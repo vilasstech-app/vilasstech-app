@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#102b50">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="VILASSTECH">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon.svg">
+  <title>VILASSTECH</title>
+  <style>
+    *{box-sizing:border-box}
+    html,body{margin:0;width:100%;height:100%;background:#102b50;font-family:Arial,sans-serif}
+    body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+    #app{height:100%;display:flex;flex-direction:column}
+    header{height:48px;flex:0 0 48px;background:#102b50;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;letter-spacing:1.5px}
+    iframe{border:0;width:100%;height:calc(100% - 48px);background:#f2f5f9;flex:1}
+    #fallback{display:none;color:#fff;text-align:center;padding:18px}
+    #fallback a{color:#fff}
+  </style>
+</head>
+<body>
+  <div id="app">
+    <header>VILASSTECH</header>
+    <iframe
+      src="https://script.google.com/macros/s/AKfycbyTDI0uDLl82lc0KuSd3hYxOVMeTFBCfDFrHWW4MpaWDfEbqgagUvwNEw5D_Mxf8VGw/exec"
+      title="Sistema de cotizaciones VILASSTECH"
+      allow="clipboard-read; clipboard-write"
+      referrerpolicy="strict-origin-when-cross-origin">
+    </iframe>
+    <div id="fallback">Si la aplicación no carga dentro de esta pantalla, <a href="https://script.google.com/macros/s/AKfycbyTDI0uDLl82lc0KuSd3hYxOVMeTFBCfDFrHWW4MpaWDfEbqgagUvwNEw5D_Mxf8VGw/exec" target="_blank" rel="noopener">ábrela directamente aquí</a>.</div>
+  </div>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js").catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
