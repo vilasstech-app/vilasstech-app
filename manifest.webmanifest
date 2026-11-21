@@ -1,0 +1,19 @@
+{
+  "id": "./",
+  "name": "VILASSTECH | Cotizaciones",
+  "short_name": "VILASSTECH",
+  "description": "Sistema privado de cotizaciones VILASSTECH",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#102b50",
+  "theme_color": "#102b50",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
