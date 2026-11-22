@@ -385,138 +385,150 @@ function printDocument(id,content){
   const JsPDF=window.jspdf&&window.jspdf.jsPDF;
   if(!JsPDF){alert('El generador PDF todavía se está cargando. Espera unos segundos y vuelve a tocar PDF.');return;}
   const doc=new JsPDF({orientation:"portrait",unit:"mm",format:"a4"});
-  const pageH=297,left=10,right=200,width=190;
-  const navy=[16,43,80],gold=[229,185,0],orange=[245,139,55],ink=[38,54,74],muted=[100,117,138],pale=[245,248,252],line=[226,233,242];
-  const parsed=new DOMParser().parseFromString("<section>"+content+"</section>","text/html");
-  const root=parsed.body;
+  const W=210,H=297,L=15,R=195,CW=180;
+  const navy=[17,42,74],blue=[38,91,143],gold=[218,166,54],ink=[43,55,70],muted=[111,124,140],pale=[246,248,251],line=[224,230,237],white=[255,255,255];
+  const parsed=new DOMParser().parseFromString("<section>"+content+"</section>","text/html"),root=parsed.body;
   const heading=root.querySelector(".doc-title h2")?.textContent.trim()||"DOCUMENTO";
   const number=root.querySelector(".doc-no")?.textContent.trim()||id;
-  let y=12;
-  function drawBrand(){
-   doc.setFillColor(...navy);doc.roundedRect(left,y,width,47,3,3,"F");
-   doc.setFillColor(...gold);doc.roundedRect(left,y+44,width,3,1,1,"F");
-   doc.setFillColor(255,255,255);doc.roundedRect(left+4,y+5,29,29,2,2,"F");
-   if(pdfLogoData){try{doc.addImage(pdfLogoData,"JPEG",left+5,y+6,27,27)}catch(e){}}
-   else{doc.setTextColor(...navy);doc.setFont("helvetica","bold");doc.setFontSize(11);doc.text("V",left+18.5,y+23,{align:"center"});}
-   doc.setDrawColor(255,255,255);doc.setLineWidth(.25);doc.line(left+37,y+6,left+37,y+40);doc.line(145,y+6,145,y+40);
-   doc.setTextColor(255,255,255);doc.setFont("helvetica","bold");doc.setFontSize(17);doc.text("VILASSTECH",left+42,y+12);
-   doc.setFont("helvetica","normal");doc.setFontSize(7);doc.setTextColor(220,232,245);doc.text("ESPECIALISTAS EN SOLUCIONES INTEGRALES",left+42,y+17);
-   const services=[["CÁMARAS CCTV",52],["CONTROL DE ACCESO",72],["ALARMAS",96],["COMPUTACIÓN",113],["REDES",133]];
-   services.forEach((it,index)=>{
-    const x=it[1],cy=y+27.5;
-    doc.setDrawColor(255,255,255);doc.setFillColor(255,255,255);doc.setLineWidth(.55);
-    if(index===0){doc.roundedRect(x,cy-2.2,6,4.4,1,1,"S");doc.circle(x+3,cy,.95,"S");doc.line(x+6,cy-1.5,x+8,cy-2.7);doc.line(x+6,cy+1.5,x+8,cy+2.7);}
-    if(index===1){doc.roundedRect(x+.5,cy-0.5,6,4.5,1,1,"S");doc.line(x+1.7,cy-.5,x+1.7,cy-2.3);doc.line(x+1.7,cy-2.3,x+5.3,cy-2.3);doc.line(x+5.3,cy-2.3,x+5.3,cy-.5);doc.circle(x+3.5,cy+1.5,.45,"S");}
-    if(index===2){doc.line(x+3,cy-3,x+6,cy-1.5);doc.line(x+6,cy-1.5,x+5.5,cy+1.5);doc.line(x+5.5,cy+1.5,x+3,cy+3);doc.line(x+3,cy+3,x+.5,cy+1.5);doc.line(x+.5,cy+1.5,x,cy-1.5);doc.line(x,cy-1.5,x+3,cy-3);doc.line(x+3,cy-1.5,x+3,cy+.5);doc.circle(x+3,cy+1.8,.25,"F");}
-    if(index===3){doc.roundedRect(x,cy-3,7,4.8,.6,.6,"S");doc.line(x+2,cy+2,x+5,cy+2);doc.line(x+3.5,cy+1.8,x+3.5,cy+3);doc.line(x+1.5,cy+3,x+5.5,cy+3);}
-    if(index===4){doc.circle(x+3,cy-2.5,.9,"S");doc.circle(x,cy+2.5,.9,"S");doc.circle(x+6,cy+2.5,.9,"S");doc.line(x+3,cy-1.6,x,cy+1.6);doc.line(x+3,cy-1.6,x+6,cy+1.6);doc.line(x+.9,cy+2.5,x+5.1,cy+2.5);}
-    doc.setFont("helvetica","bold");doc.setFontSize(4.1);doc.setTextColor(255,255,255);doc.text(it[0],x+8.5,y+29,{maxWidth:18});
-   });
-   doc.setFont("helvetica","bold");doc.setFontSize(7);doc.setTextColor(255,203,131);doc.text("CONTACTO",149,y+10);
-   doc.setFont("helvetica","normal");doc.setFontSize(6.5);doc.setTextColor(245,248,252);
-   ["La Chorrera, Panamá","6516-7840","vilasstech05@gmail.com","RUC: 8-891-1170 · DV: 0"].forEach((t,i)=>doc.text(t,149,y+16+i*6));
-   y+=54;
+  const meta=[...root.querySelectorAll(".meta p")].map(p=>({label:p.querySelector("b")?.textContent.replace(/:$/,"").trim()||"",value:p.textContent.replace(p.querySelector("b")?.textContent||"","").trim()}));
+  const table=root.querySelector("table");
+  const headers=table?[...table.querySelectorAll("thead th")].map(x=>x.textContent.trim()):[];
+  const rows=table?[...table.querySelectorAll("tbody tr")].map(tr=>[...tr.querySelectorAll("td")].map(td=>td.textContent.trim())):[];
+  let y=15;
+  function brand(){
+   doc.setFillColor(...navy);doc.rect(0,0,W,43,"F");
+   doc.setFillColor(...gold);doc.rect(0,43,W,1.8,"F");
+   doc.setFillColor(...white);doc.roundedRect(L,8,28,27,2,2,"F");
+   if(pdfLogoData){try{doc.addImage(pdfLogoData,"PNG",L+1,9,26,25,undefined,"FAST")}catch(e){doc.setTextColor(...navy);doc.setFont("helvetica","bold");doc.setFontSize(15);doc.text("VT",L+14,25,{align:"center"})}}
+   else{doc.setTextColor(...navy);doc.setFont("helvetica","bold");doc.setFontSize(15);doc.text("VT",L+14,25,{align:"center"})}
+   doc.setTextColor(...white);doc.setFont("helvetica","bold");doc.setFontSize(19);doc.text("VILASSTECH",51,18);
+   doc.setFont("helvetica","normal");doc.setFontSize(8);doc.setTextColor(213,224,237);doc.text("TECNOLOGÍA · SEGURIDAD · CONECTIVIDAD",51,24);
+   doc.setDrawColor(95,119,148);doc.line(51,28,119,28);
+   doc.setFont("helvetica","normal");doc.setFontSize(7.5);doc.setTextColor(...white);
+   doc.text("La Chorrera, Panamá",51,34);
+   doc.text("6516-7840  |  vilasstech05@gmail.com",51,39);
+   doc.setFont("helvetica","bold");doc.setFontSize(7);doc.setTextColor(244,207,133);doc.text("RUC 8-891-1170  ·  DV 0",R,17,{align:"right"});
+   doc.setFont("helvetica","normal");doc.setFontSize(7);doc.setTextColor(225,234,244);doc.text("SERVICIOS TECNOLÓGICOS",R,23,{align:"right"});
+   y=54;
   }
   function footer(){
-   doc.setDrawColor(...gold);doc.setLineWidth(.6);doc.line(left,pageH-15,right,pageH-15);
-   doc.setTextColor(...muted);doc.setFont("helvetica","normal");doc.setFontSize(7);
-   doc.text("VILASSTECH · Soluciones en videovigilancia, alarmas, control de acceso, computación y redes",left,pageH-9);
-   doc.text("Página "+doc.internal.getNumberOfPages(),right,pageH-9,{align:"right"});
+   doc.setDrawColor(...line);doc.setLineWidth(.35);doc.line(L,H-17,R,H-17);
+   doc.setFont("helvetica","normal");doc.setFontSize(7);doc.setTextColor(...muted);
+   doc.text("VILASSTECH  ·  Seguridad electrónica, soporte técnico y redes",L,H-11);
+   doc.text("Página "+doc.internal.getNumberOfPages(),R,H-11,{align:"right"});
   }
-  function newPage(){footer();doc.addPage();y=12;drawBrand();doc.setFont("helvetica","bold");doc.setFontSize(8);doc.setTextColor(...muted);doc.text("CONTINUACIÓN",left,y);y+=7;}
-  function ensure(h){if(y+h>pageH-21)newPage();}
-  drawBrand();
-  doc.setTextColor(...navy);doc.setFont("helvetica","bold");doc.setFontSize(17);doc.text(heading,left,y+1);
-  doc.setFillColor(255,243,233);doc.setDrawColor(246,201,168);doc.roundedRect(151,y-7,49,11,2,2,"FD");
-  doc.setFont("helvetica","bold");doc.setFontSize(9);doc.setTextColor(...navy);doc.text(number,175.5,y,{align:"center"});
-  doc.setDrawColor(...line);doc.setLineWidth(.5);doc.line(left,y+5,right,y+5);y+=14;
-  const meta=root.querySelector(".meta");
-  if(meta){
-   const items=[...meta.querySelectorAll("p")].map(p=>({label:p.querySelector("b")?.textContent.replace(/:$/,"").trim()||"",value:p.textContent.replace(p.querySelector("b")?.textContent||"","").trim()}));
-   const boxH=25;ensure(boxH+4);
-   doc.setFillColor(...pale);doc.setDrawColor(...line);doc.roundedRect(left,y,width,boxH,2,2,"FD");
-   items.slice(0,4).forEach((item,i)=>{
-    const col=i%2,row=Math.floor(i/2),x=left+6+col*93,yy=y+8+row*10;
-    doc.setFont("helvetica","bold");doc.setFontSize(7);doc.setTextColor(...navy);doc.text(item.label?item.label+":":"",x,yy);
-    pdfText(doc,item.value,x+22,yy,66,7,ink);
+  function nextPage(){
+   footer();doc.addPage();brand();
+   doc.setFont("helvetica","normal");doc.setFontSize(7);doc.setTextColor(...muted);
+   doc.text("CONTINUACIÓN · "+number,L,y);y+=9;
+  }
+  function ensure(h){if(y+h>H-24)nextPage()}
+  function labelValue(label,value,x,yy,max){
+   doc.setFont("helvetica","bold");doc.setFontSize(7);doc.setTextColor(...muted);doc.text(label.toUpperCase(),x,yy);
+   doc.setFont("helvetica","normal");doc.setFontSize(9);doc.setTextColor(...ink);
+   const lines=doc.splitTextToSize(value||"—",max);
+   doc.text(lines,x,yy+5);
+   return yy+5+lines.length*4;
+  }
+  brand();
+  doc.setFont("helvetica","bold");doc.setFontSize(17);doc.setTextColor(...navy);doc.text(heading,L,y);
+  doc.setFillColor(246,248,251);doc.roundedRect(150,y-8,45,12,2,2,"F");
+  doc.setFont("helvetica","bold");doc.setFontSize(9);doc.setTextColor(...blue);doc.text(number,172.5,y,{align:"center"});
+  doc.setDrawColor(...gold);doc.setLineWidth(1);doc.line(L,y+5,47,y+5);y+=16;
+  if(meta.length){
+   const boxH=29;ensure(boxH+7);
+   doc.setFillColor(...pale);doc.setDrawColor(...line);doc.roundedRect(L,y,CW,boxH,2,2,"FD");
+   const colW=82;
+   meta.slice(0,4).forEach((m,i)=>{
+    const col=i%2,row=Math.floor(i/2),x=L+7+col*89,yy=y+8+row*13;
+    labelValue(m.label,m.value,x,yy,colW);
    });
-   y+=boxH+8;
+   y+=boxH+9;
   }
-  const table=root.querySelector("table");
   if(table){
-   const headers=[...table.querySelectorAll("thead th")].map(x=>x.textContent.trim());
-   const rows=[...table.querySelectorAll("tbody tr")].map(tr=>[...tr.querySelectorAll("td")].map(td=>td.textContent.trim()));
-   const widths=[90,20,31,41];
-   ensure(13);
-   doc.setFillColor(...navy);doc.roundedRect(left,y,width,10,1.5,1.5,"F");
-   let x=left+4;
-   headers.forEach((h,i)=>{doc.setFont("helvetica","bold");doc.setFontSize(7);doc.setTextColor(255,255,255);if(i===0)doc.text(h,x,y+6.5);else doc.text(h,x+widths[i]-5,y+6.5,{align:"right"});x+=widths[i];});
+   ensure(14);
+   doc.setFillColor(...navy);doc.roundedRect(L,y,CW,10,1.5,1.5,"F");
+   const widths=[91,19,32,38];let x=L+4;
+   headers.forEach((h,i)=>{doc.setFont("helvetica","bold");doc.setFontSize(7.5);doc.setTextColor(...white);doc.text(h,x+(i===0?0:widths[i]-5),y+6.5,{align:i===0?"left":"right"});x+=widths[i]});
    y+=11;
-   rows.forEach((row,idx)=>{
-    const desc=doc.splitTextToSize(row[0]||"",widths[0]-8);
-    const rowH=Math.max(11,desc.length*4.4+5);ensure(rowH+1);
-    if(idx%2===0){doc.setFillColor(245,248,252);doc.rect(left,y-1,width,rowH,"F")}
-    doc.setFont("helvetica","normal");doc.setFontSize(8);doc.setTextColor(...ink);doc.text(desc,left+4,y+5);
-    let xx=left+widths[0];
-    for(let j=1;j<4;j++){doc.text(String(row[j]||""),xx+widths[j]-5,y+5,{align:"right"});xx+=widths[j];}
-    doc.setDrawColor(...line);doc.setLineWidth(.25);doc.line(left,y+rowH-1,right,y+rowH-1);y+=rowH;
+   rows.forEach((row,i)=>{
+    const desc=doc.splitTextToSize(row[0]||"",widths[0]-9),rh=Math.max(10,desc.length*4.3+5);
+    ensure(rh+1);
+    if(i%2===0){doc.setFillColor(248,250,252);doc.rect(L,y-1,CW,rh,"F")}
+    doc.setFont("helvetica","normal");doc.setFontSize(8.5);doc.setTextColor(...ink);doc.text(desc,L+4,y+5);
+    let xx=L+widths[0];
+    for(let j=1;j<4;j++){doc.setFontSize(8);doc.text(row[j]||"",xx+widths[j]-5,y+5,{align:"right"});xx+=widths[j]}
+    doc.setDrawColor(...line);doc.setLineWidth(.25);doc.line(L,y+rh-1,R,y+rh-1);y+=rh;
    });
    y+=8;
   }
   const sum=root.querySelector(".sum");
   if(sum){
-   const lines=[...sum.querySelectorAll("p")].map(p=>({label:p.childNodes[0]?.textContent?.trim()||p.textContent.trim(),value:p.querySelector("b")?.textContent.trim()||"",total:p.classList.contains("total")||/TOTAL/i.test(p.textContent)}));
-   const boxW=78,boxH=lines.length*8+8;ensure(boxH);
-   doc.setFillColor(...pale);doc.setDrawColor(...line);doc.roundedRect(right-boxW,y,boxW,boxH,2,2,"FD");
-   let yy=y+8;lines.forEach(item=>{
-    if(item.total){doc.setDrawColor(...gold);doc.setLineWidth(.8);doc.line(right-boxW+4,yy-4,right-4,yy-4);}
-    doc.setFont("helvetica",item.total?"bold":"normal");doc.setFontSize(item.total?10:8);doc.setTextColor(...(item.total?navy:ink));
-    doc.text(item.label,right-boxW+5,yy);doc.text(item.value,right-5,yy,{align:"right"});yy+=8;
+   const items=[...sum.querySelectorAll("p")].map(p=>({label:p.childNodes[0]?.textContent?.trim()||p.textContent.trim(),value:p.querySelector("b")?.textContent.trim()||"",total:p.classList.contains("total")||/TOTAL/i.test(p.textContent)}));
+   const bh=items.length*8+8;ensure(bh+4);
+   const bx=R-72;doc.setFillColor(...pale);doc.setDrawColor(...line);doc.roundedRect(bx,y,72,bh,2,2,"FD");
+   let yy=y+8;
+   items.forEach(it=>{
+    if(it.total){doc.setDrawColor(...gold);doc.setLineWidth(.8);doc.line(bx+5,yy-4,R-5,yy-4)}
+    doc.setFont("helvetica",it.total?"bold":"normal");doc.setFontSize(it.total?10:8);doc.setTextColor(...(it.total?navy:ink));
+    doc.text(it.label,bx+5,yy);doc.text(it.value,R-5,yy,{align:"right"});yy+=8;
    });
-   y+=boxH+8;
+   y+=bh+8;
   }
   const notes=root.querySelector(".notes");
   if(notes){
-   const note=notes.textContent.replace(/^Observaciones\s*/i,"").trim();
-   const noteLines=doc.splitTextToSize(note||"—",width-15),boxH=noteLines.length*4.5+16;ensure(boxH);
-   doc.setFillColor(255,249,237);doc.roundedRect(left,y,width,boxH,2,2,"F");doc.setFillColor(...orange);doc.roundedRect(left,y,2,boxH,1,1,"F");
-   doc.setFont("helvetica","bold");doc.setFontSize(7);doc.setTextColor(...navy);doc.text("OBSERVACIONES",left+7,y+7);
-   doc.setFont("helvetica","normal");doc.setFontSize(8);doc.setTextColor(...ink);doc.text(noteLines,left+7,y+13);y+=boxH+7;
+   const note=notes.textContent.replace(/^Observaciones\s*/i,"").trim(),lines=doc.splitTextToSize(note||"—",CW-14),bh=lines.length*4.5+15;
+   ensure(bh+3);
+   doc.setFillColor(250,248,242);doc.setDrawColor(239,229,207);doc.roundedRect(L,y,CW,bh,2,2,"FD");
+   doc.setFillColor(...gold);doc.roundedRect(L,y,2,bh,1,1,"F");
+   doc.setFont("helvetica","bold");doc.setFontSize(7);doc.setTextColor(...navy);doc.text("OBSERVACIONES",L+7,y+7);
+   doc.setFont("helvetica","normal");doc.setFontSize(8.5);doc.setTextColor(...ink);doc.text(lines,L+7,y+13);y+=bh+7;
   }
   const receipt=root.querySelector(".receipt");
   if(receipt){
    const paras=[...receipt.querySelectorAll("p")].filter(p=>!p.classList.contains("amount"));
    const amount=receipt.querySelector(".amount")?.textContent.trim()||"";
-   const boxH=paras.length*10+30;ensure(boxH);
-   doc.setFillColor(...pale);doc.setDrawColor(...line);doc.roundedRect(left,y,width,boxH,3,3,"FD");
-   let yy=y+10;paras.forEach(p=>{const raw=p.textContent.replace(/\s+/g," ").trim();yy=pdfText(doc,raw,left+8,yy,width-16,8,ink);yy+=3;});
-   doc.setFillColor(232,241,249);doc.roundedRect(left+8,yy+1,width-16,17,2,2,"F");
-   doc.setFont("helvetica","bold");doc.setFontSize(16);doc.setTextColor(...navy);doc.text(amount,left+15,yy+13);
-   y+=boxH+8;
+   const details=paras.map(p=>p.textContent.replace(/\s+/g," ").trim());
+   const bh=details.length*12+39;ensure(bh);
+   doc.setFillColor(...pale);doc.setDrawColor(...line);doc.roundedRect(L,y,CW,bh,2,2,"FD");
+   let yy=y+11;
+   details.forEach((lineText,i)=>{
+    const split=lineText.indexOf(":");
+    const lab=split>=0?lineText.slice(0,split+1):"",val=split>=0?lineText.slice(split+1).trim():lineText;
+    doc.setFont("helvetica","bold");doc.setFontSize(8);doc.setTextColor(...muted);doc.text(lab,L+8,yy);
+    doc.setFont("helvetica","normal");doc.setTextColor(...ink);doc.text(doc.splitTextToSize(val,118),L+48,yy);
+    yy+=12;
+   });
+   doc.setFillColor(232,239,247);doc.roundedRect(L+8,yy+1,CW-16,19,2,2,"F");
+   doc.setFont("helvetica","bold");doc.setFontSize(16);doc.setTextColor(...navy);doc.text(amount,L+15,yy+14);
+   y+=bh+8;
   }
   const disclaimer=[...root.querySelectorAll("p")].find(p=>p.textContent.includes("Documento comercial")||p.textContent.includes("Cotización comercial"));
-  if(disclaimer){const lines=doc.splitTextToSize(disclaimer.textContent.trim(),width);ensure(lines.length*4+5);doc.setFont("helvetica","italic");doc.setFontSize(7);doc.setTextColor(...muted);doc.text(lines,left,y);y+=lines.length*4+5;}
+  if(disclaimer){
+   const lines=doc.splitTextToSize(disclaimer.textContent.trim(),CW);ensure(lines.length*4+5);
+   doc.setFont("helvetica","italic");doc.setFontSize(7);doc.setTextColor(...muted);doc.text(lines,L,y);y+=lines.length*4+5;
+  }
   footer();
   const safeName=String(id||"documento").replace(/[^a-z0-9_-]/gi,"_");
   const blob=doc.output("blob"),file=new File([blob],safeName+".pdf",{type:"application/pdf"}),url=URL.createObjectURL(blob);
   if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
-   try{const sharing=navigator.share({files:[file],title:safeName,text:"Documento de VILASSTECH"});sharing.catch(err=>{if(err&&err.name!=="AbortError")window.location.href=url;});return;}
-   catch(err){if(err&&err.name==="AbortError")return;}
+   try{const sharing=navigator.share({files:[file],title:safeName,text:"Documento de VILASSTECH"});sharing.catch(err=>{if(err&&err.name!=="AbortError")window.location.href=url;});return}
+   catch(err){if(err&&err.name==="AbortError")return}
   }
   const isStandalone=window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone===true;
-  if(isStandalone){window.location.href=url;}
-  else{const opened=window.open(url,"_blank");if(!opened)window.location.href=url;}
+  if(isStandalone)window.location.href=url;
+  else{const opened=window.open(url,"_blank");if(!opened)window.location.href=url}
   setTimeout(()=>URL.revokeObjectURL(url),120000);
  }catch(err){
   console.error("PDF VILASSTECH:",err);
   alert("No se pudo generar el PDF. "+(err&&err.message?err.message:"Verifica tu conexión e inténtalo nuevamente."));
  }finally{
-  if(button&&button.tagName==="BUTTON"){button.disabled=false;button.textContent=buttonText||"PDF/Imprimir";}
+  if(button&&button.tagName==="BUTTON"){button.disabled=false;button.textContent=buttonText||"PDF/Imprimir"}
  }
 }
 let pdfLogoData=null;
 loadPdfLibrary().catch(err=>console.warn("PDF library:",err));
-pdfImageData("https://images.weserv.nl/?url=cdn.imagetourls.com%2Fuploads%2FtyImg%2F16lgpNfyv.jpg&output=jpg").then(data=>{pdfLogoData=data;if(!data)console.warn("No se pudo cargar el logo VILASSTECH para PDF")});
+pdfImageData("https://cdn.imagetourls.com/uploads/tyImg/169oiiDXM.png").then(data=>{pdfLogoData=data;if(!data)console.warn("No se pudo cargar el logo VILASSTECH para PDF")});
 function printQuote(d){
  let rows=d.productos.map(p=>'<tr><td>'+esc(p.descripcion)+'</td><td>'+p.cantidad+'</td><td>'+fmt(p.precio)+'</td><td>'+fmt(p.cantidad*p.precio)+'</td></tr>').join("");
  let content='<div class="doc-title"><h2>COTIZACIÓN</h2><span class="doc-no">'+esc(quoteCode(d))+'</span></div><section class="meta"><p><b>Cliente:</b> '+esc(d.cliente)+'</p><p><b>Fecha:</b> '+new Date(d.fecha).toLocaleDateString("es-PA")+'</p><p><b>Teléfono:</b> '+esc(d.telefono||"—")+'</p><p><b>Dirección:</b> '+esc(d.direccion||"—")+'</p></section><table><thead><tr><th>Descripción</th><th>Cant.</th><th>Precio</th><th>Subtotal</th></tr></thead><tbody>'+rows+'</tbody></table><div class="sum"><p>Subtotal <b>'+fmt(d.subtotal)+'</b></p><p>ITBMS <b>'+fmt(d.itbms)+'</b></p><p class="total">TOTAL <b>'+fmt(d.total)+'</b></p></div><div class="notes"><b>Observaciones</b><br>'+esc(d.observaciones||"—")+'</div><p style="margin-top:20px;color:#687b90;font-size:11px">Cotización comercial. No constituye factura fiscal electrónica.</p>';
