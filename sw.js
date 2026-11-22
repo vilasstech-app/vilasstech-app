@@ -1,4 +1,4 @@
-const CACHE="vilasstech-pwa-v47";
+const CACHE="vilasstech-pwa-v48";
 const SHELL=["./","./index.html","./manifest.webmanifest","./icon.svg"];
 self.addEventListener("install",event=>{
   event.waitUntil((async()=>{
