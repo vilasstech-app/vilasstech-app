@@ -208,6 +208,33 @@ h1{font-size:clamp(27px,3vw,36px);line-height:1.12;letter-spacing:-1.25px;font-w
 @media(max-width:760px){.dash-hero{gap:18px;padding:25px 22px;min-height:0}.hero-gallery{width:100%;height:190px;flex:0 0 100%;max-width:440px}.dash-hero{flex-wrap:wrap}.dash-copy{max-width:none}.gallery-slide figcaption strong{font-size:15px}}
 @media(prefers-reduced-motion:reduce){.gallery-slide,.gallery-slide img,.gallery-dot{transition:none!important}}
 
+
+/* Carrusel panorámico como fondo completo del hero */
+.dash-hero{position:relative;isolation:isolate;min-height:330px;padding:42px 46px;overflow:hidden}
+.hero-gallery{position:absolute;inset:0;width:100%;height:100%;max-width:none;min-height:0;flex:none;z-index:0;border:0;border-radius:inherit;box-shadow:none;background:#071b32;pointer-events:none}
+.gallery-track,.gallery-slide{position:absolute;inset:0;width:100%;height:100%}
+.gallery-slide img{object-fit:cover;object-position:center 48%;filter:saturate(.88);transform:scale(1.04)}
+.gallery-slide.active img{transform:scale(1.13)}
+.gallery-slide:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,20,39,.96) 0%,rgba(7,29,53,.88) 36%,rgba(7,29,53,.48) 68%,rgba(7,29,53,.24) 100%),linear-gradient(0deg,rgba(4,17,33,.4),transparent 55%)}
+.gallery-slide figcaption{display:none}
+.gallery-controls{top:auto;right:25px;bottom:23px;gap:8px;pointer-events:auto}
+.gallery-dot{width:8px;height:8px;background:#ffffff80;border:1px solid #fff}
+.gallery-dot.active{width:25px}
+.gallery-brand{left:auto;right:22px;top:20px;pointer-events:none}
+.dash-copy{z-index:2;max-width:610px;width:65%;text-shadow:0 2px 12px #06182c70}
+.dash-hero .hero-kicker{color:#ffc09e}
+.dash-hero .hero-actions{position:relative;z-index:3}
+@media(max-width:760px){
+ .dash-hero{min-height:340px;padding:29px 23px;align-items:center}
+ .hero-gallery{width:100%;height:100%;max-width:none;flex:none}
+ .dash-copy{width:100%;max-width:100%}
+ .dash-hero h1{font-size:clamp(30px,8vw,39px)}
+ .gallery-brand{top:auto;right:17px;bottom:17px}
+ .gallery-controls{right:18px;bottom:20px}
+ .gallery-slide:after{background:linear-gradient(90deg,rgba(5,20,39,.94),rgba(7,29,53,.62)),linear-gradient(0deg,rgba(4,17,33,.5),transparent 70%)}
+}
+@media(prefers-reduced-motion:reduce){.gallery-slide,.gallery-slide img,.gallery-dot{transition:none!important}}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head><body>
@@ -229,7 +256,7 @@ h1{font-size:clamp(27px,3vw,36px);line-height:1.12;letter-spacing:-1.25px;font-w
 <button class="nav" data-view="billingHistory">Registros</button><button class="nav" data-view="clients">Clientes</button><button class="nav" data-view="backup">Respaldo</button>
 </nav>
 <section class="view active" id="dashboard">
-<div class="dash-hero"><div class="dash-copy"><span class="hero-kicker">VILASSTECH · ESPACIO DE TRABAJO</span><h1>Tu negocio,<br>bajo control.</h1><p>Administra cotizaciones, facturas y pagos desde un solo lugar.</p><div class="hero-actions"><button class="hero-cta" data-open-quote>＋ Crear cotización</button><button class="hero-secondary" data-view="invoice">Nueva factura ↗</button></div></div><div class="hero-emblem hero-gallery" aria-label="Servicios de VILASSTECH">
+<div class="dash-hero"><div class="dash-copy"><span class="hero-kicker">VILASSTECH · ESPACIO DE TRABAJO</span><h1>Tu negocio,<br>bajo control.</h1><p>Administra cotizaciones, facturas y pagos desde un solo lugar.</p><div class="hero-actions"><button class="hero-cta" data-open-quote>＋ Crear cotización</button><button class="hero-secondary" data-view="invoice">Nueva factura ↗</button></div></div><div class="hero-gallery" aria-label="Servicios de VILASSTECH">
  <div class="gallery-track">
   <figure class="gallery-slide active"><img src="https://www.cctvcameraservice.com/images/about-img-1.jpg" alt="Instalación de cámara de videovigilancia"><figcaption><span>CCTV</span><strong>Cámaras de seguridad</strong></figcaption></figure>
   <figure class="gallery-slide"><img src="https://dormakaba-res.cloudinary.com/image/upload/t_prod-detail-square/f_auto%2Cq_auto/v1745405857/dormakaba-prod/1513245251-c-lever-pro-a06.jpg" alt="Lector electrónico de control de acceso"><figcaption><span>CONTROL DE ACCESO</span><strong>Acceso inteligente</strong></figcaption></figure>
