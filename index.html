@@ -354,6 +354,143 @@ button:disabled{opacity:.58;cursor:not-allowed;transform:none!important}
 }
 @media(prefers-reduced-motion:reduce){.mobile-nav,.mobile-menu-overlay{transition:none!important}}
 
+
+/* VILASSTECH v55 — renovación visual integral */
+:root{
+ --navy:#102b50;--blue:#087eae;--orange:#ff9563;--bg:#eef3f8;
+ --ink:#142b45;--muted:#718198;--line:#dfe7f0;--green:#239568;
+}
+html{background:#eef3f8}
+body{background:#eef3f8!important;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif!important}
+.app-shell{background:linear-gradient(145deg,#f5f8fc 0%,#edf2f8 100%);min-height:100vh}
+.sidebar{width:264px!important;padding:28px 17px!important;background:#0b203b!important;box-shadow:8px 0 32px #0b203b18!important}
+.brand{padding:3px 9px 30px!important;border-bottom:1px solid #ffffff18;margin-bottom:20px}
+.brand-mark.logo-mark{width:48px!important;height:48px!important;border-radius:15px!important}
+.brand strong{font-size:14px;letter-spacing:1.5px}
+.brand small{font-size:10px;letter-spacing:.5px}
+.sidebar nav{gap:6px!important}
+.sidebar .nav{min-height:46px;padding:12px 13px!important;border-radius:12px!important;color:#b8c8da!important;font-size:13px!important}
+.sidebar .nav span{width:27px;height:27px;border-radius:9px;background:#ffffff12}
+.sidebar .nav.active{background:#1b4168!important;border-color:#ffffff15!important;box-shadow:inset 3px 0 var(--orange)!important;color:#fff!important}
+.side-foot{border:1px solid #ffffff1c;border-radius:13px;padding:12px!important;background:#ffffff09}
+main{margin-left:264px!important;padding:0 40px 48px!important;max-width:none!important}
+.topbar{height:78px!important;margin-bottom:28px!important;border-bottom:1px solid #dce5ef!important}
+.top-right{display:flex;align-items:center;gap:9px}
+.test-pill{border:1px solid #dfe7f0!important;background:#fff!important;border-radius:30px!important;padding:10px 14px!important;color:#5f7188!important;font-size:11px!important;box-shadow:0 3px 12px #19345208}
+.install-btn{border:0!important;background:#102b50!important;color:#fff!important;border-radius:11px!important;padding:11px 16px!important}
+h1{color:#102844!important;font-size:clamp(29px,3vw,39px)!important;letter-spacing:-1.4px!important;font-weight:820!important}
+.eyebrow{font-size:10px!important;letter-spacing:1.8px!important;font-weight:850!important}
+.sub{color:#7b8ba0!important;line-height:1.6}
+.view-head,.welcome{margin-bottom:28px!important}
+.dash-hero{min-height:350px!important;border-radius:26px!important;border:1px solid #254c70!important;box-shadow:0 20px 48px #0b25452b!important;margin-bottom:30px!important}
+.dash-hero:after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(90deg,#061a33 0%,#0a2949e8 42%,#0b2c4b40 76%,#0b2c4b20 100%)}
+.dash-copy{position:relative;z-index:2!important;text-shadow:none!important}
+.dash-hero .hero-kicker{display:inline-flex;padding:8px 11px;border:1px solid #ffffff35;border-radius:30px;background:#ffffff12;color:#ffc09e!important;font-size:10px;letter-spacing:1.6px;font-weight:800}
+.dash-hero h1{font-size:clamp(38px,4.4vw,58px)!important;line-height:1.02!important;letter-spacing:-2.3px!important;color:#fff!important;margin:18px 0 13px!important}
+.dash-hero p{max-width:430px;color:#d3dfeb!important;font-size:15px!important;line-height:1.65}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:23px}
+.hero-cta,.hero-secondary{min-height:46px;padding:12px 17px!important;border-radius:12px!important;font-weight:800!important}
+.hero-cta{background:var(--orange)!important;color:#102b50!important;box-shadow:0 8px 20px #0003}
+.hero-secondary{background:#ffffff16!important;border:1px solid #ffffff55!important;color:#fff!important}
+.dash-heading{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:28px 0 15px!important}
+.dash-heading small{font-size:10px;letter-spacing:1.7px;font-weight:850;color:#1688b8}
+.dash-heading h2{font-size:21px;letter-spacing:-.6px;margin:5px 0 0;color:#173451}
+.data-status{font-size:11px;color:#6c7d91;background:#fff;border:1px solid var(--line);border-radius:30px;padding:8px 12px}
+.dash-stats{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:15px!important;margin:0 0 19px!important}
+.dash-stats .stat{min-height:160px!important;padding:19px!important;border:1px solid #e1e8f0!important;border-radius:18px!important;box-shadow:0 7px 22px #1636560a!important;position:relative;overflow:hidden}
+.dash-stats .stat:after{width:105px;height:105px;right:-34px;top:-37px;background:#eff6fb}
+.stat-head{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}
+.stat-head>small{font-size:9px!important;letter-spacing:1.1px;font-weight:850;color:#8998aa!important}
+.dash-stats .stat label{font-size:12px!important;font-weight:650;margin-top:15px}
+.dash-stats .stat strong{font-size:29px!important;letter-spacing:-1.2px!important;color:#132e4c!important;margin:8px 0 4px!important}
+.dash-stats .stat>small{font-size:10px!important}
+.dash-stats .stat-icon{width:39px;height:39px;border-radius:12px;font-size:17px}
+.panel{border:1px solid #e0e8f0!important;border-radius:19px!important;padding:23px!important;box-shadow:0 8px 26px #1736560a!important;background:#fff!important}
+.panel-heading h2{font-size:17px!important;letter-spacing:-.4px!important;color:#173451!important}
+.panel-heading p{font-size:11px!important;color:#8291a4!important}
+.panel-kicker{font-size:9px;letter-spacing:1.6px;font-weight:850;color:#1386b6}
+#trendPanel{margin:0 0 25px!important}
+.trend-filter{font-size:11px;color:#718198}
+.trend-filter select{border:1px solid #dfe7f0;border-radius:10px;padding:9px;background:#f9fbfd;color:#29435f}
+.quick-actions{gap:14px!important;margin:14px 0 24px!important}
+.quick-action{min-height:84px;padding:17px!important;border:1px solid #e0e8f0!important;border-radius:16px!important;box-shadow:0 6px 18px #17365609!important}
+.quick-action:hover{transform:translateY(-3px);border-color:#b8d4e5!important;box-shadow:0 12px 24px #17365612!important}
+.quick-action .qa-icon{width:43px;height:43px;border-radius:13px!important}
+.quick-action strong{font-size:12px!important;color:#183653}
+.quick-action small{font-size:10px!important;color:#8190a3}
+.quick-action>b{margin-left:auto;color:#1386b6;font-size:17px}
+.recent-panel{margin-bottom:18px!important}
+.draft-card{border:1px solid #e5ebf2!important;border-radius:13px!important;padding:15px!important}
+.notice{border-radius:14px!important;background:#f2f8fc!important;border-color:#d9e9f3!important}
+button,input,select,textarea{font-family:inherit}
+button{transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
+.primary{background:#102f53!important;color:#fff!important}
+.primary:hover{background:#174876!important}
+.secondary,.mini-btn{background:#fff!important;border:1px solid #dfe7f0!important;color:#24415f!important}
+.fields input,.notes-label textarea,.item-row input,.searchbox input{background:#fbfcfe!important;border:1px solid #dce5ee!important;border-radius:11px!important}
+.fields input:focus,.notes-label textarea:focus,.item-row input:focus,.searchbox input:focus{border-color:#168fc2!important;box-shadow:0 0 0 4px #168fc218!important}
+.item-row{background:#f9fbfd!important;border:1px solid #e2eaf2!important;border-radius:13px!important}
+.add-row{border-radius:12px!important;background:#edf7fb!important;color:#087eae!important}
+#toast{border-radius:13px!important;box-shadow:0 12px 30px #0b203b30}
+@media(max-width:1100px) and (min-width:761px){
+ main{padding-left:25px!important;padding-right:25px!important}
+ .sidebar{width:230px!important}
+ main{margin-left:230px!important}
+ .dash-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .dash-hero{min-height:315px!important;padding:30px!important}
+}
+@media(max-width:760px){
+ .sidebar{display:none!important}
+ main{margin:0!important;padding:0 18px calc(36px + env(safe-area-inset-bottom))!important}
+ .topbar{height:auto!important;min-height:66px!important;margin:0 0 13px!important;justify-content:flex-start!important;gap:10px!important;border:0!important}
+ .mobile-menu-btn{display:grid!important;place-items:center!important;width:43px!important;height:43px!important;flex:0 0 43px!important;border:1px solid #dfe7f0!important;border-radius:12px!important;background:#fff!important;color:#102b50!important;box-shadow:0 4px 13px #102b5010}
+ .mobile-brand{display:flex!important;align-items:center!important;gap:8px!important;flex:1!important;font-size:13px!important;font-weight:850!important;letter-spacing:.7px}
+ .mobile-brand .logo-mark{width:35px!important;height:35px!important}
+ .top-right{gap:5px!important}
+ .top-right .test-pill{font-size:9px!important;padding:8px!important}
+ .top-right #syncStatus{display:none!important}
+ .top-right #googleSyncBtn{font-size:10px!important;padding:9px!important}
+ .mobile-nav{display:flex!important;position:fixed!important;z-index:1002!important;inset:0 auto 0 0!important;width:min(84vw,330px)!important;height:100dvh!important;max-height:100dvh!important;overflow-y:auto!important;flex-direction:column!important;align-items:stretch!important;gap:7px!important;padding:25px 16px calc(25px + env(safe-area-inset-bottom))!important;margin:0!important;border-radius:0 20px 20px 0!important;background:#0b203b!important;box-shadow:18px 0 48px #06172a45!important;transform:translateX(-110%)!important;visibility:hidden!important;transition:transform .24s ease,visibility .24s ease!important}
+ .mobile-nav.open{transform:translateX(0)!important;visibility:visible!important}
+ .mobile-nav:before{content:"VILASSTECH · MENÚ";display:block;color:#aebfd3;font-size:11px;font-weight:850;letter-spacing:1.5px;padding:5px 10px 17px;border-bottom:1px solid #ffffff20;margin-bottom:8px}
+ .mobile-nav .nav{display:flex!important;align-items:center!important;width:100%!important;min-height:47px!important;margin:0!important;padding:12px 14px!important;border:1px solid transparent!important;border-radius:11px!important;background:transparent!important;color:#c2d0e0!important;text-align:left!important;font-size:14px!important}
+ .mobile-nav .nav.active{background:#1b4168!important;border-color:#ffffff18!important;color:#fff!important;box-shadow:inset 3px 0 var(--orange)!important}
+ .mobile-menu-overlay{display:block!important;position:fixed!important;inset:0!important;z-index:1001!important;background:#06172a85!important;opacity:0!important;visibility:hidden!important;transition:opacity .24s ease,visibility .24s ease!important}
+ .mobile-menu-overlay.open{opacity:1!important;visibility:visible!important}
+ body.menu-open{overflow:hidden!important}
+ .dash-hero{min-height:350px!important;padding:27px 22px!important;border-radius:21px!important;margin-bottom:24px!important}
+ .dash-hero:after{background:linear-gradient(90deg,#061a33f5,#0a2949c9 72%,#0b2c4b80)!important}
+ .dash-copy{width:100%!important;max-width:100%!important}
+ .dash-hero h1{font-size:clamp(36px,9vw,48px)!important}
+ .dash-hero p{font-size:13px!important;max-width:290px}
+ .hero-actions{gap:8px}
+ .hero-cta,.hero-secondary{font-size:11px!important;padding:11px 12px!important}
+ .dash-heading{align-items:flex-start!important;flex-direction:column!important;margin:23px 0 13px!important}
+ .dash-heading h2{font-size:19px!important}
+ .dash-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+ .dash-stats .stat{min-height:139px!important;padding:13px!important;border-radius:15px!important}
+ .dash-stats .stat strong{font-size:21px!important;letter-spacing:-.8px!important}
+ .dash-stats .stat label{font-size:10px!important}
+ .dash-stats .stat-head>small{font-size:8px!important}
+ .dash-stats .stat-icon{width:33px;height:33px}
+ .panel{padding:16px!important;border-radius:16px!important}
+ .panel-heading{align-items:flex-start!important}
+ .panel-heading h2{font-size:15px!important}
+ .trend-filter{display:flex;flex-direction:column;gap:4px}
+ .trend-filter select{max-width:125px;font-size:10px}
+ .quick-actions{grid-template-columns:1fr!important;gap:9px!important}
+ .quick-action{min-height:72px;padding:13px!important}
+ .view-head{align-items:flex-start!important;flex-direction:column!important}
+ .view-head>button{width:100%}
+ .fields{grid-template-columns:1fr!important}
+ .fields .wide{grid-column:auto!important}
+ .item-row{grid-template-columns:1fr 1fr!important}
+ .item-row .desc-field,.item-row .product-row-select{grid-column:1/-1!important}
+ .actions{flex-direction:column-reverse!important}
+ .actions button{width:100%!important}
+}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head><body>
