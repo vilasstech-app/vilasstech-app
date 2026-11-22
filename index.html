@@ -351,26 +351,148 @@ function renderTrend(){
 }
 document.getElementById("trendRange").addEventListener("change",renderTrend);
 document.querySelectorAll(".dash-stats .stat").forEach((el,i)=>{el.setAttribute("role","button");el.setAttribute("tabindex","0");const go=()=>nav(i===0?"history":"billingHistory");el.addEventListener("click",go);el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}})});
-function historyRender(){let q=(document.getElementById("searchHistory").value||"").toLowerCase(),el=document.getElementById("historyList");el.innerHTML="";let a=read().filter(d=>d.cliente.toLowerCase().includes(q)||d.id.toLowerCase().includes(q));if(!a.length)el.innerHTML='<div class="empty">No hay coincidencias.</div>';a.forEach(d=>el.append(card(d,true)))}document.getElementById("searchHistory").oninput=historyRender;function printDocument(id,content){
- const isStandalone=window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone===true;
- const returnUrl=window.location.href;
- let win=isStandalone?null:window.open("","_blank");
- const sameWindow=isStandalone||!win;
- if(!sameWindow && !win){alert("No se pudo abrir el documento. Abre VILASSTECH en Safari para generar el PDF.");return;}
- const logo="https://cdn.imagetourls.com/uploads/tyImg/16lgpNfyv.jpg";
- const css='*{box-sizing:border-box}html,body{margin:0;padding:0}body{font:12px Arial,sans-serif;background:#edf1f6;color:#26364a;-webkit-print-color-adjust:exact;print-color-adjust:exact}.page{max-width:900px;margin:25px auto;padding:30px;background:#fff;box-shadow:0 10px 35px #0b1f3a18}.brand{display:grid;grid-template-columns:125px 1fr 230px;align-items:center;gap:18px;background:#102b50;color:#fff;padding:22px;border-radius:13px;border-bottom:5px solid #e5b900}.brand-logo{width:112px;height:95px;object-fit:contain;background:#fff;border-radius:9px;padding:7px}.brand-main{padding:0 17px;border-left:1px solid #ffffff38;border-right:1px solid #ffffff38}.brand-main h1{font-size:25px;letter-spacing:2px;margin:0 0 5px;color:#fff}.brand-main p{margin:0;color:#d9e5f2;font-size:11px}.services{display:flex;gap:6px;flex-wrap:wrap;margin-top:15px}.services span{display:inline-flex;align-items:center;gap:5px;font-size:8px;font-weight:bold;letter-spacing:.25px;color:#fff;background:#ffffff17;border:1px solid #ffffff2b;border-radius:20px;padding:5px 8px}.services .service-icon{width:14px;height:14px;display:inline-grid;place-items:center;flex:0 0 14px}.services .service-icon svg{width:14px;height:14px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.brand-contact{font-size:10px;line-height:1.85;color:#f1f5fa}.brand-contact b{color:#ffcb83}.doc-title{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:25px 0 15px;padding:0 0 12px;border-bottom:2px solid #e8edf3}.doc-title h2{font-size:22px;letter-spacing:.7px;color:#102b50;margin:0}.doc-no{font-size:12px;font-weight:bold;color:#102b50;background:#fff3e9;border:1px solid #f6c9a8;border-radius:7px;padding:9px 13px}.meta{display:grid;grid-template-columns:1fr 1fr;gap:9px 18px;background:#f5f8fc;border:1px solid #e2e9f1;border-radius:10px;padding:15px 17px;margin:15px 0 20px}.meta p{margin:2px 0;line-height:1.5}.meta b{color:#102b50}table{width:100%;border-collapse:separate;border-spacing:0;margin:17px 0 20px;border:1px solid #e3eaf2;border-radius:9px;overflow:hidden}th{background:#102b50;color:#fff;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.55px;padding:12px 10px}td{padding:12px 10px;border-bottom:1px solid #e8edf3}tbody tr:nth-child(even){background:#f5f8fc}tbody tr:last-child td{border-bottom:0}td:not(:first-child),th:not(:first-child){text-align:right}.sum{width:290px;margin:12px 0 0 auto;padding:13px 16px;background:#f4f7fb;border:1px solid #e3eaf2;border-radius:10px}.sum p{display:flex;justify-content:space-between;margin:7px 0}.total{font-size:18px;font-weight:bold;color:#102b50;border-top:2px solid #e5b900;padding-top:12px;margin-top:12px!important}.notes{margin-top:22px;padding:14px 16px;border-left:4px solid #e5b900;background:#fff9ed;border-radius:0 9px 9px 0;white-space:pre-wrap;line-height:1.5}.receipt{border:1px solid #e1e8f0;border-radius:14px;padding:25px;margin-top:22px}.amount{font-size:30px;font-weight:800;color:#102b50;background:#f1f6fb;padding:15px 18px;border-radius:10px}.foot{margin-top:28px;padding-top:13px;border-top:1px solid #e4eaf1;color:#64758a;font-size:9px;line-height:1.6;text-align:center}.print-btn{display:block;margin:20px auto 0;background:#e5b900;color:#102b50;border:0;border-radius:8px;padding:12px 22px;font-weight:bold;cursor:pointer}@media(max-width:650px){.page{margin:0;padding:15px}.brand{grid-template-columns:75px 1fr;gap:10px;padding:14px}.brand-logo{width:70px;height:68px}.brand-main{border-right:0;padding:0 0 0 10px}.brand-main h1{font-size:19px}.brand-contact{grid-column:1/-1;border-top:1px solid #ffffff38;padding-top:9px}.services{gap:4px;margin-top:9px}.services span{font-size:7px;padding:4px 6px}.meta{grid-template-columns:1fr}}@page{size:A4;margin:8mm}.back-btn{display:block;margin:10px auto 22px;background:#eef3f8;color:#102b50;border:1px solid #dce5ef;border-radius:8px;padding:11px 20px;font-weight:bold;cursor:pointer}@media print{.back-btn{display:none!important}html,body{margin:0!important;padding:0!important;background:#fff!important}body{font-size:10px!important}.page{width:100%;max-width:none;margin:0;padding:0;box-shadow:none}.brand{grid-template-columns:82px minmax(0,1fr) 175px!important;gap:10px!important;padding:11px 13px!important;border-radius:7px!important}.brand-logo{width:74px!important;height:65px!important;padding:4px!important}.brand-main{padding:0 8px!important;border-left:1px solid #ffffff38!important;border-right:1px solid #ffffff38!important}.brand-main h1{font-size:19px!important}.brand-main p{font-size:8px!important}.brand-contact{grid-column:auto!important;border:0!important;padding:0!important;font-size:8px!important;line-height:1.55!important}.services{gap:3px!important;margin-top:7px!important}.services span{font-size:6px!important;padding:3px 5px!important}.services .service-icon,.services .service-icon svg{width:10px!important;height:10px!important}.doc-title{margin:12px 0 8px!important;padding-bottom:7px!important}.doc-title h2{font-size:18px!important}.doc-no{padding:6px 9px!important;font-size:10px!important}.meta{gap:4px 10px!important;padding:8px 10px!important;margin:8px 0 10px!important;font-size:9px!important}.meta p{margin:1px 0!important;line-height:1.3!important}table{margin:8px 0 10px!important;font-size:9px!important}th{padding:7px 7px!important;font-size:8px!important}td{padding:7px 7px!important}.sum{width:245px!important;margin:7px 0 0 auto!important;padding:8px 11px!important;font-size:9px!important}.sum p{margin:4px 0!important}.total{font-size:14px!important;padding-top:7px!important;margin-top:7px!important}.notes{margin-top:10px!important;padding:8px 10px!important;font-size:9px!important;line-height:1.3!important}.foot{margin-top:12px!important;padding-top:7px!important;font-size:7px!important;line-height:1.35!important}.receipt{padding:14px!important;margin-top:10px!important}.amount{font-size:22px!important;padding:10px 12px!important}.print-btn{display:none!important}.brand,table,tr,.meta,.sum,.notes,.receipt{break-inside:avoid!important;page-break-inside:avoid!important}}';
- const brand='<header class="brand"><img class="brand-logo" src="'+logo+'" alt="Logo VILASSTECH"><div class="brand-main"><h1>VILASSTECH</h1><p>ESPECIALISTAS EN SOLUCIONES INTEGRALES</p><div class="services"><span><i class="service-icon"><svg viewBox="0 0 24 24"><path d="M3 8h13l4 3v5H3z"/><circle cx="10" cy="13" r="3"/><path d="M20 11l2-2v9l-2-2"/></svg></i>CÁMARAS CCTV</span><span><i class="service-icon"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1"/></svg></i>CONTROL DE ACCESO</span><span><i class="service-icon"><svg viewBox="0 0 24 24"><path d="M12 3 21 7v5c0 5-3.8 8-9 10-5.2-2-9-5-9-10V7z"/><path d="M12 8v5m0 3h.01"/></svg></i>ALARMAS</span><span><i class="service-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/></svg></i>COMPUTACIÓN</span><span><i class="service-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/><path d="M12 7v5M6.5 16.5l4-3m7 3-4-3"/></svg></i>REDES</span></div></div><div class="brand-contact"><b>CONTACTO</b><br>La Chorrera, Panamá<br>6516-7840<br>vilasstech05@gmail.com<br>RUC: 8-891-1170 · DV: 0</div></header>';
- const html='<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(id)+'</title><style>'+css+'</style></head><body><main class="page">'+brand+content+'<footer class="foot">VILASSTECH · Soluciones en videovigilancia, alarmas, control de acceso, computación y redes.<br>vilasstech05@gmail.com · RUC: 8-891-1170 · DV: 0</footer><button class="print-btn" onclick="window.print()">Imprimir / Guardar como PDF</button>'+(sameWindow?'<button class="back-btn" onclick="location.href='+JSON.stringify(returnUrl)+'">Volver a VILASSTECH</button>':'')+'</main><script>const logo=document.querySelector(".brand-logo");if(logo&&!logo.complete){logo.onload=()=>{};logo.onerror=()=>{logo.style.display="none"}}window.focus();<\/script></body></html>';
- if(sameWindow){
-   try{
-     const blob=new Blob([html],{type:"text/html"});
-     const url=URL.createObjectURL(blob);
-     window.location.href=url;
-   }catch(err){alert("No se pudo abrir el PDF: "+(err&&err.message?err.message:"error del navegador"));}
- }else{
-   win.document.open();win.document.write(html);win.document.close();
+function historyRender(){let q=(document.getElementById("searchHistory").value||"").toLowerCase(),el=document.getElementById("historyList");el.innerHTML="";let a=read().filter(d=>d.cliente.toLowerCase().includes(q)||d.id.toLowerCase().includes(q));if(!a.length)el.innerHTML='<div class="empty">No hay coincidencias.</div>';a.forEach(d=>el.append(card(d,true)))}document.getElementById("searchHistory").oninput=historyRender;let pdfLibraryPromise=null;
+function loadPdfLibrary(){
+ if(window.jspdf&&window.jspdf.jsPDF)return Promise.resolve(window.jspdf.jsPDF);
+ if(pdfLibraryPromise)return pdfLibraryPromise;
+ pdfLibraryPromise=new Promise((resolve,reject)=>{
+  const script=document.createElement("script");
+  script.src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+  script.onload=()=>window.jspdf&&window.jspdf.jsPDF?resolve(window.jspdf.jsPDF):reject(new Error("No se pudo iniciar el generador PDF"));
+  script.onerror=()=>reject(new Error("No se pudo cargar el generador PDF. Verifica tu conexión a internet."));
+  document.head.appendChild(script);
+ });
+ return pdfLibraryPromise;
+}
+function pdfText(doc,value,x,y,maxWidth,size=9,color=[38,54,74],weight="normal"){
+ doc.setFont("helvetica",weight);doc.setFontSize(size);doc.setTextColor(...color);
+ const lines=doc.splitTextToSize(String(value||"—"),maxWidth);
+ doc.text(lines,x,y);
+ return y+(lines.length*size*0.42)+1;
+}
+function pdfImageData(url){
+ return new Promise(resolve=>{
+  const img=new Image();img.crossOrigin="anonymous";
+  img.onload=()=>{try{const c=document.createElement("canvas");c.width=img.naturalWidth||300;c.height=img.naturalHeight||300;c.getContext("2d").drawImage(img,0,0);resolve(c.toDataURL("image/jpeg",.9))}catch(e){resolve(null)}};
+  img.onerror=()=>resolve(null);img.src=url;
+ });
+}
+async function printDocument(id,content){
+ const button=document.activeElement;
+ const buttonText=button&&button.tagName==="BUTTON"?button.textContent:"";
+ if(button&&button.tagName==="BUTTON"){button.disabled=true;button.textContent="Preparando PDF…"}
+ try{
+  const JsPDF=await loadPdfLibrary();
+  const doc=new JsPDF({orientation:"portrait",unit:"mm",format:"a4"});
+  const pageW=210,pageH=297,left=14,right=196,width=182;
+  const navy=[16,43,80],gold=[229,185,0],ink=[38,54,74],muted=[100,117,138],pale=[244,247,251];
+  const parsed=new DOMParser().parseFromString("<section>"+content+"</section>","text/html");
+  const root=parsed.body;
+  const heading=root.querySelector(".doc-title h2")?.textContent.trim()||"DOCUMENTO";
+  const number=root.querySelector(".doc-no")?.textContent.trim()||id;
+  const logoData=await pdfImageData("https://cdn.imagetourls.com/uploads/tyImg/16lgpNfyv.jpg");
+  let y=14;
+  function header(){
+   doc.setFillColor(...navy);doc.roundedRect(left,y,width,39,3,3,"F");
+   doc.setFillColor(...gold);doc.rect(left,y+36,width,3,"F");
+   if(logoData){try{doc.setFillColor(255,255,255);doc.roundedRect(left+4,y+4,28,28,2,2,"F");doc.addImage(logoData,"JPEG",left+5,y+5,26,26)}catch(e){}}
+   doc.setTextColor(255,255,255);doc.setFont("helvetica","bold");doc.setFontSize(19);doc.text("VILASSTECH",left+36,y+13);
+   doc.setFont("helvetica","normal");doc.setFontSize(7.5);doc.text("ESPECIALISTAS EN SOLUCIONES INTEGRALES",left+36,y+19);
+   doc.setFontSize(7);doc.text("CÁMARAS CCTV  |  CONTROL DE ACCESO  |  ALARMAS",left+36,y+26);
+   doc.text("COMPUTACIÓN  |  REDES",left+36,y+31);
+   doc.setFontSize(7);doc.text(["La Chorrera, Panamá","6516-7840","vilasstech05@gmail.com","RUC: 8-891-1170 · DV: 0"],right-3,y+10,{align:"right",lineHeightFactor:1.45});
+   y+=47;
+   doc.setTextColor(...navy);doc.setFont("helvetica","bold");doc.setFontSize(16);doc.text(heading,left,y);
+   doc.setFillColor(255,243,233);doc.roundedRect(151,y-7,45,10,2,2,"F");
+   doc.setFontSize(9);doc.text(number,173.5,y,{align:"center"});
+   doc.setDrawColor(225,233,242);doc.line(left,y+4,right,y+4);y+=13;
+  }
+  function footer(){
+   doc.setDrawColor(225,233,242);doc.line(left,pageH-13,right,pageH-13);
+   doc.setTextColor(...muted);doc.setFont("helvetica","normal");doc.setFontSize(7);
+   doc.text("VILASSTECH · vilasstech05@gmail.com · 6516-7840",left,pageH-8);
+   doc.text("Página "+doc.internal.getNumberOfPages(),right,pageH-8,{align:"right"});
+  }
+  function newPage(){footer();doc.addPage();y=15;}
+  function ensure(h){if(y+h>pageH-19)newPage();}
+  header();
+  const meta=root.querySelector(".meta");
+  if(meta){
+   const items=[...meta.querySelectorAll("p")].map(p=>p.textContent.replace(/\s+/g," ").trim()).filter(Boolean);
+   const boxH=Math.max(17,Math.ceil(items.length/2)*8+8);ensure(boxH);
+   doc.setFillColor(...pale);doc.setDrawColor(226,233,242);doc.roundedRect(left,y,width,boxH,2,2,"FD");
+   let yy=y+7;
+   items.forEach((item,i)=>{const col=i%2,row=Math.floor(i/2);pdfText(doc,item,left+5+col*91,yy+row*8,85,8,ink);});
+   y+=boxH+7;
+  }
+  const table=root.querySelector("table");
+  if(table){
+   const headers=[...table.querySelectorAll("thead th")].map(x=>x.textContent.trim());
+   const rows=[...table.querySelectorAll("tbody tr")].map(tr=>[...tr.querySelectorAll("td")].map(td=>td.textContent.trim()));
+   const widths=[92,20,32,38];
+   ensure(12);
+   doc.setFillColor(...navy);doc.roundedRect(left,y,width,9,1.5,1.5,"F");
+   let x=left+3;headers.forEach((h,i)=>{doc.setFont("helvetica","bold");doc.setFontSize(7.5);doc.setTextColor(255,255,255);doc.text(h,x,y+6);x+=widths[i]||30;});y+=10;
+   rows.forEach((row,idx)=>{
+    const desc=doc.splitTextToSize(row[0]||"",widths[0]-5);
+    const rowH=Math.max(9,desc.length*4.2+4);ensure(rowH+1);
+    if(idx%2===0){doc.setFillColor(245,248,252);doc.rect(left,y-1,width,rowH,"F")}
+    let xx=left+3;doc.setFont("helvetica","normal");doc.setFontSize(8);doc.setTextColor(...ink);doc.text(desc,xx,y+4);xx+=widths[0];
+    for(let j=1;j<4;j++){doc.text(String(row[j]||""),xx+widths[j]-5,y+4,{align:"right"});xx+=widths[j];}
+    doc.setDrawColor(232,237,243);doc.line(left,y+rowH-1,right,y+rowH-1);y+=rowH;
+   });
+   y+=5;
+  }
+  const sum=root.querySelector(".sum");
+  if(sum){
+   const lines=[...sum.querySelectorAll("p")].map(p=>({text:p.childNodes[0]?.textContent?.trim()||p.textContent.trim(),value:p.querySelector("b")?.textContent.trim()||""}));
+   const boxW=82,boxH=lines.length*7+7;ensure(boxH);
+   doc.setFillColor(...pale);doc.roundedRect(right-boxW,y,boxW,boxH,2,2,"F");
+   let yy=y+7;lines.forEach(line=>{const total=/TOTAL/i.test(line.text);doc.setFont("helvetica",total?"bold":"normal");doc.setFontSize(total?10:8);doc.setTextColor(...(total?navy:ink));doc.text(line.text,right-boxW+4,yy);doc.text(line.value,right-4,yy,{align:"right"});yy+=7;});
+   y+=boxH+7;
+  }
+  const notes=root.querySelector(".notes");
+  if(notes){
+   const note=notes.textContent.replace(/^Observaciones\s*/i,"").trim();
+   const noteLines=doc.splitTextToSize(note||"—",width-12),boxH=noteLines.length*4.5+12;ensure(boxH);
+   doc.setFillColor(255,249,237);doc.roundedRect(left,y,width,boxH,2,2,"F");doc.setFillColor(...gold);doc.rect(left,y,2,boxH,"F");
+   pdfText(doc,"OBSERVACIONES",left+6,y+6,width-12,8,navy,"bold");pdfText(doc,note,left+6,y+12,width-12,8,ink);y+=boxH+6;
+  }
+  const receipt=root.querySelector(".receipt");
+  if(receipt){
+   const paras=[...receipt.querySelectorAll("p")].filter(p=>!p.classList.contains("amount"));
+   const amount=receipt.querySelector(".amount")?.textContent.trim()||"";
+   const boxH=paras.length*9+25;ensure(boxH);
+   doc.setFillColor(...pale);doc.setDrawColor(225,233,242);doc.roundedRect(left,y,width,boxH,3,3,"FD");
+   let yy=y+10;paras.forEach(p=>{yy=pdfText(doc,p.textContent.replace(/\s+/g," ").trim(),left+7,yy,width-14,9,ink);yy+=2;});
+   doc.setFillColor(232,241,249);doc.roundedRect(left+7,yy+1,width-14,16,2,2,"F");
+   doc.setFont("helvetica","bold");doc.setFontSize(16);doc.setTextColor(...navy);doc.text(amount,left+13,yy+12);
+   y+=boxH+8;
+  }
+  const disclaimer=root.querySelector("p:not(.amount)");
+  if(disclaimer&&(disclaimer.textContent.includes("Documento comercial")||disclaimer.textContent.includes("Cotización comercial"))){
+   ensure(10);pdfText(doc,disclaimer.textContent.trim(),left,y,width,7,muted);y+=8;
+  }
+  footer();
+  const safeName=String(id||"documento").replace(/[^a-z0-9_-]/gi,"_");
+  const blob=doc.output("blob");
+  const file=new File([blob],safeName+".pdf",{type:"application/pdf"});
+  if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+   try{await navigator.share({files:[file],title:safeName,text:"Documento de VILASSTECH"});return;}
+   catch(err){if(err&&err.name==="AbortError")return;}
+  }
+  const url=URL.createObjectURL(blob);
+  const opened=window.open(url,"_blank");
+  if(!opened)window.location.href=url;
+  setTimeout(()=>URL.revokeObjectURL(url),120000);
+ }catch(err){
+  console.error("PDF VILASSTECH:",err);
+  alert("No se pudo generar el PDF. "+(err&&err.message?err.message:"Verifica tu conexión e inténtalo nuevamente."));
+ }finally{
+  if(button&&button.tagName==="BUTTON"){button.disabled=false;button.textContent=buttonText||"PDF/Imprimir";}
  }
-}function printQuote(d){
+}
+function printQuote(d){
  let rows=d.productos.map(p=>'<tr><td>'+esc(p.descripcion)+'</td><td>'+p.cantidad+'</td><td>'+fmt(p.precio)+'</td><td>'+fmt(p.cantidad*p.precio)+'</td></tr>').join("");
  let content='<div class="doc-title"><h2>COTIZACIÓN</h2><span class="doc-no">'+esc(quoteCode(d))+'</span></div><section class="meta"><p><b>Cliente:</b> '+esc(d.cliente)+'</p><p><b>Fecha:</b> '+new Date(d.fecha).toLocaleDateString("es-PA")+'</p><p><b>Teléfono:</b> '+esc(d.telefono||"—")+'</p><p><b>Dirección:</b> '+esc(d.direccion||"—")+'</p></section><table><thead><tr><th>Descripción</th><th>Cant.</th><th>Precio</th><th>Subtotal</th></tr></thead><tbody>'+rows+'</tbody></table><div class="sum"><p>Subtotal <b>'+fmt(d.subtotal)+'</b></p><p>ITBMS <b>'+fmt(d.itbms)+'</b></p><p class="total">TOTAL <b>'+fmt(d.total)+'</b></p></div><div class="notes"><b>Observaciones</b><br>'+esc(d.observaciones||"—")+'</div><p style="margin-top:20px;color:#687b90;font-size:11px">Cotización comercial. No constituye factura fiscal electrónica.</p>';
  printDocument(d.id,content);
