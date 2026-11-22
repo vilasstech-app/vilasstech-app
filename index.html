@@ -188,6 +188,7 @@ h1{font-size:clamp(27px,3vw,36px);line-height:1.12;letter-spacing:-1.25px;font-w
 @media(max-width:850px){.product-layout{grid-template-columns:1fr}}
 @media(max-width:640px){.product-form-panel,.product-list-panel{padding:16px}.product-card{align-items:flex-start}.product-card-price{font-size:14px}}
 </style>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 </head><body>
 <div class="app-shell">
 <aside class="sidebar">
@@ -196,7 +197,7 @@ h1{font-size:clamp(27px,3vw,36px);line-height:1.12;letter-spacing:-1.25px;font-w
 <div class="side-foot"><span class="dot"></span> Aplicación instalada / web<br><small>Etapa 1 · modo de prueba</small></div>
 </aside>
 <main>
-<header class="topbar"><div class="mobile-brand"><span class="brand-mark logo-mark"><img src="https://cdn.imagetourls.com/uploads/tyImg/16lgpNfyv.jpg" alt="Logo VILASSTECH"></span> VILASSTECH</div><div class="top-right"><span class="test-pill"><i></i> Modo de prueba</span><button id="installBtn" class="install-btn" hidden>Instalar aplicación</button></div></header>
+<header class="topbar"><div class="mobile-brand"><span class="brand-mark logo-mark"><img src="https://cdn.imagetourls.com/uploads/tyImg/16lgpNfyv.jpg" alt="Logo VILASSTECH"></span> VILASSTECH</div><div class="top-right"><span class="test-pill"><i></i> Datos locales</span><button id="googleSyncBtn" class="install-btn" type="button">Conectar Google</button><button id="installBtn" class="install-btn" hidden>Instalar aplicación</button></div></header>
 <nav class="mobile-nav" aria-label="Navegación principal">
 <button class="nav active" data-view="dashboard">Inicio</button>
 <button class="nav" data-view="quote">Cotizar</button>
@@ -267,9 +268,33 @@ h1{font-size:clamp(27px,3vw,36px);line-height:1.12;letter-spacing:-1.25px;font-w
 <section class="view" id="receipt">
 <div class="view-head"><div><p class="eyebrow">COMPROBANTE INTERNO</p><h1>Recibo de pago</h1><p class="sub">Registra pagos completos o abonos de clientes.</p></div><button class="secondary" data-view="dashboard">← Volver</button></div>
 <div class="panel"><div class="fields"><label>Asociar a factura (opcional)<select id="receiptInvoice"><option value="">Sin factura asociada</option></select></label><label>Cliente *<input id="receiptClient" placeholder="Nombre del cliente"></label><label>Fecha de pago<input id="receiptDate" type="date"></label><label>Método de pago<select id="receiptMethod"><option>Efectivo</option><option>Yappy</option><option>Transferencia bancaria</option><option>Tarjeta</option><option>Cheque</option><option>Otro</option></select></label><label>Concepto<input id="receiptConcept" placeholder="Abono, pago de factura, servicio..."></label><label>Monto recibido ($) *<input id="receiptAmount" type="number" min="0.01" step="0.01" placeholder="0.00"></label></div><div class="actions"><button class="primary" id="saveReceipt" type="button">Guardar recibo</button></div><p id="receiptStatus" class="status"></p></div></section>
-<section class="view" id="billingHistory"><div class="view-head"><div><p class="eyebrow">REGISTROS LOCALES</p><h1>Facturas y recibos</h1><p class="sub">Consulta saldos y vuelve a imprimir tus documentos.</p></div><button class="secondary" data-view="dashboard">← Volver</button></div><div class="panel"><h2>Facturas</h2><div id="invoiceList" class="recent-list"></div></div><div class="panel"><h2>Recibos de pago</h2><div id="receiptList" class="recent-list"></div></div><div class="notice"><strong>Importante</strong><p>Estos registros se guardan localmente en este navegador y dispositivo. No se sincronizan todavía con Google Sheets ni constituyen documentos fiscales autorizados por la DGI.</p></div></section>
+<section class="view" id="billingHistory"><div class="view-head"><div><p class="eyebrow">REGISTROS LOCALES</p><h1>Facturas y recibos</h1><p class="sub">Consulta saldos y vuelve a imprimir tus documentos.</p></div><button class="secondary" data-view="dashboard">← Volver</button></div><div class="panel"><h2>Facturas</h2><div id="invoiceList" class="recent-list"></div></div><div class="panel"><h2>Recibos de pago</h2><div id="receiptList" class="recent-list"></div></div><div class="notice"><strong>Importante</strong><p>Los registros se guardan en este dispositivo. Pulsa “Conectar Google” para autorizar la sincronización manual con tu hoja VILASSTECH. Los documentos siguen siendo internos y no constituyen facturas fiscales autorizadas por la DGI.</p></div></section>
 </main>
 </div><div id="toast" role="status"></div><script>
+/* VILASSTECH_GOOGLE_SYNC_V1 */
+const GOOGLE_CLIENT_ID="133393163872-6dni1tvvbk183aoc38kjfdt9nne03r6f.apps.googleusercontent.com";
+const GOOGLE_SHEET_ID="1bP5uWyLG4eS3LRHBUYexODoejdgi0pXgpdGvI6nMb7A";
+const GOOGLE_SCOPE="https://www.googleapis.com/auth/spreadsheets";
+let googleAccessToken=null,googleTokenClient=null,googleSyncBusy=false;
+const CLOUD_KEYS={Productos:"vilasstech_catalog_products_v1",Cotizaciones:"vilasstech_pwa_drafts_v1",Facturas:"vilasstech_internal_invoices_v1",Recibos:"vilasstech_internal_receipts_v1"};
+function cloudStatus(msg){const b=document.getElementById("googleSyncBtn");if(b)b.textContent=msg;}
+function cloudLocal(){const out=[];for(const [tipo,key] of Object.entries(CLOUD_KEYS)){let arr=[];try{arr=JSON.parse(localStorage.getItem(key)||"[]")}catch(e){throw new Error("No se pudo leer el módulo "+tipo+" del dispositivo.")}if(!Array.isArray(arr))throw new Error("Los datos locales de "+tipo+" no tienen el formato esperado.");for(const item of arr){if(!item||typeof item!=="object")continue;const id=String(item.id||item.codigo||"");if(!id)throw new Error("Hay un registro sin identificador en "+tipo+".");out.push([tipo,id,JSON.stringify(item)]);}}return out;}
+async function cloudApi(path,method="GET",body){const res=await fetch("https://sheets.googleapis.com/v4/spreadsheets/"+GOOGLE_SHEET_ID+path,{method,headers:{Authorization:"Bearer "+googleAccessToken,"Content-Type":"application/json"},...(body?{body:JSON.stringify(body)}:{})});const data=await res.json().catch(()=>({}));if(!res.ok)throw new Error(data.error?.message||("Google Sheets respondió "+res.status));return data;}
+async function cloudSync(){if(googleSyncBusy)return;googleSyncBusy=true;cloudStatus("Sincronizando…");try{
+ let meta=await cloudApi("?fields=sheets.properties");let sheet=(meta.sheets||[]).find(x=>x.properties?.title==="VILASSTECH_SYNC");
+ if(!sheet){await cloudApi(":batchUpdate","POST",{requests:[{addSheet:{properties:{title:"VILASSTECH_SYNC"}}}]});}
+ let got=await cloudApi("/values/VILASSTECH_SYNC!A1:C");let rows=got.values||[];let remote=[];
+ for(let i=1;i<rows.length;i++){const row=rows[i];if(!row||row.length<3)continue;try{const item=JSON.parse(row[2]);if(!item||typeof item!=="object")throw new Error();remote.push([String(row[0]),String(row[1]),JSON.stringify(item)]);}catch(e){throw new Error("La hoja contiene un registro que no se puede interpretar. No se modificó ningún dato.");}}
+ const local=cloudLocal(),merged=new Map();for(const r of remote)merged.set(r[0]+"\u0000"+r[1],r);for(const r of local)merged.set(r[0]+"\u0000"+r[1],r);
+ const values=[["Tipo","ID","Registro JSON"],...Array.from(merged.values())];
+ await cloudApi("/values/VILASSTECH_SYNC!A1:C:clear","POST",{});
+ await cloudApi("/values/VILASSTECH_SYNC!A1:C?valueInputOption=RAW","PUT",{majorDimension:"ROWS",values});
+ for(const [tipo,key] of Object.entries(CLOUD_KEYS)){const arr=[];for(const r of merged.values())if(r[0]===tipo){arr.push(JSON.parse(r[2]));}localStorage.setItem(key,JSON.stringify(arr));}
+ cloudStatus("Google conectado ✓");toast("Sincronización completada. Registros locales y de Google combinados.");
+ }catch(e){cloudStatus("Reintentar Google");toast("No se pudo sincronizar: "+e.message);console.error(e);}finally{googleSyncBusy=false;}}
+function connectGoogle(){if(!window.google?.accounts?.oauth2){toast("Google aún está cargando. Espera unos segundos e inténtalo de nuevo.");return;}if(!googleTokenClient){googleTokenClient=google.accounts.oauth2.initTokenClient({client_id:GOOGLE_CLIENT_ID,scope:GOOGLE_SCOPE,callback:async(response)=>{if(response.error){toast("Google no autorizó la conexión: "+response.error);cloudStatus("Conectar Google");return;}googleAccessToken=response.access_token;await cloudSync();}});}googleTokenClient.requestAccessToken({prompt:"consent"});}
+document.getElementById("googleSyncBtn")?.addEventListener("click",connectGoogle);
+
 
 const PRODUCT_KEY="vilasstech_catalog_products_v1";
 function readProducts(){try{return JSON.parse(localStorage.getItem(PRODUCT_KEY)||"[]")}catch{return[]}}
