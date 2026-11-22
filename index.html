@@ -401,13 +401,16 @@ function printDocument(id,content){
    doc.setDrawColor(255,255,255);doc.setLineWidth(.25);doc.line(left+37,y+6,left+37,y+40);doc.line(145,y+6,145,y+40);
    doc.setTextColor(255,255,255);doc.setFont("helvetica","bold");doc.setFontSize(17);doc.text("VILASSTECH",left+42,y+12);
    doc.setFont("helvetica","normal");doc.setFontSize(7);doc.setTextColor(220,232,245);doc.text("ESPECIALISTAS EN SOLUCIONES INTEGRALES",left+42,y+17);
-   const services=[["C","CCTV",21],["A","ACCESO",17],["!","ALARMAS",16],["PC","COMPUTACIÓN",24],["N","REDES",12]];
-   let sx=left+42;
-   services.forEach(it=>{
-    doc.setDrawColor(255,255,255);doc.setLineWidth(.35);doc.circle(sx+2.5,y+28,2.5,"S");
-    doc.setFont("helvetica","bold");doc.setFontSize(it[0]==="PC"?4.2:5);doc.setTextColor(255,255,255);doc.text(it[0],sx+2.5,y+29.5,{align:"center"});
-    doc.setFont("helvetica","bold");doc.setFontSize(4.5);doc.text(it[1],sx+5.8,y+29.5);
-    sx+=it[2];
+   const services=[["CÁMARAS CCTV",52],["CONTROL DE ACCESO",72],["ALARMAS",96],["COMPUTACIÓN",113],["REDES",133]];
+   services.forEach((it,index)=>{
+    const x=it[1],cy=y+27.5;
+    doc.setDrawColor(255,255,255);doc.setFillColor(255,255,255);doc.setLineWidth(.55);
+    if(index===0){doc.roundedRect(x,cy-2.2,6,4.4,1,1,"S");doc.circle(x+3,cy,.95,"S");doc.line(x+6,cy-1.5,x+8,cy-2.7);doc.line(x+6,cy+1.5,x+8,cy+2.7);}
+    if(index===1){doc.roundedRect(x+.5,cy-0.5,6,4.5,1,1,"S");doc.line(x+1.7,cy-.5,x+1.7,cy-2.3);doc.line(x+1.7,cy-2.3,x+5.3,cy-2.3);doc.line(x+5.3,cy-2.3,x+5.3,cy-.5);doc.circle(x+3.5,cy+1.5,.45,"S");}
+    if(index===2){doc.line(x+3,cy-3,x+6,cy-1.5);doc.line(x+6,cy-1.5,x+5.5,cy+1.5);doc.line(x+5.5,cy+1.5,x+3,cy+3);doc.line(x+3,cy+3,x+.5,cy+1.5);doc.line(x+.5,cy+1.5,x,cy-1.5);doc.line(x,cy-1.5,x+3,cy-3);doc.line(x+3,cy-1.5,x+3,cy+.5);doc.circle(x+3,cy+1.8,.25,"F");}
+    if(index===3){doc.roundedRect(x,cy-3,7,4.8,.6,.6,"S");doc.line(x+2,cy+2,x+5,cy+2);doc.line(x+3.5,cy+1.8,x+3.5,cy+3);doc.line(x+1.5,cy+3,x+5.5,cy+3);}
+    if(index===4){doc.circle(x+3,cy-2.5,.9,"S");doc.circle(x,cy+2.5,.9,"S");doc.circle(x+6,cy+2.5,.9,"S");doc.line(x+3,cy-1.6,x,cy+1.6);doc.line(x+3,cy-1.6,x+6,cy+1.6);doc.line(x+.9,cy+2.5,x+5.1,cy+2.5);}
+    doc.setFont("helvetica","bold");doc.setFontSize(4.1);doc.setTextColor(255,255,255);doc.text(it[0],x+8.5,y+29,{maxWidth:18});
    });
    doc.setFont("helvetica","bold");doc.setFontSize(7);doc.setTextColor(255,203,131);doc.text("CONTACTO",149,y+10);
    doc.setFont("helvetica","normal");doc.setFontSize(6.5);doc.setTextColor(245,248,252);
@@ -513,7 +516,7 @@ function printDocument(id,content){
 }
 let pdfLogoData=null;
 loadPdfLibrary().catch(err=>console.warn("PDF library:",err));
-pdfImageData("https://cdn.imagetourls.com/uploads/tyImg/16lgpNfyv.jpg").then(data=>{pdfLogoData=data});
+pdfImageData("https://images.weserv.nl/?url=cdn.imagetourls.com%2Fuploads%2FtyImg%2F16lgpNfyv.jpg&output=jpg").then(data=>{pdfLogoData=data;if(!data)console.warn("No se pudo cargar el logo VILASSTECH para PDF")});
 function printQuote(d){
  let rows=d.productos.map(p=>'<tr><td>'+esc(p.descripcion)+'</td><td>'+p.cantidad+'</td><td>'+fmt(p.precio)+'</td><td>'+fmt(p.cantidad*p.precio)+'</td></tr>').join("");
  let content='<div class="doc-title"><h2>COTIZACIÓN</h2><span class="doc-no">'+esc(quoteCode(d))+'</span></div><section class="meta"><p><b>Cliente:</b> '+esc(d.cliente)+'</p><p><b>Fecha:</b> '+new Date(d.fecha).toLocaleDateString("es-PA")+'</p><p><b>Teléfono:</b> '+esc(d.telefono||"—")+'</p><p><b>Dirección:</b> '+esc(d.direccion||"—")+'</p></section><table><thead><tr><th>Descripción</th><th>Cant.</th><th>Precio</th><th>Subtotal</th></tr></thead><tbody>'+rows+'</tbody></table><div class="sum"><p>Subtotal <b>'+fmt(d.subtotal)+'</b></p><p>ITBMS <b>'+fmt(d.itbms)+'</b></p><p class="total">TOTAL <b>'+fmt(d.total)+'</b></p></div><div class="notes"><b>Observaciones</b><br>'+esc(d.observaciones||"—")+'</div><p style="margin-top:20px;color:#687b90;font-size:11px">Cotización comercial. No constituye factura fiscal electrónica.</p>';
