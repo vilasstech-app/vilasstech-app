@@ -573,7 +573,7 @@ let install=null;window.addEventListener("beforeinstallprompt",e=>{e.preventDefa
   customerWrite(all);fillClientOptions();if(document.getElementById("clients").classList.contains("active"))renderCustomers();
  }
  function fillClientOptions(){const dl=document.getElementById("clientOptions");if(dl)dl.innerHTML=customerRead().map(c=>'<option value="'+safe(c.nombre)+'"></option>').join("");}
- function fillFields(prefix,name){const c=customerRead().find(x=>String(x.nombre||"").toLocaleLowerCase("es")===String(name||"").trim().toLocaleLowerCase("es"));if(!c)return;const p=document.getElementById(prefix+"Phone"),a=document.getElementById(prefix+"Address");if(p&&!p.value)p.value=c.telefono||"";if(a&&!a.value)a.value=c.direccion||"";}
+ function fillFields(prefix,name){const c=customerRead().find(x=>String(x.nombre||"").toLocaleLowerCase("es")===String(name||"").trim().toLocaleLowerCase("es"));if(!c)return;const p=document.getElementById(prefix?prefix+"Phone":"phone"),a=document.getElementById(prefix?prefix+"Address":"address");if(p&&!p.value)p.value=c.telefono||"";if(a&&!a.value)a.value=c.direccion||"";}
  function resetCustomer(){document.getElementById("customerForm").reset();document.getElementById("customerId").value="";document.getElementById("cancelCustomerEdit").hidden=true;}
  function renderCustomers(){
   const q=(document.getElementById("customerSearch").value||"").toLowerCase(),all=customerRead(),list=document.getElementById("customerList");document.getElementById("customerCount").textContent=all.length;list.innerHTML="";
