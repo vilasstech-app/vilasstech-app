@@ -35,6 +35,55 @@ input,textarea,select{border-radius:11px!important}
 .panel{padding:20px}
 .mobile-nav{border-radius:14px;backdrop-filter:blur(10px)}
 @media(max-width:640px){main{padding-left:14px;padding-right:14px}.topbar{border:0}.welcome{margin-top:4px}.stat{padding:14px}.stat strong{font-size:20px}.panel{padding:15px;border-radius:16px}.quick-action{border-radius:13px}}
+
+/* VILASSTECH — diseño premium */
+:root{--navy:#0b1f3a;--blue:#168fc2;--orange:#ff945f;--bg:#f5f7fc;--ink:#172b45;--muted:#74839a;--line:#e7edf5}
+body{background:#f5f7fc;color:#172b45;letter-spacing:-.12px}
+.app-shell{background:linear-gradient(135deg,#f8faff 0%,#f2f6fb 55%,#f8fafc 100%)}
+.sidebar{width:258px;padding:27px 17px;background:linear-gradient(165deg,#081b34 0%,#102d50 56%,#153e66 100%);box-shadow:12px 0 36px #071a3020}
+.brand{padding:2px 9px 34px;gap:12px}.brand-mark.logo-mark{width:46px;height:46px;border-radius:14px;padding:4px;background:#fff;box-shadow:0 7px 20px #0003}
+.brand strong{font-size:14px;letter-spacing:1.15px}.brand small{font-size:10px;letter-spacing:.25px;color:#aebfd3}
+.sidebar nav{display:grid;gap:7px}.nav{position:relative;display:flex;align-items:center;gap:12px;padding:13px 14px;margin:0;border:1px solid transparent;border-radius:12px!important;color:#c2d0e0;font-size:13px;font-weight:600;transition:all .2s ease}
+.nav span{width:23px;height:23px;display:inline-grid;place-items:center;border-radius:7px;background:#ffffff12;color:#dce9f6;font-size:16px}
+.nav.active,.nav.active:hover{background:linear-gradient(100deg,#ffffff20,#ffffff0a);border-color:#ffffff18;color:#fff;box-shadow:inset 3px 0 var(--orange),0 7px 18px #06172a25}
+.nav.active span{background:#ff945f24;color:#ffb18a}.nav:hover{background:#ffffff0d;color:#fff}
+.side-foot{padding:13px 12px;border:1px solid #ffffff16;border-radius:13px;background:#ffffff09;font-size:11px;color:#c0cee0}
+main{margin-left:258px;padding:0 36px 45px;max-width:1800px}
+.topbar{height:76px;margin-bottom:30px;border-bottom:1px solid #e5ebf3;position:relative}
+.test-pill{background:#fff;border:1px solid #e5ebf3;padding:10px 14px;color:#53657d;font-weight:600;box-shadow:0 4px 14px #152e4c08}
+h1{font-size:clamp(27px,3vw,36px);line-height:1.12;letter-spacing:-1.25px;font-weight:800;color:#102844}
+.eyebrow{font-size:10px;letter-spacing:1.8px;color:#168fc2;font-weight:800}
+.sub{font-size:14px;color:#8491a4}
+.welcome,.view-head{margin-bottom:27px}
+.stat,.panel{background:#fff;border:1px solid #e8edf4;border-radius:20px;box-shadow:0 8px 28px #17385b08}
+.stat{position:relative;overflow:hidden;padding:20px 21px;min-height:148px}
+.stat:after{content:"";position:absolute;right:-23px;top:-29px;width:94px;height:94px;border-radius:50%;background:linear-gradient(135deg,#eaf5fc,#f7fbff);z-index:0}
+.stat>*{position:relative;z-index:1}.stat label{font-size:11px;font-weight:700;letter-spacing:.25px;color:#8290a3}
+.stat strong{font-size:27px;letter-spacing:-1px;color:#132d4b;margin:13px 0 6px}
+.stat small{font-size:11px;color:#98a4b4}
+.stat-icon{width:39px;height:39px;display:inline-grid;place-items:center;border-radius:13px;background:#e9f6fc;color:#168fc2;font-size:17px}
+.stat-icon.orange{background:#fff0e8;color:#e57c45}.stat-icon.green{background:#e9f8f0;color:#239b67}
+.panel{padding:23px;margin-bottom:18px}.panel h2{font-size:17px;font-weight:750;letter-spacing:-.3px;color:#18314f}
+.panel-heading{margin-bottom:19px}.panel-heading p{color:#8996a8}
+.quick{padding:25px 27px;border-radius:22px;background:radial-gradient(circle at 90% 0%,#2c6797 0,transparent 34%),linear-gradient(115deg,#0b2342,#174675);box-shadow:0 14px 32px #0d2a4b26}
+.quick h2{font-size:21px;letter-spacing:-.5px}.quick p{color:#c7d7e8;line-height:1.55}
+.quick .primary{background:linear-gradient(135deg,#ffad7e,#ff8c55);color:#102b50;font-weight:800;padding:13px 19px}
+.quick-actions{gap:13px;margin:17px 0 21px}.quick-action{padding:17px;border:1px solid #e8edf4;border-radius:17px;box-shadow:0 6px 18px #102b5008}.quick-action .qa-icon{width:43px;height:43px;border-radius:13px}
+.draft-card{padding:15px;border-radius:14px;border-color:#e9eef5;background:#fff}.draft-card:hover{box-shadow:0 10px 22px #102b5010;transform:translateY(-2px)}
+.primary,.secondary,.install-btn,.mini-btn,.add-row{border-radius:12px;font-weight:700;transition:all .2s ease}
+.primary{background:linear-gradient(135deg,#12365e,#0b2545);box-shadow:0 5px 13px #102b501c}.primary:hover{background:#1c4b78;box-shadow:0 8px 18px #102b5028}
+.secondary,.install-btn,.mini-btn{border:1px solid #e2e9f1;background:#fff;color:#25415f}
+.fields input,.notes-label textarea,.item-row input,.searchbox input{padding:13px 14px;border:1px solid #e1e8f0;border-radius:12px!important;background:#fbfcfe}
+.fields label,.notes-label{font-weight:650;color:#667991}.fields input:focus,.notes-label textarea:focus,.item-row input:focus,.searchbox input:focus{border-color:#69b8d8;box-shadow:0 0 0 4px #168fc214}
+.item-row{border:1px solid #e8edf4;border-radius:14px;padding:13px;background:#fbfcfe}
+.add-row{background:#eff8fc;border:1px dashed #9ccfe3;color:#117ca8;padding:13px}
+.notice{border:1px solid #dcebf5;border-radius:14px;background:#f0f8fd;padding:15px}
+#toast{box-shadow:0 12px 30px #0b1f3a30;border:1px solid #ffffff20}
+@media(min-width:1200px){.stats{gap:16px}.stat{min-height:158px}main{padding-left:42px;padding-right:42px}}
+@media(max-width:800px){.sidebar{width:220px}main{margin-left:220px;padding-left:22px;padding-right:22px}}
+@media(max-width:640px){main{margin:0;padding:0 15px 34px}.topbar{height:62px;margin-bottom:20px}.mobile-brand{font-size:13px;letter-spacing:.35px}.mobile-brand .logo-mark{width:34px;height:34px}.mobile-nav{padding:8px 0 12px;margin-bottom:17px;background:#f5f7fc}.mobile-nav .nav{padding:10px 13px;border-radius:12px!important;box-shadow:0 3px 10px #102b5008}.welcome{gap:13px}.stats{gap:10px}.stat{min-height:132px;padding:15px;border-radius:17px}.stat strong{font-size:21px;margin:10px 0 5px}.stat-icon{width:34px;height:34px;padding:7px}.quick{padding:21px;border-radius:18px}.panel{padding:17px;border-radius:17px}.quick-actions{gap:9px}.quick-action{padding:13px}.view-head{gap:10px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
 </style>
 </head><body>
 <div class="app-shell">
