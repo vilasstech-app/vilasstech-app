@@ -235,6 +235,13 @@ h1{font-size:clamp(27px,3vw,36px);line-height:1.12;letter-spacing:-1.25px;font-w
 }
 @media(prefers-reduced-motion:reduce){.gallery-slide,.gallery-slide img,.gallery-dot{transition:none!important}}
 
+
+/* Calidad y reproducción continua del carrusel */
+.gallery-slide img{transform:none!important;transition:none!important;image-rendering:auto;object-position:center center}
+.gallery-slide.active img{transform:none!important}
+.gallery-slide:after{background:linear-gradient(90deg,rgba(5,20,39,.94) 0%,rgba(7,29,53,.76) 39%,rgba(7,29,53,.26) 100%),linear-gradient(0deg,rgba(4,17,33,.3),transparent 58%)}
+.gallery-controls,.gallery-brand{display:none!important}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head><body>
@@ -258,20 +265,13 @@ h1{font-size:clamp(27px,3vw,36px);line-height:1.12;letter-spacing:-1.25px;font-w
 <section class="view active" id="dashboard">
 <div class="dash-hero"><div class="dash-copy"><span class="hero-kicker">VILASSTECH · ESPACIO DE TRABAJO</span><h1>Tu negocio,<br>bajo control.</h1><p>Administra cotizaciones, facturas y pagos desde un solo lugar.</p><div class="hero-actions"><button class="hero-cta" data-open-quote>＋ Crear cotización</button><button class="hero-secondary" data-view="invoice">Nueva factura ↗</button></div></div><div class="hero-gallery" aria-label="Servicios de VILASSTECH">
  <div class="gallery-track">
-  <figure class="gallery-slide active"><img src="https://www.cctvcameraservice.com/images/about-img-1.jpg" alt="Instalación de cámara de videovigilancia"><figcaption><span>CCTV</span><strong>Cámaras de seguridad</strong></figcaption></figure>
-  <figure class="gallery-slide"><img src="https://dormakaba-res.cloudinary.com/image/upload/t_prod-detail-square/f_auto%2Cq_auto/v1745405857/dormakaba-prod/1513245251-c-lever-pro-a06.jpg" alt="Lector electrónico de control de acceso"><figcaption><span>CONTROL DE ACCESO</span><strong>Acceso inteligente</strong></figcaption></figure>
-  <figure class="gallery-slide"><img src="https://www.dtinstalacje.pl/img/d_56fd74c2703c2.jpg" alt="Teclado de sistema de alarma"><figcaption><span>ALARMAS</span><strong>Protección y seguridad</strong></figcaption></figure>
-  <figure class="gallery-slide"><img src="https://www.aecomputersolutions.com/images/inshoprepair.png" alt="Técnico reparando una computadora portátil"><figcaption><span>COMPUTACIÓN</span><strong>Reparación y mantenimiento</strong></figcaption></figure>
-  <figure class="gallery-slide"><img src="https://www.elektro-ostrach.de/assets/img/services/edv-vernetzung.jpg" alt="Cableado estructurado y redes"><figcaption><span>REDES</span><strong>Conectividad profesional</strong></figcaption></figure>
+  <figure class="gallery-slide active"><img src="https://watchmenkc.com/images/about-team.webp" alt="Instalación de cámara de videovigilancia"><figcaption><span>CCTV</span><strong>Cámaras de seguridad</strong></figcaption></figure>
+  <figure class="gallery-slide"><img src="https://aptuswi.com/assets/service-access-control-CKe5XnSM.jpg" alt="Lector electrónico de control de acceso"><figcaption><span>CONTROL DE ACCESO</span><strong>Acceso inteligente</strong></figcaption></figure>
+  <figure class="gallery-slide"><img src="https://www.honeywellhome.com/cdn/shop/files/LKP500-c1-6_2b34bdc9-81fb-47f6-a848-a5b471b16499.jpg?v=1757233064&width=1500" alt="Teclado de sistema de alarma"><figcaption><span>ALARMAS</span><strong>Protección y seguridad</strong></figcaption></figure>
+  <figure class="gallery-slide"><img src="https://www.elevify.com/_next/image?q=85&url=https%3A%2F%2Fproduction.elevify-cdn.com%2Fimages%2F2026-05%2F24ec0243-53f6-45c3-a25e-5dc826089213.jpg&w=3840" alt="Técnico reparando una computadora portátil"><figcaption><span>COMPUTACIÓN</span><strong>Reparación y mantenimiento</strong></figcaption></figure>
+  <figure class="gallery-slide"><img src="https://images.leadconnectorhq.com/image/f_webp/q_90/r_1920/u_https%3A/assets.cdn.filesafe.space/oZNTCnxS7G621xvoV3B8/media/b0540cc0-811f-4e7c-a063-d38e0447bb0e.jpeg" alt="Cableado estructurado y redes"><figcaption><span>REDES</span><strong>Conectividad profesional</strong></figcaption></figure>
  </div>
- <div class="gallery-controls" aria-label="Seleccionar servicio">
-  <button type="button" class="gallery-dot active" aria-label="Mostrar cámaras" data-slide="0"></button>
-  <button type="button" class="gallery-dot" aria-label="Mostrar control de acceso" data-slide="1"></button>
-  <button type="button" class="gallery-dot" aria-label="Mostrar alarmas" data-slide="2"></button>
-  <button type="button" class="gallery-dot" aria-label="Mostrar computación" data-slide="3"></button>
-  <button type="button" class="gallery-dot" aria-label="Mostrar redes" data-slide="4"></button>
- </div>
- <div class="gallery-brand"><img src="https://cdn.imagetourls.com/uploads/tyImg/169oiiDXM.png" alt="Logo VILASSTECH"><span>VILASSTECH</span></div>
+
 </div></div>
 <div class="dash-heading"><div><small>RESUMEN GENERAL</small><h2>Estado de tu negocio</h2></div><span class="data-status"><i></i> Datos de este dispositivo</span></div>
 <div class="stats dash-stats">
@@ -680,8 +680,8 @@ let install=null;window.addEventListener("beforeinstallprompt",e=>{e.preventDefa
  document.querySelectorAll('[data-view="clients"]').forEach(b=>b.addEventListener("click",renderCustomers));
 })();
 
-/* Carrusel automático de servicios VILASSTECH */
-(()=>{const gallery=document.querySelector(".hero-gallery");if(!gallery)return;const slides=[...gallery.querySelectorAll(".gallery-slide")],dots=[...gallery.querySelectorAll(".gallery-dot")];if(slides.length<2)return;let current=0,timer=null;const reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;function show(i){current=(i+slides.length)%slides.length;slides.forEach((s,n)=>s.classList.toggle("active",n===current));dots.forEach((d,n)=>{d.classList.toggle("active",n===current);d.setAttribute("aria-pressed",n===current?"true":"false")})}function stop(){if(timer){clearInterval(timer);timer=null}}function start(){stop();if(!reduced&&!document.hidden)timer=setInterval(()=>show(current+1),4800)}dots.forEach((d)=>d.addEventListener("click",()=>{show(Number(d.dataset.slide));start()}));gallery.addEventListener("mouseenter",stop);gallery.addEventListener("mouseleave",start);gallery.addEventListener("focusin",stop);gallery.addEventListener("focusout",start);document.addEventListener("visibilitychange",()=>document.hidden?stop():start());show(0);start()})();
+/* Carrusel automático continuo de servicios VILASSTECH */
+(()=>{const gallery=document.querySelector(".hero-gallery");if(!gallery)return;const slides=[...gallery.querySelectorAll(".gallery-slide")];if(slides.length<2)return;let current=0;const show=i=>{current=(i+slides.length)%slides.length;slides.forEach((s,n)=>s.classList.toggle("active",n===current))};show(0);setInterval(()=>show(current+1),5000)})();
 
 </script>
 </body></html>
