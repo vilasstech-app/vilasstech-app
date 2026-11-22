@@ -401,12 +401,12 @@ function printDocument(id,content){
    doc.setDrawColor(255,255,255);doc.setLineWidth(.25);doc.line(left+37,y+6,left+37,y+40);doc.line(145,y+6,145,y+40);
    doc.setTextColor(255,255,255);doc.setFont("helvetica","bold");doc.setFontSize(17);doc.text("VILASSTECH",left+42,y+12);
    doc.setFont("helvetica","normal");doc.setFontSize(7);doc.setTextColor(220,232,245);doc.text("ESPECIALISTAS EN SOLUCIONES INTEGRALES",left+42,y+17);
-   const services=[["C","CÁMARAS CCTV",27],["A","ACCESO",23],["!","ALARMAS",22],["PC","COMPUTACIÓN",33],["N","REDES",19]];
+   const services=[["C","CCTV",21],["A","ACCESO",17],["!","ALARMAS",16],["PC","COMPUTACIÓN",24],["N","REDES",12]];
    let sx=left+42;
    services.forEach(it=>{
-    doc.setDrawColor(255,255,255);doc.setLineWidth(.35);doc.circle(sx+3.1,y+28,3.1,"S");
-    doc.setFont("helvetica","bold");doc.setFontSize(it[0]==="PC"?4.8:6);doc.setTextColor(255,255,255);doc.text(it[0],sx+3.1,y+29.5,{align:"center"});
-    doc.setFont("helvetica","bold");doc.setFontSize(5.2);doc.text(it[1],sx+7.5,y+29.5);
+    doc.setDrawColor(255,255,255);doc.setLineWidth(.35);doc.circle(sx+2.5,y+28,2.5,"S");
+    doc.setFont("helvetica","bold");doc.setFontSize(it[0]==="PC"?4.2:5);doc.setTextColor(255,255,255);doc.text(it[0],sx+2.5,y+29.5,{align:"center"});
+    doc.setFont("helvetica","bold");doc.setFontSize(4.5);doc.text(it[1],sx+5.8,y+29.5);
     sx+=it[2];
    });
    doc.setFont("helvetica","bold");doc.setFontSize(7);doc.setTextColor(255,203,131);doc.text("CONTACTO",149,y+10);
