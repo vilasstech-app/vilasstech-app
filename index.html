@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#102b50"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="VILASSTECH">
-<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="./icon.svg">
+<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="https://cdn.imagetourls.com/uploads/tyImg/16lgpNfyv.jpg" type="image/jpeg"><link rel="apple-touch-icon" href="https://cdn.imagetourls.com/uploads/tyImg/16lgpNfyv.jpg">
 <title>VILASSTECH Cotizaciones</title><style>
 :root{--navy:#102b50;--blue:#0d85b8;--orange:#f28b55;--ink:#182c49;--muted:#718198;--bg:#f4f7fb;--line:#e5ebf2;--green:#27a36b}
 *{box-sizing:border-box}html{scroll-behavior:smooth}button,.stat,.panel,.draft-card{transition:transform .18s ease,box-shadow .18s ease,background .18s ease,border-color .18s ease}button:hover{transform:translateY(-2px)}button:active{transform:scale(.98)}.stat:hover,.draft-card:hover{transform:translateY(-3px);box-shadow:0 9px 24px #102b5014}.panel{animation:rise .35s ease both}.view.active{animation:fadeIn .22s ease}@keyframes rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}@keyframes fadeIn{from{opacity:0}to{opacity:1}}.quick-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0 18px}.quick-action{display:flex;align-items:center;gap:12px;text-align:left;background:#fff;border:1px solid var(--line);border-radius:13px;padding:15px;color:var(--navy);box-shadow:0 3px 12px #102b5008}.quick-action .qa-icon{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:#eaf5fb;color:var(--blue);font-size:19px}.quick-action:nth-child(2) .qa-icon{background:#fff0e5;color:#bd6a31}.quick-action:nth-child(3) .qa-icon{background:#e7f7ee;color:#208558}.quick-action strong{display:block;font-size:13px}.quick-action small{display:block;color:var(--muted);font-size:11px;margin-top:4px}.stat strong{font-variant-numeric:tabular-nums}.progress-track{height:7px;background:#edf1f6;border-radius:20px;overflow:hidden;margin-top:10px}.progress-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--orange));border-radius:20px;transition:width .35s ease}.section-label{font-size:11px;letter-spacing:.8px;color:var(--muted);font-weight:bold;margin:20px 0 9px}*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial,sans-serif;color:var(--ink)}button,input,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:9px;padding:12px 15px;font-weight:700}
@@ -352,8 +352,9 @@ function renderTrend(){
 document.getElementById("trendRange").addEventListener("change",renderTrend);
 document.querySelectorAll(".dash-stats .stat").forEach((el,i)=>{el.setAttribute("role","button");el.setAttribute("tabindex","0");const go=()=>nav(i===0?"history":"billingHistory");el.addEventListener("click",go);el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}})});
 function historyRender(){let q=(document.getElementById("searchHistory").value||"").toLowerCase(),el=document.getElementById("historyList");el.innerHTML="";let a=read().filter(d=>d.cliente.toLowerCase().includes(q)||d.id.toLowerCase().includes(q));if(!a.length)el.innerHTML='<div class="empty">No hay coincidencias.</div>';a.forEach(d=>el.append(card(d,true)))}document.getElementById("searchHistory").oninput=historyRender;function printDocument(id,content){
- let win=window.open("","_blank");
- const sameWindow=!win;
+ const isStandalone=window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone===true;
+ let win=isStandalone?null:window.open("","_blank");
+ const sameWindow=isStandalone||!win;
  if(sameWindow)win=window;
  if(sameWindow)win.document.open();
  const logo="https://cdn.imagetourls.com/uploads/tyImg/16lgpNfyv.jpg";
