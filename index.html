@@ -193,11 +193,11 @@ h1{font-size:clamp(27px,3vw,36px);line-height:1.12;letter-spacing:-1.25px;font-w
 <div class="app-shell">
 <aside class="sidebar">
 <div class="brand"><div class="brand-mark logo-mark"><img src="https://cdn.imagetourls.com/uploads/tyImg/16lgpNfyv.jpg" alt="Logo VILASSTECH"></div><div><strong>VILASSTECH</strong><small>Soluciones integrales</small></div></div>
-<nav><button class="nav active" data-view="dashboard"><span>⌂</span> Inicio</button><button class="nav" data-view="quote"><span>＋</span> Nueva cotización</button><button class="nav" data-view="history"><span>▤</span> Historial local</button><button class="nav" data-view="products"><span>▦</span> Productos y precios</button><button class="nav" data-view="invoice"><span>▧</span> Nueva factura</button><button class="nav" data-view="receipt"><span>＄</span> Recibo de pago</button><button class="nav" data-view="billingHistory"><span>▤</span> Facturas y recibos</button></nav>
+<nav><button class="nav active" data-view="dashboard"><span>⌂</span> Inicio</button><button class="nav" data-view="quote"><span>＋</span> Nueva cotización</button><button class="nav" data-view="history"><span>▤</span> Historial local</button><button class="nav" data-view="products"><span>▦</span> Productos y precios</button><button class="nav" data-view="invoice"><span>▧</span> Nueva factura</button><button class="nav" data-view="receipt"><span>＄</span> Recibo de pago</button><button class="nav" data-view="billingHistory"><span>▤</span> Facturas y recibos</button><button class="nav" data-view="clients"><span>♙</span> Clientes</button><button class="nav" data-view="backup"><span>⇧</span> Respaldo</button></nav>
 <div class="side-foot"><span class="dot"></span> Aplicación instalada / web<br><small>Etapa 1 · modo de prueba</small></div>
 </aside>
 <main>
-<header class="topbar"><div class="mobile-brand"><span class="brand-mark logo-mark"><img src="https://cdn.imagetourls.com/uploads/tyImg/16lgpNfyv.jpg" alt="Logo VILASSTECH"></span> VILASSTECH</div><div class="top-right"><span class="test-pill"><i></i> Datos locales</span><button id="googleSyncBtn" class="install-btn" type="button">Conectar Google</button><button id="installBtn" class="install-btn" hidden>Instalar aplicación</button></div></header>
+<header class="topbar"><div class="mobile-brand"><span class="brand-mark logo-mark"><img src="https://cdn.imagetourls.com/uploads/tyImg/16lgpNfyv.jpg" alt="Logo VILASSTECH"></span> VILASSTECH</div><div class="top-right"><span class="test-pill"><i></i> Datos locales</span><span id="syncStatus" class="test-pill" title="Estado de sincronización">Sin sincronizar</span><button id="googleSyncBtn" class="install-btn" type="button">Conectar Google</button><button id="installBtn" class="install-btn" hidden>Instalar aplicación</button></div></header>
 <nav class="mobile-nav" aria-label="Navegación principal">
 <button class="nav active" data-view="dashboard">Inicio</button>
 <button class="nav" data-view="quote">Cotizar</button>
@@ -205,7 +205,7 @@ h1{font-size:clamp(27px,3vw,36px);line-height:1.12;letter-spacing:-1.25px;font-w
 <button class="nav" data-view="history">Historial</button>
 <button class="nav" data-view="invoice">Facturas</button>
 <button class="nav" data-view="receipt">Recibos</button>
-<button class="nav" data-view="billingHistory">Registros</button>
+<button class="nav" data-view="billingHistory">Registros</button><button class="nav" data-view="clients">Clientes</button><button class="nav" data-view="backup">Respaldo</button>
 </nav>
 <section class="view active" id="dashboard">
 <div class="dash-hero"><div class="dash-copy"><span class="hero-kicker">VILASSTECH · ESPACIO DE TRABAJO</span><h1>Tu negocio,<br>bajo control.</h1><p>Administra cotizaciones, facturas y pagos desde un solo lugar.</p><div class="hero-actions"><button class="hero-cta" data-open-quote>＋ Crear cotización</button><button class="hero-secondary" data-view="invoice">Nueva factura ↗</button></div></div><div class="hero-emblem"><div class="emblem-ring"></div><div class="emblem-card logo-emblem"><img src="https://cdn.imagetourls.com/uploads/tyImg/16lgpNfyv.jpg" alt="Logo VILASSTECH"><small>VILASSTECH</small></div><span class="emblem-star">✦</span></div></div>
@@ -253,7 +253,7 @@ h1{font-size:clamp(27px,3vw,36px);line-height:1.12;letter-spacing:-1.25px;font-w
 <div class="view-head"><div><p class="eyebrow">DOCUMENTO NUEVO</p><h1>Nueva cotización</h1><p class="sub">Completa los datos del cliente y agrega los servicios.</p></div><button class="secondary" data-view="dashboard">← Volver</button></div>
 <form id="quoteForm">
 <div class="panel"><div class="panel-heading"><div><h2>Datos del cliente</h2><p>Información de contacto para la cotización.</p></div><span class="quote-badge" id="quoteNumber">BORRADOR</span></div>
-<div class="fields"><label>Cliente / razón social *<input id="client" required placeholder="Nombre del cliente"></label><label>Teléfono<input id="phone" type="tel" placeholder="Número de contacto"></label><label class="wide">Dirección<input id="address" placeholder="Dirección del cliente"></label></div></div>
+<div class="fields"><label>Cliente / razón social *<input id="client" list="clientOptions" required placeholder="Nombre del cliente"></label><label>Teléfono<input id="phone" type="tel" placeholder="Número de contacto"></label><label class="wide">Dirección<input id="address" placeholder="Dirección del cliente"></label></div></div>
 <div class="panel"><div class="panel-heading"><div><h2>Productos y servicios</h2><p>Agrega los renglones que necesites.</p></div></div><div id="items"></div><button class="add-row" type="button" id="addItem">＋ Añadir producto o servicio</button></div>
 <div class="panel"><div class="panel-heading"><div><h2>Resumen</h2><p>Calculado automáticamente.</p></div></div><label class="tax-toggle"><input type="checkbox" id="tax"> Aplicar ITBMS (7%)</label><div class="totals"><div><span>Subtotal</span><b id="subtotal">$0.00</b></div><div><span>ITBMS</span><b id="taxValue">$0.00</b></div><div class="grand"><span>Total</span><b id="total">$0.00</b></div></div><label class="notes-label">Observaciones / condiciones<textarea id="notes" rows="3" placeholder="Vigencia, garantía, método de pago, condiciones..."></textarea></label><div class="actions"><button type="button" class="secondary" id="resetQuote">Limpiar</button><button type="button" class="primary" id="saveQuote">Guardar borrador</button></div><p id="saveStatus" class="status" aria-live="polite"></p></div></form>
 </section>
@@ -261,14 +261,28 @@ h1{font-size:clamp(27px,3vw,36px);line-height:1.12;letter-spacing:-1.25px;font-w
 <section class="view" id="invoice">
 <div class="view-head"><div><p class="eyebrow">DOCUMENTO COMERCIAL INTERNO</p><h1>Nueva factura</h1><p class="sub">Factura interna en PDF; no es factura fiscal electrónica DGI.</p></div><button class="secondary" data-view="dashboard">← Volver</button></div>
 <form id="invoiceForm">
-<div class="panel"><div class="panel-heading"><h2>Datos del cliente</h2><span class="quote-badge" id="invoiceNumber">FACTURA</span></div><div class="fields"><label>Cliente / razón social *<input id="invClient" required placeholder="Nombre del cliente"></label><label>Teléfono<input id="invPhone" type="tel" placeholder="Número"></label><label class="wide">Dirección<input id="invAddress" placeholder="Dirección"></label></div></div>
+<div class="panel"><div class="panel-heading"><h2>Datos del cliente</h2><span class="quote-badge" id="invoiceNumber">FACTURA</span></div><div class="fields"><label>Cliente / razón social *<input id="invClient" list="clientOptions" required placeholder="Nombre del cliente"></label><label>Teléfono<input id="invPhone" type="tel" placeholder="Número"></label><label class="wide">Dirección<input id="invAddress" placeholder="Dirección"></label></div></div>
 <div class="panel"><h2>Productos y servicios</h2><div id="invoiceItems"></div><button class="add-row" type="button" id="addInvoiceItem">＋ Añadir línea</button></div>
 <div class="panel"><label class="tax-toggle"><input type="checkbox" id="invTax"> Aplicar ITBMS (7%)</label><div class="totals"><div><span>Subtotal</span><b id="invSubtotal">$0.00</b></div><div><span>ITBMS</span><b id="invTaxValue">$0.00</b></div><div class="grand"><span>Total</span><b id="invTotal">$0.00</b></div></div><label class="notes-label">Observaciones<textarea id="invNotes" rows="3"></textarea></label><div class="actions"><button type="button" class="secondary" id="resetInvoice">Limpiar</button><button type="button" class="primary" id="saveInvoice">Guardar factura</button></div><p id="invoiceStatus" class="status"></p></div>
 </form></section>
 <section class="view" id="receipt">
 <div class="view-head"><div><p class="eyebrow">COMPROBANTE INTERNO</p><h1>Recibo de pago</h1><p class="sub">Registra pagos completos o abonos de clientes.</p></div><button class="secondary" data-view="dashboard">← Volver</button></div>
-<div class="panel"><div class="fields"><label>Asociar a factura (opcional)<select id="receiptInvoice"><option value="">Sin factura asociada</option></select></label><label>Cliente *<input id="receiptClient" placeholder="Nombre del cliente"></label><label>Fecha de pago<input id="receiptDate" type="date"></label><label>Método de pago<select id="receiptMethod"><option>Efectivo</option><option>Yappy</option><option>Transferencia bancaria</option><option>Tarjeta</option><option>Cheque</option><option>Otro</option></select></label><label>Concepto<input id="receiptConcept" placeholder="Abono, pago de factura, servicio..."></label><label>Monto recibido ($) *<input id="receiptAmount" type="number" min="0.01" step="0.01" placeholder="0.00"></label></div><div class="actions"><button class="primary" id="saveReceipt" type="button">Guardar recibo</button></div><p id="receiptStatus" class="status"></p></div></section>
+<div class="panel"><div class="fields"><label>Asociar a factura (opcional)<select id="receiptInvoice"><option value="">Sin factura asociada</option></select></label><label>Cliente *<input id="receiptClient" list="clientOptions" placeholder="Nombre del cliente"></label><label>Fecha de pago<input id="receiptDate" type="date"></label><label>Método de pago<select id="receiptMethod"><option>Efectivo</option><option>Yappy</option><option>Transferencia bancaria</option><option>Tarjeta</option><option>Cheque</option><option>Otro</option></select></label><label>Concepto<input id="receiptConcept" placeholder="Abono, pago de factura, servicio..."></label><label>Monto recibido ($) *<input id="receiptAmount" type="number" min="0.01" step="0.01" placeholder="0.00"></label></div><div class="actions"><button class="primary" id="saveReceipt" type="button">Guardar recibo</button></div><p id="receiptStatus" class="status"></p></div></section>
 <section class="view" id="billingHistory"><div class="view-head"><div><p class="eyebrow">REGISTROS LOCALES</p><h1>Facturas y recibos</h1><p class="sub">Consulta saldos y vuelve a imprimir tus documentos.</p></div><button class="secondary" data-view="dashboard">← Volver</button></div><div class="panel"><h2>Facturas</h2><div id="invoiceList" class="recent-list"></div></div><div class="panel"><h2>Recibos de pago</h2><div id="receiptList" class="recent-list"></div></div><div class="notice"><strong>Importante</strong><p>Los registros se guardan en este dispositivo. Pulsa “Conectar Google” para autorizar la sincronización manual con tu hoja VILASSTECH. Los documentos siguen siendo internos y no constituyen facturas fiscales autorizadas por la DGI.</p></div></section>
+
+<section class="view" id="clients">
+ <div class="view-head"><div><p class="eyebrow">DIRECTORIO COMERCIAL</p><h1>Clientes</h1><p class="sub">Guarda los datos de tus clientes para reutilizarlos en cotizaciones, facturas y recibos.</p></div><button class="secondary" data-view="dashboard">← Volver</button></div>
+ <div class="panel"><div class="panel-heading"><div><h2>Registrar cliente</h2><p>Los datos se guardan en este dispositivo y se incluyen en el respaldo.</p></div></div>
+ <form id="customerForm"><input type="hidden" id="customerId"><div class="fields"><label>Nombre / razón social *<input id="customerName" required maxlength="120" placeholder="Nombre del cliente"></label><label>Teléfono<input id="customerPhone" type="tel" maxlength="40" placeholder="Teléfono"></label><label class="wide">Dirección<input id="customerAddress" maxlength="180" placeholder="Dirección"></label></div><div class="actions"><button type="button" class="secondary" id="cancelCustomerEdit" hidden>Cancelar</button><button type="submit" class="primary">Guardar cliente</button></div></form></div>
+ <div class="panel"><div class="panel-heading"><div><h2>Directorio</h2><p><strong id="customerCount">0</strong> clientes guardados</p></div></div><div class="searchbox"><input id="customerSearch" placeholder="Buscar por nombre o teléfono…"></div><div id="customerList" class="recent-list"></div></div>
+</section>
+<section class="view" id="backup">
+ <div class="view-head"><div><p class="eyebrow">PROTECCIÓN DE INFORMACIÓN</p><h1>Respaldo de datos</h1><p class="sub">Descarga una copia de tus cotizaciones, facturas, recibos, productos y clientes.</p></div><button class="secondary" data-view="dashboard">← Volver</button></div>
+ <div class="panel"><h2>Crear respaldo</h2><p class="sub">Guarda un archivo JSON en tu dispositivo. Te recomendamos hacerlo antes de cambiar de teléfono o navegador.</p><div class="actions"><button type="button" class="primary" id="downloadBackup">Descargar respaldo</button></div></div>
+ <div class="panel"><h2>Restaurar respaldo</h2><p class="sub">Selecciona un archivo de respaldo generado por VILASSTECH. Antes de restaurarlo se descargará automáticamente una copia de los datos actuales.</p><label class="notes-label">Archivo de respaldo<input id="restoreBackupFile" type="file" accept=".json,application/json"></label><div class="actions"><button type="button" class="secondary" id="restoreBackup">Restaurar datos</button></div></div>
+ <div class="notice"><strong>Importante</strong><p>La restauración reemplaza los registros de los módulos incluidos en el archivo. No borres los datos del navegador ni desinstales la aplicación sin tener un respaldo. La sincronización con Google es adicional; este archivo permite guardar una copia independiente.</p></div>
+</section>
+<datalist id="clientOptions"></datalist>
 </main>
 </div><div id="toast" role="status"></div><script>
 /* VILASSTECH_GOOGLE_SYNC_V1 */
@@ -276,8 +290,8 @@ const GOOGLE_CLIENT_ID="703244530205-eb0t81877ct9a2l9k6h5nal75pau0j86.apps.googl
 const GOOGLE_SHEET_ID="1bP5uWyLG4eS3LRHBUYexODoejdgi0pXgpdGvI6nMb7A";
 const GOOGLE_SCOPE="https://www.googleapis.com/auth/spreadsheets";
 let googleAccessToken=null,googleTokenClient=null,googleSyncBusy=false;
-const CLOUD_KEYS={Productos:"vilasstech_catalog_products_v1",Cotizaciones:"vilasstech_pwa_drafts_v1",Facturas:"vilasstech_internal_invoices_v1",Recibos:"vilasstech_internal_receipts_v1"};
-function cloudStatus(msg){const b=document.getElementById("googleSyncBtn");if(b)b.textContent=msg;}
+const CLOUD_KEYS={Productos:"vilasstech_catalog_products_v1",Cotizaciones:"vilasstech_pwa_drafts_v1",Facturas:"vilasstech_internal_invoices_v1",Recibos:"vilasstech_internal_receipts_v1",Clientes:"vilasstech_customers_v1"};
+function cloudStatus(msg){const b=document.getElementById("googleSyncBtn");if(b)b.textContent=msg;const s=document.getElementById("syncStatus");if(s)s.textContent=msg.includes("conectado")?"Sincronizado ✓":msg.includes("Conectando")?"Sincronizando…":msg.includes("Reintentar")?"Error de sincronización":(localStorage.getItem("vilasstech_last_sync")?"Última sync: "+new Date(localStorage.getItem("vilasstech_last_sync")).toLocaleString("es-PA"):"Sin sincronizar");}
 function cloudLocal(){const out=[];for(const [tipo,key] of Object.entries(CLOUD_KEYS)){let arr=[];try{arr=JSON.parse(localStorage.getItem(key)||"[]")}catch(e){throw new Error("No se pudo leer el módulo "+tipo+" del dispositivo.")}if(!Array.isArray(arr))throw new Error("Los datos locales de "+tipo+" no tienen el formato esperado.");for(const item of arr){if(!item||typeof item!=="object")continue;const id=String(item.id||item.codigo||"");if(!id)throw new Error("Hay un registro sin identificador en "+tipo+".");out.push([tipo,id,JSON.stringify(item)]);}}return out;}
 async function cloudApi(path,method="GET",body){
  const url="https://sheets.googleapis.com/v4/spreadsheets/"+GOOGLE_SHEET_ID+path;
@@ -306,7 +320,7 @@ async function cloudSync(){
   await cloudApi("/values/VILASSTECH_SYNC!A1:C?valueInputOption=RAW","PUT",{majorDimension:"ROWS",values});
   etapa="actualizando este dispositivo";
   for(const [tipo,key] of Object.entries(CLOUD_KEYS)){const arr=[];for(const r of merged.values())if(r[0]===tipo)arr.push(JSON.parse(r[2]));localStorage.setItem(key,JSON.stringify(arr));}
-  cloudStatus("Google conectado ✓");toast("Sincronización completada. Registros locales y de Google combinados.");
+  localStorage.setItem("vilasstech_last_sync",new Date().toISOString());cloudStatus("Google conectado ✓");const ss=document.getElementById("syncStatus");if(ss)ss.textContent="Sincronizado ✓ · "+new Date().toLocaleTimeString("es-PA",{hour:"2-digit",minute:"2-digit"});toast("Sincronización completada. Registros locales y de Google combinados.");
  }catch(e){
   cloudStatus("Reintentar Google");
   let detalle=e.message||"Error desconocido";
@@ -542,5 +556,64 @@ document.querySelectorAll('[data-view="receipt"]').forEach(b=>b.addEventListener
 document.querySelectorAll('[data-view="billingHistory"]').forEach(b=>b.addEventListener("click",renderBilling));
 
 let install=null;window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();install=e;let b=document.getElementById("installBtn");b.hidden=false;b.onclick=async()=>{install.prompt();await install.userChoice;install=null;b.hidden=true}});window.addEventListener("appinstalled",()=>toast("Aplicación instalada"));if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(console.warn));dash();add();addInvoiceLine();renderBilling();
+
+/* VILASSTECH mejoras: clientes, respaldo, estados y duplicados */
+(()=>{
+ const CLIENT_KEY="vilasstech_customers_v1",DRAFT_KEY="vilasstech_pwa_drafts_v1";
+ const customerRead=()=>{try{const a=JSON.parse(localStorage.getItem(CLIENT_KEY)||"[]");return Array.isArray(a)?a:[]}catch{return[]}};
+ const customerWrite=a=>localStorage.setItem(CLIENT_KEY,JSON.stringify(a));
+ const safe=v=>String(v||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+ const nameEl=document.getElementById("customerName"),phoneEl=document.getElementById("customerPhone"),addressEl=document.getElementById("customerAddress");
+ function upsertCustomer(nombre,telefono,direccion){
+  nombre=String(nombre||"").trim();if(!nombre)return;
+  const all=customerRead(),key=nombre.toLocaleLowerCase("es");
+  let c=all.find(x=>String(x.nombre||"").trim().toLocaleLowerCase("es")===key);
+  if(c){c.telefono=telefono||c.telefono||"";c.direccion=direccion||c.direccion||"";c.actualizado=new Date().toISOString();}
+  else all.unshift({id:"CLI-"+Date.now().toString(36),nombre,telefono:telefono||"",direccion:direccion||"",actualizado:new Date().toISOString()});
+  customerWrite(all);fillClientOptions();if(document.getElementById("clients").classList.contains("active"))renderCustomers();
+ }
+ function fillClientOptions(){const dl=document.getElementById("clientOptions");if(dl)dl.innerHTML=customerRead().map(c=>'<option value="'+safe(c.nombre)+'"></option>').join("");}
+ function fillFields(prefix,name){const c=customerRead().find(x=>String(x.nombre||"").toLocaleLowerCase("es")===String(name||"").trim().toLocaleLowerCase("es"));if(!c)return;const p=document.getElementById(prefix+"Phone"),a=document.getElementById(prefix+"Address");if(p&&!p.value)p.value=c.telefono||"";if(a&&!a.value)a.value=c.direccion||"";}
+ function resetCustomer(){document.getElementById("customerForm").reset();document.getElementById("customerId").value="";document.getElementById("cancelCustomerEdit").hidden=true;}
+ function renderCustomers(){
+  const q=(document.getElementById("customerSearch").value||"").toLowerCase(),all=customerRead(),list=document.getElementById("customerList");document.getElementById("customerCount").textContent=all.length;list.innerHTML="";
+  const shown=all.filter(c=>(c.nombre+" "+c.telefono+" "+c.direccion).toLowerCase().includes(q));
+  if(!shown.length){list.innerHTML='<div class="empty">'+(all.length?"No hay resultados.":"Aún no hay clientes guardados. Se guardarán automáticamente al crear documentos.")+"</div>";return;}
+  shown.forEach(c=>{const e=document.createElement("article");e.className="draft-card";e.innerHTML='<div class="draft-left"><div class="draft-client">'+safe(c.nombre)+'</div><div class="draft-date">'+safe(c.telefono||"Sin teléfono")+' · '+safe(c.direccion||"Sin dirección")+'</div></div><div class="draft-actions"><button class="mini-btn edit">Editar</button><button class="mini-btn delete">Eliminar</button></div>';
+   e.querySelector(".edit").onclick=()=>{document.getElementById("customerId").value=c.id;nameEl.value=c.nombre;phoneEl.value=c.telefono||"";addressEl.value=c.direccion||"";document.getElementById("cancelCustomerEdit").hidden=false;nameEl.focus();};
+   e.querySelector(".delete").onclick=()=>{if(confirm("¿Eliminar este cliente del directorio? Sus documentos no se eliminarán.")){customerWrite(customerRead().filter(x=>x.id!==c.id));renderCustomers();fillClientOptions();}};list.append(e);
+  });
+ }
+ document.getElementById("customerForm").addEventListener("submit",e=>{e.preventDefault();const id=document.getElementById("customerId").value,n=nameEl.value.trim();if(!n)return;let all=customerRead(),existing=all.find(x=>x.id===id);if(existing){existing.nombre=n;existing.telefono=phoneEl.value.trim();existing.direccion=addressEl.value.trim();existing.actualizado=new Date().toISOString();customerWrite(all);}else upsertCustomer(n,phoneEl.value.trim(),addressEl.value.trim());resetCustomer();renderCustomers();fillClientOptions();toast("Cliente guardado");});
+ document.getElementById("cancelCustomerEdit").onclick=resetCustomer;document.getElementById("customerSearch").oninput=renderCustomers;
+ [["client",""],["invClient","inv"],["receiptClient","receipt"]].forEach(([id,prefix])=>{const el=document.getElementById(id);if(el)el.addEventListener("change",()=>{if(prefix!=="receipt")fillFields(prefix,el.value);});});
+ const originalQuote=document.getElementById("saveQuote").onclick;document.getElementById("saveQuote").onclick=function(){originalQuote?.apply(this,arguments);const n=document.getElementById("client").value.trim();if(n)upsertCustomer(n,document.getElementById("phone").value.trim(),document.getElementById("address").value.trim());};
+ const originalInvoice=document.getElementById("saveInvoice").onclick;document.getElementById("saveInvoice").onclick=function(){originalInvoice?.apply(this,arguments);const n=document.getElementById("invClient").value.trim();if(n)upsertCustomer(n,document.getElementById("invPhone").value.trim(),document.getElementById("invAddress").value.trim());};
+ const originalReceipt=document.getElementById("saveReceipt").onclick;document.getElementById("saveReceipt").onclick=function(){originalReceipt?.apply(this,arguments);const n=document.getElementById("receiptClient").value.trim();if(n)upsertCustomer(n,"","");};
+ const historyList=document.getElementById("historyList");
+ function addQuoteTools(){
+  historyList.querySelectorAll(".draft-card").forEach(el=>{
+   if(el.querySelector(".quote-status"))return;
+   const displayed=el.querySelector(".draft-no")?.textContent||"",arr=JSON.parse(localStorage.getItem(DRAFT_KEY)||"[]");
+   const d=arr.find(x=>x.id===displayed)||arr.find(x=>typeof quoteCode==="function"&&quoteCode(x)===displayed);if(!d)return;
+   const select=document.createElement("select");select.className="quote-status";select.setAttribute("aria-label","Estado de cotización");select.style.cssText="font-size:11px;padding:5px;border:1px solid #dce5ef;border-radius:8px;margin-top:6px;background:#f8fbfe;color:#18314f";
+   ["Pendiente","Enviada","Aprobada","Rechazada"].forEach(v=>{const o=document.createElement("option");o.value=v;o.textContent=v;o.selected=(d.estado||"Pendiente")===v;select.append(o)});
+   select.onchange=()=>{const a=JSON.parse(localStorage.getItem(DRAFT_KEY)||"[]"),x=a.find(z=>z.id===d.id);if(x){x.estado=select.value;localStorage.setItem(DRAFT_KEY,JSON.stringify(a));toast("Estado actualizado: "+select.value);}};
+   const duplicate=document.createElement("button");duplicate.type="button";duplicate.className="mini-btn";duplicate.textContent="Duplicar";
+   duplicate.onclick=()=>{const a=JSON.parse(localStorage.getItem(DRAFT_KEY)||"[]"),copy=JSON.parse(JSON.stringify(d));copy.id=nextQuoteCode(a);copy.fecha=new Date().toISOString();copy.estado="Pendiente";a.unshift(copy);localStorage.setItem(DRAFT_KEY,JSON.stringify(a));document.getElementById("searchHistory").dispatchEvent(new Event("input"));toast("Cotización duplicada como "+copy.id);};
+   el.querySelector(".draft-left")?.append(select);el.querySelector(".draft-actions")?.append(duplicate);
+  });
+ }
+ new MutationObserver(addQuoteTools).observe(historyList,{childList:true});
+ document.getElementById("searchHistory").addEventListener("input",()=>setTimeout(addQuoteTools,0));
+ const dataKeys=["vilasstech_catalog_products_v1",DRAFT_KEY,"vilasstech_internal_invoices_v1","vilasstech_internal_receipts_v1",CLIENT_KEY];
+ function downloadObject(obj,name){const blob=new Blob([JSON.stringify(obj,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);}
+ function exportBackup(){const data={app:"VILASSTECH",formatVersion:1,createdAt:new Date().toISOString(),records:{}};dataKeys.forEach(k=>{try{data.records[k]=JSON.parse(localStorage.getItem(k)||"[]");}catch(e){throw new Error("No se pudo leer "+k);}});downloadObject(data,"VILASSTECH-respaldo-"+new Date().toISOString().slice(0,10)+".json");}
+ document.getElementById("downloadBackup").onclick=()=>{try{exportBackup();toast("Respaldo descargado");}catch(e){alert(e.message)}};
+ document.getElementById("restoreBackup").onclick=async()=>{const file=document.getElementById("restoreBackupFile").files[0];if(!file){alert("Selecciona primero un archivo JSON de respaldo.");return;}if(!confirm("La restauración reemplazará los registros actuales por los del archivo. Antes se descargará una copia de seguridad actual. ¿Deseas continuar?"))return;try{const data=JSON.parse(await file.text());if(data.app!=="VILASSTECH"||!data.records||typeof data.records!=="object")throw new Error("El archivo no parece ser un respaldo válido de VILASSTECH.");for(const k of dataKeys){if(data.records[k]!==undefined&&!Array.isArray(data.records[k]))throw new Error("El módulo "+k+" no tiene un formato válido.");}exportBackup();dataKeys.forEach(k=>{if(data.records[k]!==undefined)localStorage.setItem(k,JSON.stringify(data.records[k]));});fillClientOptions();renderCustomers();document.getElementById("searchHistory").dispatchEvent(new Event("input"));toast("Respaldo restaurado. Recarga la aplicación para actualizar los paneles.");}catch(e){alert("No se pudo restaurar: "+e.message);}};
+ fillClientOptions();renderCustomers();
+ const sync=document.getElementById("syncStatus"),last=localStorage.getItem("vilasstech_last_sync");if(sync)sync.textContent=last?"Última sync: "+new Date(last).toLocaleString("es-PA"):"Sin sincronizar";
+ document.querySelectorAll('[data-view="clients"]').forEach(b=>b.addEventListener("click",renderCustomers));
+})();
 </script>
 </body></html>
