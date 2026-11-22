@@ -279,19 +279,43 @@ let googleAccessToken=null,googleTokenClient=null,googleSyncBusy=false;
 const CLOUD_KEYS={Productos:"vilasstech_catalog_products_v1",Cotizaciones:"vilasstech_pwa_drafts_v1",Facturas:"vilasstech_internal_invoices_v1",Recibos:"vilasstech_internal_receipts_v1"};
 function cloudStatus(msg){const b=document.getElementById("googleSyncBtn");if(b)b.textContent=msg;}
 function cloudLocal(){const out=[];for(const [tipo,key] of Object.entries(CLOUD_KEYS)){let arr=[];try{arr=JSON.parse(localStorage.getItem(key)||"[]")}catch(e){throw new Error("No se pudo leer el módulo "+tipo+" del dispositivo.")}if(!Array.isArray(arr))throw new Error("Los datos locales de "+tipo+" no tienen el formato esperado.");for(const item of arr){if(!item||typeof item!=="object")continue;const id=String(item.id||item.codigo||"");if(!id)throw new Error("Hay un registro sin identificador en "+tipo+".");out.push([tipo,id,JSON.stringify(item)]);}}return out;}
-async function cloudApi(path,method="GET",body){const res=await fetch("https://sheets.googleapis.com/v4/spreadsheets/"+GOOGLE_SHEET_ID+path,{method,headers:{Authorization:"Bearer "+googleAccessToken,"Content-Type":"application/json"},...(body?{body:JSON.stringify(body)}:{})});const data=await res.json().catch(()=>({}));if(!res.ok)throw new Error(data.error?.message||("Google Sheets respondió "+res.status));return data;}
-async function cloudSync(){if(googleSyncBusy)return;googleSyncBusy=true;cloudStatus("Sincronizando…");try{
- let meta=await cloudApi("?fields=sheets.properties");let sheet=(meta.sheets||[]).find(x=>x.properties?.title==="VILASSTECH_SYNC");
- if(!sheet){await cloudApi(":batchUpdate","POST",{requests:[{addSheet:{properties:{title:"VILASSTECH_SYNC"}}}]});}
- let got=await cloudApi("/values/VILASSTECH_SYNC!A1:C");let rows=got.values||[];let remote=[];
- for(let i=1;i<rows.length;i++){const row=rows[i];if(!row||row.length<3)continue;try{const item=JSON.parse(row[2]);if(!item||typeof item!=="object")throw new Error();remote.push([String(row[0]),String(row[1]),JSON.stringify(item)]);}catch(e){throw new Error("La hoja contiene un registro que no se puede interpretar. No se modificó ningún dato.");}}
- const local=cloudLocal(),merged=new Map();for(const r of remote)merged.set(r[0]+"\u0000"+r[1],r);for(const r of local)merged.set(r[0]+"\u0000"+r[1],r);
- const values=[["Tipo","ID","Registro JSON"],...Array.from(merged.values())];
- await cloudApi("/values/VILASSTECH_SYNC!A1:C:clear","POST",{});
- await cloudApi("/values/VILASSTECH_SYNC!A1:C?valueInputOption=RAW","PUT",{majorDimension:"ROWS",values});
- for(const [tipo,key] of Object.entries(CLOUD_KEYS)){const arr=[];for(const r of merged.values())if(r[0]===tipo){arr.push(JSON.parse(r[2]));}localStorage.setItem(key,JSON.stringify(arr));}
- cloudStatus("Google conectado ✓");toast("Sincronización completada. Registros locales y de Google combinados.");
- }catch(e){cloudStatus("Reintentar Google");toast("No se pudo sincronizar: "+e.message);console.error(e);}finally{googleSyncBusy=false;}}
+async function cloudApi(path,method="GET",body){
+ const url="https://sheets.googleapis.com/v4/spreadsheets/"+GOOGLE_SHEET_ID+path;
+ let res,data;
+ try{res=await fetch(url,{method,headers:{Authorization:"Bearer "+googleAccessToken,"Content-Type":"application/json"},...(body?{body:JSON.stringify(body)}:{})});}
+ catch(e){throw new Error("No se pudo comunicar con Google Sheets. Revisa tu conexión a Internet.");}
+ data=await res.json().catch(()=>({}));
+ if(!res.ok){const err=new Error(data.error?.message||("Google Sheets respondió "+res.status));err.httpStatus=res.status;throw err;}
+ return data;
+}
+async function cloudSync(){
+ if(googleSyncBusy)return;googleSyncBusy=true;cloudStatus("Conectando con Google…");
+ let etapa="comprobando acceso a la hoja";
+ try{
+  let meta=await cloudApi("?fields=sheets.properties");
+  let sheet=(meta.sheets||[]).find(x=>x.properties?.title==="VILASSTECH_SYNC");
+  if(!sheet){etapa="creando la pestaña VILASSTECH_SYNC";await cloudApi(":batchUpdate","POST",{requests:[{addSheet:{properties:{title:"VILASSTECH_SYNC"}}}]});}
+  etapa="leyendo los registros de Google";
+  let got=await cloudApi("/values/VILASSTECH_SYNC!A1:C");let rows=got.values||[];let remote=[];
+  for(let i=1;i<rows.length;i++){const row=rows[i];if(!row||row.length<3)continue;try{const item=JSON.parse(row[2]);if(!item||typeof item!=="object")throw new Error();remote.push([String(row[0]),String(row[1]),JSON.stringify(item)]);}catch(e){throw new Error("La pestaña VILASSTECH_SYNC tiene un registro ilegible. No se modificó ningún dato.");}}
+  etapa="combinando los datos locales y los de Google";
+  const local=cloudLocal(),merged=new Map();for(const r of remote)merged.set(r[0]+"\\u0000"+r[1],r);for(const r of local)merged.set(r[0]+"\\u0000"+r[1],r);
+  const values=[["Tipo","ID","Registro JSON"],...Array.from(merged.values())];
+  etapa="guardando los registros en Google";
+  await cloudApi("/values/VILASSTECH_SYNC!A1:C:clear","POST",{});
+  await cloudApi("/values/VILASSTECH_SYNC!A1:C?valueInputOption=RAW","PUT",{majorDimension:"ROWS",values});
+  etapa="actualizando este dispositivo";
+  for(const [tipo,key] of Object.entries(CLOUD_KEYS)){const arr=[];for(const r of merged.values())if(r[0]===tipo)arr.push(JSON.parse(r[2]));localStorage.setItem(key,JSON.stringify(arr));}
+  cloudStatus("Google conectado ✓");toast("Sincronización completada. Registros locales y de Google combinados.");
+ }catch(e){
+  cloudStatus("Reintentar Google");
+  let detalle=e.message||"Error desconocido";
+  if(e.httpStatus===403)detalle+=". Verifica que Sheets API esté habilitada en el proyecto VILASSTECH APP y que la cuenta tenga acceso a la hoja.";
+  if(e.httpStatus===401)detalle+=". La autorización venció; pulsa Conectar Google otra vez.";
+  if(e.httpStatus===404)detalle+=". No se encontró la hoja indicada.";
+  toast("Error al "+etapa+": "+detalle);console.error("VILASSTECH sync:",etapa,e);
+ }finally{googleSyncBusy=false;}
+}
 function connectGoogle(){if(!window.google?.accounts?.oauth2){toast("Google aún está cargando. Espera unos segundos e inténtalo de nuevo.");return;}if(!googleTokenClient){googleTokenClient=google.accounts.oauth2.initTokenClient({client_id:GOOGLE_CLIENT_ID,scope:GOOGLE_SCOPE,callback:async(response)=>{if(response.error){toast("Google no autorizó la conexión: "+response.error);cloudStatus("Conectar Google");return;}googleAccessToken=response.access_token;await cloudSync();}});}googleTokenClient.requestAccessToken({prompt:"consent"});}
 document.getElementById("googleSyncBtn")?.addEventListener("click",connectGoogle);
 
