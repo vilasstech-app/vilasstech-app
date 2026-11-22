@@ -370,11 +370,28 @@ function pdfText(doc,value,x,y,maxWidth,size=9,color=[38,54,74],weight="normal")
  doc.text(lines,x,y);
  return y+(lines.length*size*0.42)+1;
 }
-function pdfImageData(url){
+function pdfImageData(urls){
+ const candidates=Array.isArray(urls)?urls:[url];
  return new Promise(resolve=>{
-  const img=new Image();img.crossOrigin="anonymous";
-  img.onload=()=>{try{const c=document.createElement("canvas");c.width=img.naturalWidth||300;c.height=img.naturalHeight||300;c.getContext("2d").drawImage(img,0,0);resolve(c.toDataURL("image/jpeg",.9))}catch(e){resolve(null)}};
-  img.onerror=()=>resolve(null);img.src=url;
+  let index=0;
+  const attempt=()=>{
+   if(index>=candidates.length){resolve(null);return}
+   const img=new Image();img.crossOrigin="anonymous";
+   img.onload=()=>{
+    try{
+     const canvas=document.createElement("canvas");
+     const scale=Math.min(1,900/Math.max(img.naturalWidth||1,img.naturalHeight||1));
+     canvas.width=Math.max(1,Math.round((img.naturalWidth||300)*scale));
+     canvas.height=Math.max(1,Math.round((img.naturalHeight||300)*scale));
+     const ctx=canvas.getContext("2d");ctx.fillStyle="#fff";ctx.fillRect(0,0,canvas.width,canvas.height);
+     ctx.drawImage(img,0,0,canvas.width,canvas.height);
+     resolve(canvas.toDataURL("image/jpeg",.94));
+    }catch(e){index++;attempt()}
+   };
+   img.onerror=()=>{index++;attempt()};
+   img.src=candidates[index]+(candidates[index].includes("?")?"&":"?")+"v=2";
+  };
+  attempt();
  });
 }
 function printDocument(id,content){
@@ -397,7 +414,7 @@ function printDocument(id,content){
   function top(){
    doc.setFillColor(...navy);doc.rect(0,0,W,47,"F");
    doc.setFillColor(...gold);doc.rect(0,47,W,1.5,"F");
-   if(pdfLogoData){try{doc.addImage(pdfLogoData,"JPEG",L,9,29,29,undefined,"FAST")}catch(e){}}
+   if(pdfLogoData){try{doc.addImage(pdfLogoData,"JPEG",L,9,29,29,undefined,"FAST")}catch(e){doc.setFillColor(255,255,255);doc.roundedRect(L,9,29,29,2,2,"F");doc.setFont("helvetica","bold");doc.setFontSize(7);doc.setTextColor(...navy);doc.text("VILASSTECH",L+14.5,25,{align:"center"})}}else{doc.setFillColor(255,255,255);doc.roundedRect(L,9,29,29,2,2,"F");doc.setFont("helvetica","bold");doc.setFontSize(7);doc.setTextColor(...navy);doc.text("VILASSTECH",L+14.5,25,{align:"center"})}
    doc.setTextColor(...white);doc.setFont("helvetica","bold");doc.setFontSize(20);doc.text("VILASSTECH",54,20);
    doc.setFont("helvetica","normal");doc.setFontSize(8);doc.setTextColor(219,229,240);doc.text("SEGURIDAD ELECTRÓNICA  ·  TECNOLOGÍA  ·  REDES",54,27);
    doc.setDrawColor(91,113,139);doc.line(54,31,126,31);
@@ -505,7 +522,7 @@ function printDocument(id,content){
 }
 let pdfLogoData=null;
 loadPdfLibrary().catch(err=>console.warn("PDF library:",err));
-pdfImageData("https://cdn.imagetourls.com/uploads/tyImg/169oiiDXM.png").then(data=>{pdfLogoData=data;if(!data)console.warn("No se pudo cargar el logo VILASSTECH para PDF")});
+pdfImageData(["https://images.weserv.nl/?url=cdn.imagetourls.com%2Fuploads%2FtyImg%2F169oiiDXM.png&output=png","https://cdn.imagetourls.com/uploads/tyImg/169oiiDXM.png","https://images.weserv.nl/?url=cdn.imagetourls.com%2Fuploads%2FtyImg%2F16lgpNfyv.jpg&output=jpg","https://cdn.imagetourls.com/uploads/tyImg/16lgpNfyv.jpg"]).then(data=>{pdfLogoData=data;if(!data)console.warn("No se pudo cargar el logo VILASSTECH para PDF")});
 function printQuote(d){
  let rows=d.productos.map(p=>'<tr><td>'+esc(p.descripcion)+'</td><td>'+p.cantidad+'</td><td>'+fmt(p.precio)+'</td><td>'+fmt(p.cantidad*p.precio)+'</td></tr>').join("");
  let content='<div class="doc-title"><h2>COTIZACIÓN</h2><span class="doc-no">'+esc(quoteCode(d))+'</span></div><section class="meta"><p><b>Cliente:</b> '+esc(d.cliente)+'</p><p><b>Fecha:</b> '+new Date(d.fecha).toLocaleDateString("es-PA")+'</p><p><b>Teléfono:</b> '+esc(d.telefono||"—")+'</p><p><b>Dirección:</b> '+esc(d.direccion||"—")+'</p></section><table><thead><tr><th>Descripción</th><th>Cant.</th><th>Precio</th><th>Subtotal</th></tr></thead><tbody>'+rows+'</tbody></table><div class="sum"><p>Subtotal <b>'+fmt(d.subtotal)+'</b></p><p>ITBMS <b>'+fmt(d.itbms)+'</b></p><p class="total">TOTAL <b>'+fmt(d.total)+'</b></p></div><div class="notes"><b>Observaciones</b><br>'+esc(d.observaciones||"—")+'</div><p style="margin-top:20px;color:#687b90;font-size:11px">Cotización comercial. No constituye factura fiscal electrónica.</p>';
