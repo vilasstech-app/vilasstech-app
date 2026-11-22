@@ -377,12 +377,12 @@ function pdfImageData(url){
   img.onerror=()=>resolve(null);img.src=url;
  });
 }
-async function printDocument(id,content){
+function printDocument(id,content){
  const button=document.activeElement;
  const buttonText=button&&button.tagName==="BUTTON"?button.textContent:"";
  if(button&&button.tagName==="BUTTON"){button.disabled=true;button.textContent="Preparando PDF…"}
  try{
-  const JsPDF=await loadPdfLibrary();
+  const JsPDF=window.jspdf&&window.jspdf.jsPDF;if(!JsPDF){alert('El generador PDF todavía se está cargando. Espera unos segundos y vuelve a tocar PDF.');return;}
   const doc=new JsPDF({orientation:"portrait",unit:"mm",format:"a4"});
   const pageW=210,pageH=297,left=14,right=196,width=182;
   const navy=[16,43,80],gold=[229,185,0],ink=[38,54,74],muted=[100,117,138],pale=[244,247,251];
@@ -390,7 +390,7 @@ async function printDocument(id,content){
   const root=parsed.body;
   const heading=root.querySelector(".doc-title h2")?.textContent.trim()||"DOCUMENTO";
   const number=root.querySelector(".doc-no")?.textContent.trim()||id;
-  const logoData=await pdfImageData("https://cdn.imagetourls.com/uploads/tyImg/16lgpNfyv.jpg");
+  const logoData=pdfLogoData;
   let y=14;
   function header(){
    doc.setFillColor(...navy);doc.roundedRect(left,y,width,39,3,3,"F");
@@ -477,13 +477,17 @@ async function printDocument(id,content){
   const safeName=String(id||"documento").replace(/[^a-z0-9_-]/gi,"_");
   const blob=doc.output("blob");
   const file=new File([blob],safeName+".pdf",{type:"application/pdf"});
-  if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
-   try{await navigator.share({files:[file],title:safeName,text:"Documento de VILASSTECH"});return;}
-   catch(err){if(err&&err.name==="AbortError")return;}
-  }
   const url=URL.createObjectURL(blob);
-  const opened=window.open(url,"_blank");
-  if(!opened)window.location.href=url;
+  if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+   try{
+    const sharing=navigator.share({files:[file],title:safeName,text:"Documento de VILASSTECH"});
+    sharing.catch(err=>{if(err&&err.name!=="AbortError")window.location.href=url;});
+    return;
+   }catch(err){if(err&&err.name==="AbortError")return;}
+  }
+  const isStandalone=window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone===true;
+  if(isStandalone){window.location.href=url;}
+  else{const opened=window.open(url,"_blank");if(!opened)window.location.href=url;}
   setTimeout(()=>URL.revokeObjectURL(url),120000);
  }catch(err){
   console.error("PDF VILASSTECH:",err);
@@ -492,6 +496,9 @@ async function printDocument(id,content){
   if(button&&button.tagName==="BUTTON"){button.disabled=false;button.textContent=buttonText||"PDF/Imprimir";}
  }
 }
+let pdfLogoData=null;
+loadPdfLibrary().catch(err=>console.warn("PDF library:",err));
+pdfImageData("https://cdn.imagetourls.com/uploads/tyImg/16lgpNfyv.jpg").then(data=>{pdfLogoData=data});
 function printQuote(d){
  let rows=d.productos.map(p=>'<tr><td>'+esc(p.descripcion)+'</td><td>'+p.cantidad+'</td><td>'+fmt(p.precio)+'</td><td>'+fmt(p.cantidad*p.precio)+'</td></tr>').join("");
  let content='<div class="doc-title"><h2>COTIZACIÓN</h2><span class="doc-no">'+esc(quoteCode(d))+'</span></div><section class="meta"><p><b>Cliente:</b> '+esc(d.cliente)+'</p><p><b>Fecha:</b> '+new Date(d.fecha).toLocaleDateString("es-PA")+'</p><p><b>Teléfono:</b> '+esc(d.telefono||"—")+'</p><p><b>Dirección:</b> '+esc(d.direccion||"—")+'</p></section><table><thead><tr><th>Descripción</th><th>Cant.</th><th>Precio</th><th>Subtotal</th></tr></thead><tbody>'+rows+'</tbody></table><div class="sum"><p>Subtotal <b>'+fmt(d.subtotal)+'</b></p><p>ITBMS <b>'+fmt(d.itbms)+'</b></p><p class="total">TOTAL <b>'+fmt(d.total)+'</b></p></div><div class="notes"><b>Observaciones</b><br>'+esc(d.observaciones||"—")+'</div><p style="margin-top:20px;color:#687b90;font-size:11px">Cotización comercial. No constituye factura fiscal electrónica.</p>';
