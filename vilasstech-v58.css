@@ -67,3 +67,8 @@
 #dashboard.v58-dashboard>.v58-content-grid{display:grid!important;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr)!important;gap:14px!important}
 #dashboard .v58-content-grid>.panel{min-width:0!important;width:100%!important;box-sizing:border-box!important}
 @media(max-width:760px){#dashboard.v58-dashboard>.v58-hero{grid-template-columns:minmax(0,1fr)!important}#dashboard.v58-dashboard>.v58-content-grid{grid-template-columns:minmax(0,1fr)!important}}
+
+
+/* Fix: inactive application views must stay hidden; v58 dashboard layout must not override navigation. */
+.view:not(.active){display:none!important}
+.view.active{display:block!important}
