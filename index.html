@@ -313,6 +313,47 @@ button:disabled{opacity:.58;cursor:not-allowed;transform:none!important}
  .top-right #googleSyncBtn{white-space:nowrap}
 }
 @media(hover:none){button:hover,.stat:hover,.draft-card:hover{transform:none!important}}
+
+
+/* VILASSTECH v54 — corrección de navegación adaptable */
+@media (min-width:641px) and (max-width:760px){
+  .sidebar{display:none!important}
+  main{margin:0!important;padding:0 18px 36px!important}
+  .mobile-menu-btn{display:none!important}
+  .mobile-nav{display:flex!important;position:sticky!important;inset:auto!important;width:auto!important;height:auto!important;max-height:none!important;overflow-x:auto!important;overflow-y:hidden!important;flex-direction:row!important;align-items:center!important;gap:6px!important;padding:8px 2px 12px!important;margin:0 0 16px!important;border-radius:0!important;background:#f5f7fc!important;z-index:30!important;transform:none!important;visibility:visible!important;box-shadow:none!important}
+  .mobile-nav .nav{display:block!important;flex:0 0 auto!important;width:auto!important;min-height:42px!important;margin:0!important;padding:10px 13px!important;border-radius:11px!important;background:#fff!important;border:1px solid #e5ebf3!important;color:#25415f!important;font-size:12px!important}
+  .mobile-nav .nav.active{background:var(--navy)!important;color:#fff!important;border-color:var(--navy)!important}
+}
+@media(max-width:640px){
+  .sidebar{display:none!important}
+  main{margin:0!important;padding:0 14px calc(34px + env(safe-area-inset-bottom))!important}
+  .topbar{height:auto!important;min-height:62px!important;justify-content:flex-start!important;gap:10px!important;margin-bottom:12px!important}
+  .mobile-menu-btn{display:grid!important;place-items:center!important;flex:0 0 42px!important;width:42px!important;height:42px!important;padding:0!important}
+  .mobile-brand{display:flex!important;align-items:center!important;gap:8px!important;flex:1!important;font-weight:800!important;font-size:13px!important}
+  .mobile-brand .logo-mark{width:34px!important;height:34px!important}
+  .mobile-nav{display:flex!important;position:fixed!important;z-index:1002!important;inset:0 auto 0 0!important;width:min(82vw,320px)!important;height:100vh!important;height:100dvh!important;max-height:100dvh!important;overflow-x:hidden!important;overflow-y:auto!important;overscroll-behavior:contain!important;flex-direction:column!important;align-items:stretch!important;gap:7px!important;padding:24px 16px calc(24px + env(safe-area-inset-bottom))!important;margin:0!important;border-radius:0 20px 20px 0!important;background:linear-gradient(165deg,#081b34 0%,#102d50 56%,#153e66 100%)!important;box-shadow:18px 0 48px #06172a45!important;transform:translateX(-110%)!important;visibility:hidden!important;transition:transform .24s ease,visibility .24s ease!important}
+  .mobile-nav.open{transform:translateX(0)!important;visibility:visible!important}
+  .mobile-nav .nav{display:flex!important;align-items:center!important;justify-content:flex-start!important;flex:0 0 auto!important;width:100%!important;min-height:47px!important;margin:0!important;padding:12px 14px!important;border:1px solid transparent!important;border-radius:11px!important;background:transparent!important;color:#c2d0e0!important;text-align:left!important;font-size:14px!important;font-weight:650!important;box-shadow:none!important}
+  .mobile-nav .nav.active{background:linear-gradient(100deg,#ffffff20,#ffffff0a)!important;border-color:#ffffff18!important;color:#fff!important;box-shadow:inset 3px 0 #ff945f!important}
+  .mobile-menu-overlay{display:block!important;position:fixed!important;inset:0!important;z-index:1001!important;background:#06172a80!important;opacity:0!important;visibility:hidden!important;transition:opacity .24s ease,visibility .24s ease!important}
+  .mobile-menu-overlay.open{opacity:1!important;visibility:visible!important}
+  body.menu-open{overflow:hidden!important}
+  .top-right{min-width:0!important;gap:5px!important}
+  .top-right #syncStatus{display:none!important}
+  .top-right #googleSyncBtn{white-space:nowrap!important;font-size:10px!important;padding:8px 9px!important}
+  .dash-hero{min-height:310px!important;padding:26px 20px!important}
+  .dash-copy{width:100%!important;max-width:100%!important}
+  .dash-hero h1{font-size:clamp(30px,8vw,39px)!important}
+  .dash-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .quick-actions{grid-template-columns:1fr!important}
+  .fields{grid-template-columns:1fr!important}
+  .fields .wide{grid-column:auto!important}
+  .item-row{grid-template-columns:1fr 1fr!important}
+  .item-row .desc-field,.item-row .product-row-select{grid-column:1/-1!important}
+  .product-layout{grid-template-columns:minmax(0,1fr)!important}
+}
+@media(prefers-reduced-motion:reduce){.mobile-nav,.mobile-menu-overlay{transition:none!important}}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head><body>
