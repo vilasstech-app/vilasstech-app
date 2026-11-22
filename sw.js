@@ -1,5 +1,5 @@
-const CACHE="vilasstech-pwa-v55";
-const SHELL=["./","./index.html","./manifest.webmanifest","./icon.svg"];
+const CACHE="vilasstech-pwa-v56";
+const SHELL=["./","./index.html","./manifest.webmanifest","./icon.svg","./vilasstech-v56.css?v=56"];
 self.addEventListener("install",event=>{
   event.waitUntil((async()=>{
     const cache=await caches.open(CACHE);
