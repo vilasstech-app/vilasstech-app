@@ -1,44 +1,35 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#102b50">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="VILASSTECH">
-  <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="icon" href="./icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="./icon.svg">
-  <title>VILASSTECH</title>
-  <style>
-    *{box-sizing:border-box}
-    html,body{margin:0;width:100%;height:100%;background:#102b50;font-family:Arial,sans-serif}
-    body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
-    #app{height:100%;display:flex;flex-direction:column}
-    header{height:48px;flex:0 0 48px;background:#102b50;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;letter-spacing:1.5px}
-    iframe{border:0;width:100%;height:calc(100% - 48px);background:#f2f5f9;flex:1}
-    #fallback{display:none;color:#fff;text-align:center;padding:18px}
-    #fallback a{color:#fff}
-  </style>
-</head>
-<body>
-  <div id="app">
-    <header>VILASSTECH</header>
-    <iframe
-      src="https://script.google.com/macros/s/AKfycbyTDI0uDLl82lc0KuSd3hYxOVMeTFBCfDFrHWW4MpaWDfEbqgagUvwNEw5D_Mxf8VGw/exec"
-      title="Sistema de cotizaciones VILASSTECH"
-      allow="clipboard-read; clipboard-write"
-      referrerpolicy="strict-origin-when-cross-origin">
-    </iframe>
-    <div id="fallback">Si la aplicación no carga dentro de esta pantalla, <a href="https://script.google.com/macros/s/AKfycbyTDI0uDLl82lc0KuSd3hYxOVMeTFBCfDFrHWW4MpaWDfEbqgagUvwNEw5D_Mxf8VGw/exec" target="_blank" rel="noopener">ábrela directamente aquí</a>.</div>
-  </div>
-  <script>
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js").catch(() => {});
-      });
-    }
-  </script>
-</body>
-</html>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#102b50"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="VILASSTECH">
+<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="./icon.svg">
+<title>VILASSTECH Cotizaciones</title><link rel="stylesheet" href="./app.css">
+</head><body>
+<div class="app-shell">
+<aside class="sidebar">
+<div class="brand"><div class="brand-mark">V</div><div><strong>VILASSTECH</strong><small>Soluciones integrales</small></div></div>
+<nav><button class="nav active" data-view="dashboard"><span>⌂</span> Inicio</button><button class="nav" data-view="quote"><span>＋</span> Nueva cotización</button><button class="nav" data-view="history"><span>▤</span> Historial local</button></nav>
+<div class="side-foot"><span class="dot"></span> Aplicación instalada / web<br><small>Etapa 1 · modo de prueba</small></div>
+</aside>
+<main>
+<header class="topbar"><div class="mobile-brand"><span class="brand-mark">V</span> VILASSTECH</div><div class="top-right"><span class="test-pill"><i></i> Modo de prueba</span><button id="installBtn" class="install-btn" hidden>Instalar aplicación</button></div></header>
+<section class="view active" id="dashboard">
+<div class="welcome"><div><p class="eyebrow">PANEL DE CONTROL</p><h1>¡Hola! Bienvenido a VILASSTECH</h1><p class="sub">Cotiza tus servicios y productos de forma rápida.</p></div><button class="primary" data-open-quote>＋ Crear cotización</button></div>
+<div class="stats"><div class="stat"><span class="stat-icon blue">▤</span><label>Borradores guardados</label><strong id="statDrafts">0</strong><small>En este dispositivo</small></div><div class="stat"><span class="stat-icon orange">$</span><label>Total de borradores</label><strong id="statAmount">$0.00</strong><small>Acumulado de borradores</small></div><div class="stat"><span class="stat-icon green">✓</span><label>Aplicación</label><strong>Lista</strong><small>Instalable en dispositivos</small></div></div>
+<div class="panel quick"><div><h2>¿Qué necesitas hacer?</h2><p>Comienza una nueva cotización y añade los productos o servicios.</p></div><button class="primary" data-open-quote>Crear cotización <span>→</span></button></div>
+<div class="panel"><div class="panel-heading"><div><h2>Borradores recientes</h2><p>Documentos guardados localmente en esta etapa de prueba.</p></div><button class="link-btn" data-view="history">Ver historial →</button></div><div id="recentList" class="recent-list"></div></div>
+<div class="notice"><strong>Nota sobre esta versión</strong><p>Los borradores se guardan solamente en este dispositivo y navegador. Todavía no se sincronizan con Google Sheets ni representan las cotizaciones oficiales de tu sistema anterior.</p></div>
+</section>
+<section class="view" id="quote">
+<div class="view-head"><div><p class="eyebrow">DOCUMENTO NUEVO</p><h1>Nueva cotización</h1><p class="sub">Completa los datos del cliente y agrega los servicios.</p></div><button class="secondary" data-view="dashboard">← Volver</button></div>
+<form id="quoteForm">
+<div class="panel"><div class="panel-heading"><div><h2>Datos del cliente</h2><p>Información de contacto para la cotización.</p></div><span class="quote-badge" id="quoteNumber">BORRADOR</span></div>
+<div class="fields"><label>Cliente / razón social *<input id="client" required placeholder="Nombre del cliente"></label><label>Teléfono<input id="phone" type="tel" placeholder="Número de contacto"></label><label class="wide">Dirección<input id="address" placeholder="Dirección del cliente"></label></div></div>
+<div class="panel"><div class="panel-heading"><div><h2>Productos y servicios</h2><p>Agrega los renglones que necesites.</p></div></div><div id="items"></div><button class="add-row" type="button" id="addItem">＋ Añadir producto o servicio</button></div>
+<div class="panel"><div class="panel-heading"><div><h2>Resumen</h2><p>Calculado automáticamente.</p></div></div><label class="tax-toggle"><input type="checkbox" id="tax"> Aplicar ITBMS (7%)</label><div class="totals"><div><span>Subtotal</span><b id="subtotal">$0.00</b></div><div><span>ITBMS</span><b id="taxValue">$0.00</b></div><div class="grand"><span>Total</span><b id="total">$0.00</b></div></div><label class="notes-label">Observaciones / condiciones<textarea id="notes" rows="3" placeholder="Vigencia, garantía, método de pago, condiciones..."></textarea></label><div class="actions"><button type="button" class="secondary" id="resetQuote">Limpiar</button><button type="button" class="primary" id="saveQuote">Guardar borrador</button></div><p id="saveStatus" class="status" aria-live="polite"></p></div></form>
+</section>
+<section class="view" id="history"><div class="view-head"><div><p class="eyebrow">DOCUMENTOS</p><h1>Historial de borradores</h1><p class="sub">Busca por cliente o número de borrador.</p></div><button class="primary" data-open-quote>＋ Crear</button></div><div class="panel"><div class="searchbox"><span>⌕</span><input id="searchHistory" placeholder="Buscar por nombre de cliente…"></div><div id="historyList" class="recent-list"></div></div><div class="notice"><strong>Historial temporal</strong><p>Este historial es independiente de tu historial oficial en Google Sheets. La conexión a tu sistema real se realizará en la siguiente fase.</p></div></section>
+</main>
+</div><div id="toast" role="status"></div><script src="./app.js"></script>
+</body></html>
