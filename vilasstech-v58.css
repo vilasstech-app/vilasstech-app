@@ -431,3 +431,8 @@ body.v59-pdf-open{overflow:hidden!important}
 #dashboard .v59-gallery .gallery-slide{background:#f5f8fb!important}
 #dashboard .v59-gallery .service-visual:after{background:linear-gradient(180deg,transparent 40%,#071e35 91%)!important}
 #dashboard .v59-gallery .gallery-slide figcaption{bottom:53px!important}
+
+/* Galería definitiva con las cinco fotografías elegidas por el propietario */
+#dashboard .v59-gallery .service-photo{object-fit:cover!important;object-position:center!important;filter:none!important;padding:0!important;background:transparent!important}
+#dashboard .v59-gallery .service-visual:after{background:linear-gradient(180deg,#071e3500 12%,#071e3520 48%,#071e35e8 100%)!important}
+#dashboard .v59-gallery .gallery-slide{background:#0c263b!important}
