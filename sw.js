@@ -1,4 +1,4 @@
-const CACHE="vilasstech-pwa-v79-ruc-payment";
+const CACHE="vilasstech-pwa-v80-firebase-admin";
 const SHELL=["./","./index.html","./manifest.webmanifest","./icon.svg","./VILASSTECH-logo-original-recortado.png","./vilasstech-v56.css?v=56","./vilasstech-v57.css?v=57","./vilasstech-v58.css?v=60-ruc-payment","./galeria/01-alarmas.jpg","./galeria/02-control-acceso.jpg","./galeria/03-reparacion-computadoras.jpg","./galeria/04-redes.jpg","./galeria/05-camaras-cctv.jpg"];
 self.addEventListener("install",event=>{
   event.waitUntil((async()=>{
