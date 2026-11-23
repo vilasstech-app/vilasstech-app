@@ -436,3 +436,9 @@ body.v59-pdf-open{overflow:hidden!important}
 #dashboard .v59-gallery .service-photo{object-fit:cover!important;object-position:center!important;filter:none!important;padding:0!important;background:transparent!important}
 #dashboard .v59-gallery .service-visual:after{background:linear-gradient(180deg,#071e3500 12%,#071e3520 48%,#071e35e8 100%)!important}
 #dashboard .v59-gallery .gallery-slide{background:#0c263b!important}
+
+/* Logotipo original PNG: conservar proporción y maximizar legibilidad */
+.sidebar .brand .brand-mark.logo-mark{width:100%!important;max-width:235px!important;height:91px!important;min-height:0!important;aspect-ratio:auto!important;padding:3px!important;background:#fff!important;overflow:hidden!important}
+.sidebar .brand .brand-mark.logo-mark img{display:block!important;width:100%!important;height:100%!important;max-height:none!important;object-fit:contain!important;object-position:center!important}
+.topbar .mobile-brand .brand-mark.logo-mark{height:51px!important;width:165px!important;max-width:45vw!important;padding:2px!important;background:#fff!important}
+.topbar .mobile-brand .brand-mark.logo-mark img{width:100%!important;height:100%!important;object-fit:contain!important}
