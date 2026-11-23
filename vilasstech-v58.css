@@ -422,3 +422,12 @@ body.v59-pdf-open{overflow:hidden!important}
 .sidebar .brand .brand-mark.logo-mark{max-width:225px!important;min-height:82px!important;padding:5px 7px!important;aspect-ratio:2.9/1!important}
 .sidebar .brand .brand-mark.logo-mark img{width:100%!important;height:100%!important;max-height:none!important;object-fit:contain!important;object-position:center!important}
 .topbar .mobile-brand .brand-mark.logo-mark img{object-fit:contain!important;object-position:center!important}
+
+/* Ajuste visual 59.9: logotipo legible y fotos exclusivas de equipos */
+.sidebar .brand .brand-mark.logo-mark{max-width:235px!important;width:100%!important;min-height:0!important;height:86px!important;aspect-ratio:auto!important;padding:4px 5px!important}
+.sidebar .brand .brand-mark.logo-mark img{width:100%!important;height:100%!important;max-height:none!important;object-fit:contain!important}
+.topbar .mobile-brand .brand-mark.logo-mark{width:170px!important;max-width:43vw!important;height:50px!important;padding:2px!important}
+#dashboard .v59-gallery .service-photo{object-fit:contain!important;object-position:center 38%!important;filter:none!important;inset:0!important;padding:15px 20px 78px!important;background:#f5f8fb!important}
+#dashboard .v59-gallery .gallery-slide{background:#f5f8fb!important}
+#dashboard .v59-gallery .service-visual:after{background:linear-gradient(180deg,transparent 40%,#071e35 91%)!important}
+#dashboard .v59-gallery .gallery-slide figcaption{bottom:53px!important}
