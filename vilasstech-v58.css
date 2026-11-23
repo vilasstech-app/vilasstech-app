@@ -200,3 +200,77 @@
 .view:not(#dashboard) .recent-list>*{border-radius:12px}
 #products .product-layout,#clients .product-layout{gap:18px!important}
 @media(max-width:700px){.view:not(#dashboard) .view-head{align-items:flex-start!important;flex-direction:column!important;gap:12px!important}.view:not(#dashboard) .view-head button{width:100%!important}.view:not(#dashboard) .panel{padding:16px!important;border-radius:16px!important}.view:not(#dashboard) .view-head h1{font-size:27px!important}.view:not(#dashboard) .panel-heading{align-items:flex-start!important;flex-wrap:wrap!important}}
+
+/* ================================================================
+ VILASSTECH 59 · AURORA — transformación integral de interfaz
+ Exclusivamente visual: preserva navegación, IDs, eventos y datos.
+================================================================ */
+:root{--navy:#101e34!important;--blue:#0c9aa6!important;--orange:#ff995e!important;--ink:#14243c!important;--muted:#75879a!important;--bg:#edf3f8!important;--line:#dce7f0!important;--green:#20ae84!important}
+html,body{background:#edf3f8!important;color:#172b45!important}
+body{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important}
+.app-shell{background:radial-gradient(circle at 83% 0%,#d9f0f0 0%,transparent 34%),#edf3f8!important;min-height:100vh}
+button{font-family:inherit!important;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid #23b6b7!important;outline-offset:3px}
+.sidebar{background:linear-gradient(180deg,#0b182b 0%,#132b43 58%,#102337 100%)!important;border-right:1px solid #2a4358!important;box-shadow:8px 0 35px rgba(18,35,57,.09)!important}
+.sidebar .brand{border-bottom:1px solid #ffffff1e!important;padding-bottom:25px!important;margin-bottom:17px!important}
+.sidebar .brand strong{font-size:14px!important;letter-spacing:1.8px!important;color:#fff!important}
+.sidebar .brand small{color:#9cb6c9!important;font-size:10px!important;letter-spacing:.45px!important}
+.sidebar .brand-mark.logo-mark{background:#173550!important;border:1px solid #43687a!important;border-radius:16px!important}
+.sidebar nav .nav{border:1px solid transparent!important;border-radius:13px!important;color:#b6cbd8!important;font-weight:650!important;font-size:12px!important;letter-spacing:.08px!important;margin:4px 0!important;transition:background .2s,border-color .2s,transform .2s!important}
+.sidebar nav .nav span{background:#ffffff0d!important;color:#9ed8d7!important;border-radius:10px!important}
+.sidebar nav .nav:hover{background:#ffffff12!important;color:#fff!important;border-color:#ffffff1a!important;transform:translateX(2px)!important}
+.sidebar nav .nav.active{background:linear-gradient(100deg,#155968,#16364d)!important;color:#fff!important;border:1px solid #2c8e96!important;box-shadow:inset 3px 0 #40d7cc,0 5px 18px #06131e50!important}
+.sidebar nav .nav.active span{color:#63eee0!important;background:#ffffff19!important}
+.sidebar .side-foot{background:#ffffff0a!important;border:1px solid #ffffff16!important;border-radius:13px!important;padding:12px!important;color:#b2cbd5!important}
+.topbar{background:#ffffffc9!important;backdrop-filter:blur(14px);border:1px solid #e0eaf1!important;border-radius:16px!important;padding:0 16px!important;box-shadow:0 5px 25px #2039540a!important;margin-top:16px!important;margin-bottom:23px!important}
+.topbar .test-pill{border:1px solid #dbe9ec!important;background:#f2faf9!important;color:#567487!important;font-weight:650!important}
+.topbar .install-btn{background:#11283f!important;color:#fff!important;border:1px solid #11283f!important;border-radius:11px!important;font-weight:750!important}
+.view:not(.active){display:none!important}.view.active{display:block!important}
+.view.active{animation:auroraEnter .25s ease both}
+@keyframes auroraEnter{from{opacity:.6;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.view .view-head{background:linear-gradient(110deg,#122c44,#16435a)!important;border:1px solid #22576a!important;border-radius:23px!important;padding:26px 29px!important;box-shadow:0 15px 35px #102a4321!important;margin-bottom:23px!important}
+.view .view-head h1{color:#fff!important;font-size:clamp(27px,3vw,39px)!important;font-weight:850!important;letter-spacing:-1.2px!important}
+.view .view-head .eyebrow{color:#58e1d5!important;letter-spacing:2.1px!important;font-weight:850!important;font-size:10px!important}
+.view .view-head .sub{color:#c5dbe5!important;font-size:13px!important;line-height:1.6!important}
+.view .view-head button{background:#fff!important;color:#15364c!important;border:1px solid #ffffffb8!important;border-radius:11px!important;font-weight:800!important;padding:12px 18px!important}
+.view .panel{background:#fff!important;border:1px solid #e1eaf1!important;border-radius:22px!important;box-shadow:0 9px 28px #1939510b!important;padding:24px!important}
+.view .panel h2{color:#14334a!important;font-size:19px!important;font-weight:800!important}
+.view .panel-heading{border-bottom:1px solid #eaf0f4!important;padding-bottom:17px!important;margin-bottom:19px!important}
+.view .panel-heading p{color:#8294a3!important}
+.view label,.view .notes-label{color:#3c5b6d!important;font-weight:750!important;font-size:12px!important}
+.view input:not([type=checkbox]):not([type=radio]):not([type=hidden]),.view select,.view textarea{background:#f5f9fb!important;border:1px solid #d9e6eb!important;border-radius:12px!important;color:#17354b!important;padding:12px 13px!important;min-height:45px!important;box-shadow:none!important}
+.view input:focus,.view select:focus,.view textarea:focus{border-color:#0ca7a9!important;box-shadow:0 0 0 4px #16b8b51b!important;outline:none!important;background:#fff!important}
+.view button.primary,.view .primary{background:linear-gradient(110deg,#0c8f9c,#0b697d)!important;border:1px solid #087c89!important;color:#fff!important;border-radius:12px!important;font-weight:800!important;box-shadow:0 7px 18px #0b879c2b!important}
+.view button.secondary,.view .secondary,.view .mini-btn{background:#f3f8fa!important;color:#1a5061!important;border:1px solid #d9e7ec!important;border-radius:11px!important;font-weight:750!important}
+.view .quote-badge{background:#e5f8f5!important;color:#087b7b!important;border:1px solid #bfe8e2!important;border-radius:10px!important}
+.view .notice{background:#eaf6f8!important;border:1px solid #cfe8eb!important;border-left:4px solid #12a5a6!important;border-radius:14px!important}
+.view .searchbox{background:#f5f9fb!important;border:1px solid #d9e6eb!important;border-radius:13px!important}
+.view .product-card,.view .draft-card,.view .recent-item,.view .item-row{background:#fff!important;border:1px solid #e1eaf1!important;border-radius:15px!important;box-shadow:0 3px 12px #17374d08!important}
+.view .product-card:hover,.view .draft-card:hover{border-color:#8dd6d2!important;box-shadow:0 10px 24px #0b858515!important}
+.view table{border-collapse:separate!important;border-spacing:0!important;width:100%}
+.view th{background:#eaf4f5!important;color:#35616b!important;font-size:11px!important;letter-spacing:.5px!important}
+.view td{border-bottom:1px solid #eaf0f4!important;color:#28485b!important}
+#dashboard.v58-dashboard .v58-welcome{background:linear-gradient(105deg,#102a42,#164e61)!important;border-radius:23px!important;padding:26px 28px!important;margin-bottom:18px!important;box-shadow:0 14px 30px #15364b1a!important}
+#dashboard .v58-welcome .v58-label{color:#61e4d8!important}
+#dashboard .v58-welcome h1{color:#fff!important;font-size:clamp(27px,3vw,39px)!important}
+#dashboard .v58-welcome p{color:#c7dce6!important}
+#dashboard .v58-welcome-actions .v58-btn-primary{background:#ff9a62!important;color:#172d41!important;border:0!important}
+#dashboard .v58-welcome-actions .v58-btn-secondary{background:#ffffff18!important;color:#fff!important;border:1px solid #ffffff40!important}
+#dashboard .v58-hero-main{background:linear-gradient(120deg,#0e3a4a,#0d7481)!important;border:1px solid #2d9da2!important;border-radius:22px!important;box-shadow:0 12px 28px #11445421!important}
+#dashboard .v58-hero-main .v58-pill{background:#ffffff16!important;border:1px solid #ffffff38!important;color:#a5fff0!important}
+#dashboard .v58-hero-main h2{color:#fff!important}
+#dashboard .v58-hero-main p{color:#d2ecee!important}
+#dashboard .v58-hero-main button:first-child{background:#ff9b62!important;color:#183348!important}
+#dashboard .v58-hero-media{border-radius:22px!important;overflow:hidden!important}
+#dashboard .v58-stats .stat{background:#fff!important;border:1px solid #deebef!important;border-radius:19px!important;box-shadow:0 8px 25px #173a4c0c!important}
+#dashboard .v58-stats .stat:before{background:#12a5a6!important}
+#dashboard .v58-stats .stat strong{color:#12364b!important}
+#dashboard .v58-content-grid .panel,#dashboard .recent-panel{border-radius:21px!important;border:1px solid #e0eaef!important;background:#fff!important;box-shadow:0 8px 26px #1939510c!important}
+#dashboard .quick-action{border-radius:15px!important;border:1px solid #dce9ee!important;background:#f8fbfc!important}
+#dashboard .quick-action:hover{background:#eaf9f7!important;border-color:#88d6cf!important}
+#dashboard .qa-icon{background:#dff6f1!important;color:#087f83!important}
+#dashboard .notice{background:#eaf7f7!important;border-color:#cde8e8!important}
+@media(min-width:901px){.sidebar{width:250px!important;padding:24px 16px!important}main{margin-left:250px!important;padding:0 27px 40px!important}#dashboard .v58-hero{gap:17px!important}#dashboard .v58-welcome{min-height:145px!important}}
+@media(max-width:900px){main{margin-left:0!important;padding:0 15px 28px!important}.topbar{margin-top:10px!important;border-radius:14px!important}.sidebar{z-index:1000!important}#dashboard .v58-welcome{padding:21px!important}.view .view-head{padding:21px!important;border-radius:18px!important}.view .panel{padding:17px!important;border-radius:17px!important}}
+@media(max-width:600px){#dashboard .v58-welcome-actions{display:grid!important;grid-template-columns:1fr 1fr!important}#dashboard .v58-welcome h1{font-size:27px!important}#dashboard .v58-hero-main{padding:22px!important}.view .view-head{flex-direction:column!important;align-items:stretch!important}.view .view-head button{width:100%!important}.view .fields{grid-template-columns:1fr!important}.view .product-layout{grid-template-columns:1fr!important}.view .panel{padding:15px!important}}
+@media(prefers-reduced-motion:reduce){.view.active{animation:none!important}button,.panel{transition:none!important}}
