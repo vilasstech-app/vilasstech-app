@@ -174,3 +174,29 @@
   .topbar{margin-bottom:12px!important}
 }
 @media(max-width:900px){#dashboard .v58-hero-main{padding:24px!important}#dashboard .v58-hero{gap:12px!important}}
+
+/* VILASSTECH v58-8 · rediseño de pantallas de gestión (solo presentación) */
+.view:not(#dashboard){max-width:1480px;margin-inline:auto}
+.view:not(#dashboard) .view-head{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:0 0 22px!important;padding:8px 0 19px!important;border-bottom:1px solid #dce6f1}
+.view:not(#dashboard) .view-head .eyebrow{font-size:10px!important;letter-spacing:2px!important;font-weight:850!important;color:#f0783f!important;margin:0 0 9px!important}
+.view:not(#dashboard) .view-head h1{font-size:clamp(26px,2.7vw,37px)!important;line-height:1.14!important;letter-spacing:-1.2px!important;color:#102a49!important;margin:0 0 8px!important}
+.view:not(#dashboard) .view-head .sub{color:#73869c!important;font-size:13px!important;line-height:1.55!important;margin:0!important}
+.view:not(#dashboard) .panel{background:#fff!important;border:1px solid #e0e9f3!important;border-radius:20px!important;box-shadow:0 10px 30px rgba(20,49,83,.055)!important;padding:22px!important;margin-bottom:18px!important}
+.view:not(#dashboard) .panel-heading{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-bottom:16px;margin-bottom:17px;border-bottom:1px solid #edf1f6}
+.view:not(#dashboard) .panel h2{color:#153250!important;letter-spacing:-.45px!important;font-size:18px!important}
+.view:not(#dashboard) .panel-heading p,.view:not(#dashboard) .panel .sub{color:#8090a3!important;font-size:12px!important;line-height:1.6!important}
+.view:not(#dashboard) .fields{gap:15px!important}
+.view:not(#dashboard) label{font-weight:700!important;color:#405875!important;font-size:12px!important}
+.view:not(#dashboard) input:not([type=checkbox]):not([type=radio]):not([type=hidden]),.view:not(#dashboard) select,.view:not(#dashboard) textarea{border:1px solid #dbe5f0!important;background:#f9fbfe!important;border-radius:11px!important;min-height:43px!important;box-shadow:none!important;color:#1a3553!important;transition:border-color .18s,box-shadow .18s,background .18s}
+.view:not(#dashboard) textarea{min-height:95px!important}
+.view:not(#dashboard) input:focus,.view:not(#dashboard) select:focus,.view:not(#dashboard) textarea:focus{outline:none!important;border-color:#1c8ebc!important;background:#fff!important;box-shadow:0 0 0 3px rgba(28,142,188,.12)!important}
+.view:not(#dashboard) button.primary,.view:not(#dashboard) .primary{background:#112d50!important;color:white!important;border-radius:11px!important;box-shadow:0 5px 14px rgba(17,45,80,.12)!important}
+.view:not(#dashboard) button.secondary,.view:not(#dashboard) .secondary{background:#fff!important;color:#23415f!important;border:1px solid #dce5f0!important;border-radius:11px!important}
+.view:not(#dashboard) .actions{gap:10px!important;flex-wrap:wrap}
+.view:not(#dashboard) .quote-badge{background:#eaf3fa!important;color:#23618a!important;border:1px solid #d6e7f4!important;border-radius:9px!important;padding:8px 11px!important}
+.view:not(#dashboard) .searchbox{background:#f8fbff!important;border:1px solid #dce7f2!important;border-radius:12px!important;padding:4px 12px!important;margin-bottom:15px!important}
+.view:not(#dashboard) .searchbox input{background:transparent!important;border:0!important;box-shadow:none!important}
+.view:not(#dashboard) .notice{border-radius:14px!important;background:#f2f7fc!important;border:1px solid #deebf5!important;padding:16px 19px!important}
+.view:not(#dashboard) .recent-list>*{border-radius:12px}
+#products .product-layout,#clients .product-layout{gap:18px!important}
+@media(max-width:700px){.view:not(#dashboard) .view-head{align-items:flex-start!important;flex-direction:column!important;gap:12px!important}.view:not(#dashboard) .view-head button{width:100%!important}.view:not(#dashboard) .panel{padding:16px!important;border-radius:16px!important}.view:not(#dashboard) .view-head h1{font-size:27px!important}.view:not(#dashboard) .panel-heading{align-items:flex-start!important;flex-wrap:wrap!important}}
