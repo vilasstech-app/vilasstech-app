@@ -442,3 +442,6 @@ body.v59-pdf-open{overflow:hidden!important}
 .sidebar .brand .brand-mark.logo-mark img{display:block!important;width:100%!important;height:100%!important;max-height:none!important;object-fit:contain!important;object-position:center!important}
 .topbar .mobile-brand .brand-mark.logo-mark{height:51px!important;width:165px!important;max-width:45vw!important;padding:2px!important;background:#fff!important}
 .topbar .mobile-brand .brand-mark.logo-mark img{width:100%!important;height:100%!important;object-fit:contain!important}
+
+/* Datos fiscales y configuración bancaria */
+#backup #paymentSettingsForm .fields{grid-template-columns:repeat(2,minmax(0,1fr))!important}#backup #paymentSettingsForm .wide{grid-column:1/-1!important}@media(max-width:700px){#backup #paymentSettingsForm .fields{grid-template-columns:1fr!important}}
