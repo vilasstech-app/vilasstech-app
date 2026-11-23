@@ -384,3 +384,33 @@ body.v59-pdf-open{overflow:hidden!important}
 .topbar .mobile-brand .brand-mark.logo-mark{width:146px!important;height:48px!important;background:#fff!important;border-radius:9px!important;padding:3px!important;display:inline-flex!important;align-items:center!important}
 .topbar .mobile-brand .brand-mark.logo-mark img{width:100%!important;height:100%!important;object-fit:contain!important}
 @media(max-width:900px){.topbar .mobile-brand{font-size:0!important}.topbar .mobile-brand .brand-mark.logo-mark{width:135px!important;max-width:35vw!important;height:44px!important}.sidebar .brand .brand-mark.logo-mark{max-width:210px!important}}
+
+/* Corrección global de encabezados: contraste, márgenes y alineación */
+.view:not(#dashboard) > .view-head{
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  gap:22px!important;padding:27px 30px!important;min-height:142px!important;
+  background:linear-gradient(115deg,#102c45,#145366)!important;
+  border-radius:23px!important;overflow:visible!important;
+}
+.view:not(#dashboard) > .view-head > div:first-child{flex:1 1 auto!important;min-width:0!important;display:block!important}
+.view:not(#dashboard) > .view-head .eyebrow{
+  display:block!important;color:#66efe3!important;font-size:11px!important;
+  font-weight:850!important;letter-spacing:2.1px!important;line-height:1.4!important;
+  margin:0 0 10px!important;padding:0!important
+}
+.view:not(#dashboard) > .view-head h1{
+  display:block!important;color:#fff!important;-webkit-text-fill-color:#fff!important;
+  opacity:1!important;font-size:clamp(27px,3vw,39px)!important;line-height:1.18!important;
+  font-weight:850!important;letter-spacing:-1.1px!important;margin:0 0 9px!important;padding:0!important;
+  text-shadow:none!important
+}
+.view:not(#dashboard) > .view-head .sub{
+  display:block!important;color:#d4e6ee!important;-webkit-text-fill-color:#d4e6ee!important;
+  opacity:1!important;font-size:13px!important;line-height:1.55!important;margin:0!important;padding:0!important
+}
+.view:not(#dashboard) > .view-head > button{flex:0 0 auto!important;align-self:center!important;white-space:nowrap!important}
+@media(max-width:700px){
+  .view:not(#dashboard) > .view-head{padding:23px 20px!important;min-height:0!important;gap:16px!important;flex-direction:column!important;align-items:stretch!important}
+  .view:not(#dashboard) > .view-head h1{font-size:29px!important}
+  .view:not(#dashboard) > .view-head > button{align-self:stretch!important;width:100%!important}
+}
