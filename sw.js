@@ -1,5 +1,5 @@
-const CACHE="vilasstech-pwa-v71-pdf-preview";
-const SHELL=["./","./index.html","./manifest.webmanifest","./icon.svg","./vilasstech-v56.css?v=56","./vilasstech-v57.css?v=57","./vilasstech-v58.css?v=59-pdf4",];
+const CACHE="vilasstech-pwa-v72-brand-assets";
+const SHELL=["./","./index.html","./manifest.webmanifest","./icon.svg","./vilasstech-logo.svg","./vilasstech-v56.css?v=56","./vilasstech-v57.css?v=57","./vilasstech-v58.css?v=59-brand5",];
 self.addEventListener("install",event=>{
   event.waitUntil((async()=>{
     const cache=await caches.open(CACHE);
