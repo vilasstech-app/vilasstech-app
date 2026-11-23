@@ -358,3 +358,20 @@ button:focus-visible,a:focus-visible{outline:3px solid #23b6b7!important;outline
 /* La imagen de respaldo se muestra cuando una foto externa falla */
 #dashboard .v59-gallery .service-photo[style*="display: none"]{display:none!important}
 #dashboard .v59-gallery .service-photo[style*="display:none"]{display:none!important}
+
+/* Visor PDF integrado para escritorio y teléfono */
+.v59-pdf-modal[hidden]{display:none!important}
+.v59-pdf-modal{position:fixed;inset:0;z-index:99999;background:#07182bdf;display:flex;align-items:center;justify-content:center;padding:16px}
+body.v59-pdf-open{overflow:hidden!important}
+.v59-pdf-shell{width:min(1120px,100%);height:min(900px,calc(100dvh - 32px));background:#f3f7fa;border-radius:20px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 90px #0008}
+.v59-pdf-toolbar{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:13px 18px;background:#fff;border-bottom:1px solid #dce7ed}
+.v59-pdf-title{display:flex;flex-direction:column;min-width:0;gap:3px}.v59-pdf-title strong{font-size:14px;color:#123348;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.v59-pdf-title small{font-size:10px;color:#7d90a1}
+.v59-pdf-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.v59-pdf-actions button{border-radius:10px;padding:11px 13px;font-size:12px;font-weight:800;border:1px solid #d6e4e9;cursor:pointer;min-height:43px}
+.v59-pdf-download{background:#0b8390;color:#fff;border-color:#0b8390!important}
+.v59-pdf-share{background:#eaf5f6;color:#135a6a}
+.v59-pdf-close{background:#f3f6f8;color:#18394a;font-size:18px!important;min-width:43px}
+.v59-pdf-content{position:relative;flex:1;min-height:0;background:#d8e1e8}
+.v59-pdf-content iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff}
+.v59-pdf-fallback{display:none;padding:12px;text-align:center;font-size:12px;color:#53697a}
+@media(max-width:700px){.v59-pdf-modal{padding:0;align-items:stretch}.v59-pdf-shell{width:100%;height:100dvh;border-radius:0}.v59-pdf-toolbar{padding:11px 12px;display:grid;gap:9px;grid-template-columns:1fr auto}.v59-pdf-title small{display:none}.v59-pdf-actions{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr auto;gap:7px}.v59-pdf-actions button{padding:10px 7px;font-size:11px}.v59-pdf-close{min-width:40px}.v59-pdf-content iframe{height:100%}}
