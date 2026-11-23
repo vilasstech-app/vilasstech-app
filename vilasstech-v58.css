@@ -375,3 +375,12 @@ body.v59-pdf-open{overflow:hidden!important}
 .v59-pdf-content iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#fff}
 .v59-pdf-fallback{display:none;padding:12px;text-align:center;font-size:12px;color:#53697a}
 @media(max-width:700px){.v59-pdf-modal{padding:0;align-items:stretch}.v59-pdf-shell{width:100%;height:100dvh;border-radius:0}.v59-pdf-toolbar{padding:11px 12px;display:grid;gap:9px;grid-template-columns:1fr auto}.v59-pdf-title small{display:none}.v59-pdf-actions{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr auto;gap:7px}.v59-pdf-actions button{padding:10px 7px;font-size:11px}.v59-pdf-close{min-width:40px}.v59-pdf-content iframe{height:100%}}
+
+/* Marca corporativa completa en alta definición */
+.sidebar .brand{display:flex!important;align-items:center!important;gap:10px!important}
+.sidebar .brand .brand-mark.logo-mark{width:100%!important;max-width:215px!important;height:auto!important;min-height:72px!important;background:#fff!important;border-radius:14px!important;border:1px solid #dce7ee!important;padding:8px!important;display:flex!important;align-items:center!important;justify-content:center!important;flex:1 1 auto!important;overflow:hidden!important}
+.sidebar .brand .brand-mark.logo-mark img{display:block!important;width:100%!important;height:auto!important;max-height:85px!important;object-fit:contain!important}
+.sidebar .brand>div:last-child{display:none!important}
+.topbar .mobile-brand .brand-mark.logo-mark{width:146px!important;height:48px!important;background:#fff!important;border-radius:9px!important;padding:3px!important;display:inline-flex!important;align-items:center!important}
+.topbar .mobile-brand .brand-mark.logo-mark img{width:100%!important;height:100%!important;object-fit:contain!important}
+@media(max-width:900px){.topbar .mobile-brand{font-size:0!important}.topbar .mobile-brand .brand-mark.logo-mark{width:135px!important;max-width:35vw!important;height:44px!important}.sidebar .brand .brand-mark.logo-mark{max-width:210px!important}}
