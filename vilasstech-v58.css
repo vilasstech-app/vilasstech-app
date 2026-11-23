@@ -274,3 +274,80 @@ button:focus-visible,a:focus-visible{outline:3px solid #23b6b7!important;outline
 @media(max-width:900px){main{margin-left:0!important;padding:0 15px 28px!important}.topbar{margin-top:10px!important;border-radius:14px!important}.sidebar{z-index:1000!important}#dashboard .v58-welcome{padding:21px!important}.view .view-head{padding:21px!important;border-radius:18px!important}.view .panel{padding:17px!important;border-radius:17px!important}}
 @media(max-width:600px){#dashboard .v58-welcome-actions{display:grid!important;grid-template-columns:1fr 1fr!important}#dashboard .v58-welcome h1{font-size:27px!important}#dashboard .v58-hero-main{padding:22px!important}.view .view-head{flex-direction:column!important;align-items:stretch!important}.view .view-head button{width:100%!important}.view .fields{grid-template-columns:1fr!important}.view .product-layout{grid-template-columns:1fr!important}.view .panel{padding:15px!important}}
 @media(prefers-reduced-motion:reduce){.view.active{animation:none!important}button,.panel{transition:none!important}}
+
+/* VILASSTECH 59.2 · estructura operativa escritorio y teléfono */
+#dashboard .v58-welcome{display:flex!important;align-items:center!important;gap:18px!important}
+#dashboard .v58-welcome-actions{flex:0 0 auto!important}
+#dashboard .v59-showcase{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:18px;margin-bottom:22px;align-items:stretch}
+#dashboard .v59-intro{min-height:310px;border-radius:23px;background:linear-gradient(145deg,#0b3b4c,#087b80);padding:34px 32px;color:#fff;display:flex;flex-direction:column;justify-content:center;box-shadow:0 12px 32px #0a536b22}
+#dashboard .v59-kicker{color:#90fff0;font-size:10px;font-weight:850;letter-spacing:2px}
+#dashboard .v59-intro h2{font-size:clamp(27px,2.9vw,39px);line-height:1.13;letter-spacing:-1.2px;color:#fff;margin:16px 0 12px;max-width:540px}
+#dashboard .v59-intro p{color:#d5efee;font-size:13px;line-height:1.65;margin:0 0 20px;max-width:480px}
+#dashboard .v59-service-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:22px}
+#dashboard .v59-service-tags span{border:1px solid #ffffff36;background:#ffffff15;color:#e2fffb;border-radius:999px;padding:7px 10px;font-size:10px;font-weight:700}
+#dashboard .v59-client-link{align-self:flex-start;background:#fff!important;color:#0b4d5c!important;border-radius:12px!important;padding:11px 15px!important;font-size:12px;font-weight:800!important}
+#dashboard .v59-client-link span{margin-left:12px}
+#dashboard .v59-gallery{height:310px;min-height:310px!important;position:relative;overflow:hidden;border:1px solid #264a60!important;border-radius:23px!important;background:#091e33!important;isolation:isolate;box-shadow:0 12px 32px #0b29451e}
+#dashboard .v59-gallery .gallery-track{position:absolute;inset:0}
+#dashboard .v59-gallery .gallery-slide{position:absolute!important;inset:0!important;margin:0!important;display:block!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;transition:opacity .65s ease!important;background:radial-gradient(circle at 80% 30%,#195166,#091e33 70%)!important}
+#dashboard .v59-gallery .gallery-slide.active{visibility:visible!important;opacity:1!important;pointer-events:auto!important;z-index:2!important}
+#dashboard .v59-gallery .gallery-slide:after{content:none!important}
+#dashboard .v59-gallery .service-visual{position:absolute;inset:0 0 35px 28%;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#dashboard .v59-gallery .service-art{height:100%;width:100%;max-width:450px;filter:drop-shadow(0 12px 25px #0005)}
+#dashboard .v59-gallery .gallery-slide figcaption{position:absolute!important;z-index:4!important;inset:auto 20px 46px!important;background:none!important;padding:0!important;display:flex!important;flex-direction:column!important;gap:5px!important;text-align:left!important}
+#dashboard .v59-gallery .gallery-slide figcaption span{color:#6cf1e0!important;font-size:10px!important;font-weight:850!important;letter-spacing:1.5px!important}
+#dashboard .v59-gallery .gallery-slide figcaption strong{color:#fff!important;font-size:clamp(18px,2.1vw,27px)!important;line-height:1.2!important}
+#dashboard .v59-gallery .gallery-slide figcaption small{color:#b9d7e0!important;font-size:11px!important}
+#dashboard .v59-gallery-controls{position:absolute;z-index:6;right:15px;top:15px;display:flex;gap:7px;align-items:center;color:#d8eff4}
+#dashboard .v59-gallery-controls button{background:#ffffff1e!important;color:#fff!important;border:1px solid #ffffff38!important;width:34px;height:34px;padding:0!important;border-radius:10px!important;font-size:24px!important;line-height:1!important}
+#dashboard .v59-gallery-counter{font-size:11px;font-weight:800;letter-spacing:1px;min-width:53px;text-align:center}
+#dashboard .v59-gallery-dots{position:absolute;z-index:6;bottom:17px;left:20px;display:flex;gap:7px}
+#dashboard .v59-gallery-dots button{padding:0!important;width:7px;height:7px;border-radius:10px!important;border:0!important;background:#ffffff60!important;transition:width .2s}
+#dashboard .v59-gallery-dots button.active{width:25px;background:#57e4d6!important}
+.v59-mobile-dock{display:none}
+@media(min-width:901px){#dashboard .v59-showcase{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}#dashboard .v59-intro,#dashboard .v59-gallery{min-height:300px!important;height:auto}#dashboard .v59-gallery{height:310px}}
+@media(max-width:900px){
+ .app-shell{overflow-x:clip!important}
+ main{width:100%!important;min-width:0!important;padding:0 14px calc(110px + env(safe-area-inset-bottom))!important}
+ .topbar{height:auto!important;min-height:62px!important;padding:10px 12px!important;margin-top:9px!important;margin-bottom:15px!important;display:flex!important;gap:9px!important}
+ .topbar .mobile-brand{display:flex!important;align-items:center!important;gap:8px!important;min-width:0!important;font-size:12px!important;font-weight:850!important}
+ .topbar .top-right{display:flex!important;gap:5px!important;min-width:0!important;margin-left:auto!important}
+ .topbar .top-right .test-pill{display:none!important}
+ .topbar #googleSyncBtn{font-size:10px!important;padding:9px 10px!important;margin:0!important;white-space:nowrap!important}
+ #dashboard .v58-welcome{display:block!important;padding:23px!important;border-radius:20px!important;margin-bottom:13px!important;min-height:0!important}
+ #dashboard .v58-welcome h1{font-size:clamp(27px,6vw,36px)!important}
+ #dashboard .v58-welcome-actions{display:flex!important;grid-template-columns:none!important;margin-top:17px!important}
+ #dashboard .v58-welcome-actions button{width:auto!important;min-height:44px!important;padding:11px 17px!important}
+ #dashboard .v59-showcase{grid-template-columns:1fr!important;gap:12px!important}
+ #dashboard .v59-intro{min-height:0!important;padding:23px!important;border-radius:19px!important}
+ #dashboard .v59-intro h2{font-size:27px!important;margin:10px 0!important}
+ #dashboard .v59-intro p{margin-bottom:12px!important}
+ #dashboard .v59-service-tags{margin-bottom:13px!important}
+ #dashboard .v59-gallery{height:280px!important;min-height:280px!important;border-radius:19px!important}
+ #dashboard .v58-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+ #dashboard .v58-content-grid{grid-template-columns:1fr!important}
+ #dashboard .v58-section-head{align-items:center!important}
+ #dashboard .v58-section-head .data-status{display:none!important}
+ .v59-mobile-dock{position:fixed;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:center;bottom:0;left:0;right:0;z-index:990;background:#10263c!important;border-top:1px solid #2e5364!important;padding:9px max(8px,env(safe-area-inset-right)) calc(9px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));box-shadow:0 -12px 32px #0b1c3440}
+ .v59-mobile-dock button{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;padding:7px 2px!important;min-height:51px!important;background:transparent!important;border:0!important;border-radius:12px!important;color:#b6cbd7!important;font-size:10px!important;font-weight:750!important;box-shadow:none!important;margin:0!important;transform:none!important}
+ .v59-mobile-dock button span{font-size:23px!important;line-height:1!important}
+ .v59-mobile-dock button small{font-size:10px!important;font-weight:750!important;letter-spacing:0!important}
+ .v59-mobile-dock button.active{background:#155866!important;color:#74f5e5!important}
+ #mobileNav{z-index:1003!important;max-height:calc(100dvh - 95px)!important;overflow-y:auto!important}
+ #mobileMenuOverlay{z-index:1001!important}
+ .sidebar{z-index:1002!important}
+ .view:not(#dashboard) .view-head{display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:13px!important;padding:22px!important}
+ .view:not(#dashboard) .view-head button{width:100%!important;min-height:44px!important}
+ .view:not(#dashboard) .panel{padding:17px!important;border-radius:17px!important}
+ .view:not(#dashboard) .fields{grid-template-columns:1fr!important}
+ .view:not(#dashboard) .product-layout{grid-template-columns:1fr!important}
+ .view:not(#dashboard) .item-row{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .view:not(#dashboard) .item-row .desc-field,.view:not(#dashboard) .item-row .product-row-select{grid-column:1/-1!important}
+ .view:not(#dashboard) .panel,.view:not(#dashboard) .item-row,.view:not(#dashboard) .product-card{max-width:100%!important;min-width:0!important}
+ .view:not(#dashboard) .actions{display:flex!important;flex-wrap:wrap!important;gap:9px!important}
+ .view:not(#dashboard) .actions button{min-height:43px!important}
+ .view:not(#dashboard) .recent-list{min-width:0!important}
+ .view:not(#dashboard) .product-card{flex-wrap:wrap!important}
+ .view table{display:block!important;max-width:100%!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch!important}
+}
+@media(max-width:390px){.topbar .mobile-brand{font-size:10px!important}.topbar #googleSyncBtn{font-size:9px!important;padding:8px!important}#dashboard .v59-service-tags span{font-size:9px!important;padding:6px 8px!important}#dashboard .v59-gallery{height:255px!important;min-height:255px!important}.v59-mobile-dock button small{font-size:9px!important}}
