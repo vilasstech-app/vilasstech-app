@@ -417,3 +417,8 @@ body.v59-pdf-open{overflow:hidden!important}
 
 /* Galería fotográfica: enfoque natural, contraste y encuadre */
 #dashboard .v59-gallery .service-photo{filter:brightness(.88) saturate(1.04)!important;object-position:center 44%!important}#dashboard .v59-gallery .service-visual:after{background:linear-gradient(180deg,#061b2b05 0%,#061b2b14 35%,#061b2be8 100%)!important}#dashboard .v59-gallery .gallery-slide figcaption{bottom:53px!important}#dashboard .v59-gallery .gallery-slide figcaption strong{text-shadow:0 2px 10px #0009!important}
+
+/* Logo proporcional, basado en la figura geométrica de referencia */
+.sidebar .brand .brand-mark.logo-mark{max-width:225px!important;min-height:82px!important;padding:5px 7px!important;aspect-ratio:2.9/1!important}
+.sidebar .brand .brand-mark.logo-mark img{width:100%!important;height:100%!important;max-height:none!important;object-fit:contain!important;object-position:center!important}
+.topbar .mobile-brand .brand-mark.logo-mark img{object-fit:contain!important;object-position:center!important}
