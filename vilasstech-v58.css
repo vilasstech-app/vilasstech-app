@@ -60,7 +60,7 @@
 @media(prefers-reduced-motion:reduce){#dashboard .v58-hero-service .gallery-slide{transition:none}}
 
 /* v58.1 corrective layout: prevent shrink-to-content/float collisions */
-#dashboard.v58-dashboard{display:block!important;width:100%!important;max-width:none!important;min-width:0!important;overflow:visible!important}
+#dashboard.v58-dashboard.active{display:block!important;width:100%!important;max-width:none!important;min-width:0!important;overflow:visible!important}
 #dashboard.v58-dashboard>.v58-welcome,#dashboard.v58-dashboard>.v58-hero,#dashboard.v58-dashboard>.v58-stats-wrap,#dashboard.v58-dashboard>.v58-content-grid,#dashboard.v58-dashboard>.v58-bottom{float:none!important;clear:both!important;width:100%!important;max-width:none!important;min-width:0!important;box-sizing:border-box!important}
 #dashboard.v58-dashboard>.v58-hero{display:grid!important;grid-template-columns:minmax(0,1.45fr) minmax(0,.8fr)!important;align-items:stretch!important;gap:14px!important;margin:0 0 22px!important}
 #dashboard .v58-hero-main,#dashboard .v58-hero-service{width:100%!important;max-width:none!important;min-width:0!important;min-height:205px!important;box-sizing:border-box!important}
