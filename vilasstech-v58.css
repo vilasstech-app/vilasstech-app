@@ -414,3 +414,6 @@ body.v59-pdf-open{overflow:hidden!important}
   .view:not(#dashboard) > .view-head h1{font-size:29px!important}
   .view:not(#dashboard) > .view-head > button{align-self:stretch!important;width:100%!important}
 }
+
+/* Galería fotográfica: enfoque natural, contraste y encuadre */
+#dashboard .v59-gallery .service-photo{filter:brightness(.88) saturate(1.04)!important;object-position:center 44%!important}#dashboard .v59-gallery .service-visual:after{background:linear-gradient(180deg,#061b2b05 0%,#061b2b14 35%,#061b2be8 100%)!important}#dashboard .v59-gallery .gallery-slide figcaption{bottom:53px!important}#dashboard .v59-gallery .gallery-slide figcaption strong{text-shadow:0 2px 10px #0009!important}
