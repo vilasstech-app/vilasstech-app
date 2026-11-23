@@ -495,8 +495,9 @@ button{transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <link rel="stylesheet" href="./vilasstech-v56.css?v=56">
 <link rel="stylesheet" href="./vilasstech-v57.css?v=57">
-<link rel="stylesheet" href="./vilasstech-v58.css?v=59-unified3">
+<link rel="stylesheet" href="./vilasstech-v58.css?v=59-pdf4">
 </head><body>
+<div id="v59PdfViewer" class="v59-pdf-modal" role="dialog" aria-modal="true" aria-label="Vista previa de PDF" hidden><div class="v59-pdf-shell"><div class="v59-pdf-toolbar"><div class="v59-pdf-title"><strong id="v59PdfTitle">Vista previa</strong><small>Revisa el documento antes de descargarlo o compartirlo</small></div><div class="v59-pdf-actions"><button type="button" id="v59PdfDownload" class="v59-pdf-download">↓ Descargar PDF</button><button type="button" id="v59PdfShare" class="v59-pdf-share">Compartir</button><button type="button" id="v59PdfClose" class="v59-pdf-close" aria-label="Cerrar vista previa">✕</button></div></div><div class="v59-pdf-content"><iframe id="v59PdfFrame" title="Documento PDF" loading="eager"></iframe><div class="v59-pdf-fallback">Si tu navegador no muestra la vista previa, utiliza <strong>Descargar PDF</strong> para abrirlo desde tus archivos.</div></div></div></div>
 <div class="app-shell">
 <aside class="sidebar">
 <div class="brand"><div class="brand-mark logo-mark"><img src="https://cdn.imagetourls.com/uploads/tyImg/16lgpNfyv.jpg" alt="Logo VILASSTECH" onerror="this.onerror=null;this.src='./icon.svg'"></div><div><strong>VILASSTECH</strong><small>Soluciones integrales</small></div></div>
@@ -709,6 +710,15 @@ function pdfImageData(urls){
   attempt();
  });
 }
+/* Vista previa y exportación PDF: sin compartir automáticamente */
+let vilasPdfCurrent=null;
+function closeVilasPdf(){const modal=document.getElementById("v59PdfViewer"),frame=document.getElementById("v59PdfFrame");modal.hidden=true;document.body.classList.remove("v59-pdf-open");frame.removeAttribute("src");if(vilasPdfCurrent){URL.revokeObjectURL(vilasPdfCurrent.url);vilasPdfCurrent=null}}
+function showVilasPdf(blob,filename){closeVilasPdf();const url=URL.createObjectURL(blob),modal=document.getElementById("v59PdfViewer");vilasPdfCurrent={blob,url,filename};document.getElementById("v59PdfTitle").textContent=filename;document.getElementById("v59PdfFrame").src=url+"#toolbar=0&navpanes=0";modal.hidden=false;document.body.classList.add("v59-pdf-open");document.getElementById("v59PdfDownload").focus()}
+document.getElementById("v59PdfClose").addEventListener("click",closeVilasPdf);
+document.getElementById("v59PdfViewer").addEventListener("click",e=>{if(e.target.id==="v59PdfViewer")closeVilasPdf()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!document.getElementById("v59PdfViewer").hidden)closeVilasPdf()});
+document.getElementById("v59PdfDownload").addEventListener("click",()=>{if(!vilasPdfCurrent)return;const a=document.createElement("a");a.href=vilasPdfCurrent.url;a.download=vilasPdfCurrent.filename;document.body.appendChild(a);a.click();a.remove()});
+document.getElementById("v59PdfShare").addEventListener("click",async()=>{if(!vilasPdfCurrent)return;const {blob,filename,url}=vilasPdfCurrent;try{const file=new File([blob],filename,{type:"application/pdf"});if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:filename});return}if(navigator.clipboard&&navigator.clipboard.writeText){await navigator.clipboard.writeText(filename);alert("La opción de compartir archivos no está disponible en este navegador. Descarga el PDF para enviarlo.");return}alert("Descarga el PDF para compartirlo desde tu dispositivo.")}catch(e){if(e.name!=="AbortError")alert("No se pudo compartir. Puedes descargar el PDF directamente.")}});
 function printDocument(id,content){
  const button=document.activeElement,buttonText=button&&button.tagName==="BUTTON"?button.textContent:"";
  if(button&&button.tagName==="BUTTON"){button.disabled=true;button.textContent="Preparando PDF…"}
@@ -812,11 +822,8 @@ function printDocument(id,content){
   const disclaimer=[...root.querySelectorAll("p")].find(p=>p.textContent.includes("Documento comercial")||p.textContent.includes("Cotización comercial"));
   if(disclaimer){const lines=doc.splitTextToSize(disclaimer.textContent.trim(),CW);ensure(lines.length*4+5);doc.setFont("helvetica","italic");doc.setFontSize(7);doc.setTextColor(...muted);doc.text(lines,L,y);y+=lines.length*4+5}
   footer();
-  const safeName=String(id||"documento").replace(/[^a-z0-9_-]/gi,"_"),blob=doc.output("blob"),file=new File([blob],safeName+".pdf",{type:"application/pdf"}),url=URL.createObjectURL(blob);
-  if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){try{const sharing=navigator.share({files:[file],title:safeName,text:"Documento de VILASSTECH"});sharing.catch(err=>{if(err&&err.name!=="AbortError")window.location.href=url});return}catch(err){if(err&&err.name==="AbortError")return}}
-  const standalone=window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone===true;
-  if(standalone)window.location.href=url;else{const opened=window.open(url,"_blank");if(!opened)window.location.href=url}
-  setTimeout(()=>URL.revokeObjectURL(url),120000);
+  const safeName=String(id||"documento").replace(/[^a-z0-9_-]/gi,"_"),blob=doc.output("blob");
+  showVilasPdf(blob,safeName+".pdf");
  }catch(err){console.error("PDF VILASSTECH:",err);alert("No se pudo generar el PDF. "+(err&&err.message?err.message:"Inténtalo nuevamente."))}
  finally{if(button&&button.tagName==="BUTTON"){button.disabled=false;button.textContent=buttonText||"PDF/Imprimir"}}
 }
