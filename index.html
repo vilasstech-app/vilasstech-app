@@ -945,8 +945,7 @@ let install=null;window.addEventListener("beforeinstallprompt",e=>{e.preventDefa
 import{initializeApp}from"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 import{getAuth,GoogleAuthProvider,signInWithPopup,signInWithRedirect,getRedirectResult,onAuthStateChanged,signOut}from"https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 const config={apiKey:"AIzaSyA-HW7bsMn6KE-ejIx_OJOkN9T0Q5DGqEg",authDomain:"vilasstech-fadb1.firebaseapp.com",projectId:"vilasstech-fadb1",storageBucket:"vilasstech-fadb1.firebasestorage.app",messagingSenderId:"745461170525",appId:"1:745461170525:web:41cae8bee7094f6d4d68b4",measurementId:"G-60422FZB71"};
-import{initializeAppCheck,ReCaptchaEnterpriseProvider}from"https://www.gstatic.com/firebasejs/11.10.0/firebase-app-check.js";
-const app=initializeApp(config);try{initializeAppCheck(app,{provider:new ReCaptchaEnterpriseProvider("6LeroC8uAAAAAB5Vas-kUZ1GpI9pZEno0-OsXoZH"),isTokenAutoRefreshEnabled:true});}catch(e){console.warn("App Check",e);}
+const app=initializeApp(config);
 const auth=getAuth(app),provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:"select_account"});
 const login=document.getElementById("vtAuthLogin"),logout=document.getElementById("vtAuthLogout"),message=document.getElementById("vtAuthMessage");const admin="javuson05@gmail.com";
 function setMessage(t){message.textContent=t}
