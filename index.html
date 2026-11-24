@@ -634,7 +634,7 @@ async function cloudSync(){
  }finally{googleSyncBusy=false;}
 }
 function connectGoogle(){if(!window.google?.accounts?.oauth2){toast("Google aún está cargando. Espera unos segundos e inténtalo de nuevo.");return;}if(!googleTokenClient){googleTokenClient=google.accounts.oauth2.initTokenClient({client_id:GOOGLE_CLIENT_ID,scope:GOOGLE_SCOPE,callback:async(response)=>{if(response.error){toast("Google no autorizó la conexión: "+response.error);cloudStatus("Conectar Google");return;}googleAccessToken=response.access_token;await cloudSync();}});}googleTokenClient.requestAccessToken({prompt:"consent"});}
-document.getElementById("googleSyncBtn")?.addEventListener("click",connectGoogle);
+document.getElementById("googleSyncBtn").hidden=true;
 
 
 const PRODUCT_KEY="vilasstech_catalog_products_v1";
@@ -951,14 +951,14 @@ try { initializeAppCheck(app,{provider:new ReCaptchaEnterpriseProvider("6LeroC8u
 const auth=getAuth(app),provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:"select_account"});
 const login=document.getElementById("vtAuthLogin"),logout=document.getElementById("vtAuthLogout"),message=document.getElementById("vtAuthMessage");const admin="javuson05@gmail.com";
 function setMessage(t){message.textContent=t}
-onAuthStateChanged(auth,async user=>{if(user&&user.emailVerified&&user.email?.toLowerCase()===admin){document.documentElement.classList.add("vt-authorized");return}document.documentElement.classList.remove("vt-authorized");login.hidden=false;if(user){setMessage("Esta cuenta no está autorizada. Usa la cuenta administradora.");logout.hidden=false}else{setMessage("Solo la cuenta administradora autorizada puede acceder.");logout.hidden=true}});
+onAuthStateChanged(auth,async user=>{if(user&&user.emailVerified&&user.email?.toLowerCase()===admin){setMessage("Cargando datos seguros…");return}document.documentElement.classList.remove("vt-authorized");login.hidden=false;if(user){setMessage("Esta cuenta no está autorizada. Usa la cuenta administradora.");logout.hidden=false}else{setMessage("Solo la cuenta administradora autorizada puede acceder.");logout.hidden=true}});
 login.addEventListener("click",async()=>{login.disabled=true;setMessage("Abriendo Google…");try{await signInWithPopup(auth,provider)}catch(e){if(e.code==="auth/popup-blocked"){await signInWithRedirect(auth,provider);return}setMessage(e.code==="auth/unauthorized-domain"?"Autoriza vilasstechpty.github.io en Firebase Authentication > Settings > Authorized domains.":"No se pudo iniciar sesión ("+e.code+").")}finally{login.disabled=false}});
 logout.addEventListener("click",async()=>{await signOut(auth);setMessage("Selecciona la cuenta administradora.");logout.hidden=true});
 getRedirectResult(auth).catch(e=>setMessage("Error de inicio de sesión: "+e.code));
 </script><script type="module">
 import{initializeApp,getApps,getApp}from"https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
-import{getFirestore,doc,getDoc,setDoc}from"https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+import{getFirestore,doc,getDoc,setDoc,getDocFromServer,runTransaction}from"https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 const cfg={apiKey:"AIzaSyA-HW7bsMn6KE-ejIx_OJOkN9T0Q5DGqEg",authDomain:"vilasstech-fadb1.firebaseapp.com",projectId:"vilasstech-fadb1",appId:"1:745461170525:web:41cae8bee7094f6d4d68b4"};
 const app=getApps().length?getApp():initializeApp(cfg),auth=getAuth(app),db=getFirestore(app),button=document.getElementById("vtCloudBackup"),status=document.getElementById("vtCloudBackupStatus");
 const keys=["vilasstech_catalog_products_v1","vilasstech_pwa_drafts_v1","vilasstech_internal_invoices_v1","vilasstech_internal_receipts_v1","vilasstech_customers_v1"];
@@ -974,4 +974,53 @@ await setDoc(target,{app:"VILASSTECH",createdAt,formatVersion:1,content:payload,
 const verify=await getDoc(target);if(!verify.exists()||verify.data().content!==payload)throw Error("No se pudo verificar la copia guardada.");
 status.textContent="✓ Respaldo guardado y verificado en Firebase: "+new Date(createdAt).toLocaleString("es-PA");
 }catch(e){status.textContent="No se completó el respaldo: "+e.message}finally{button.disabled=false}});
+
+const syncLabel=document.getElementById("syncStatus");
+let baseline=null,revision=null,busy=false,activeUid=null;
+const initialId="initial-2026-11-24T18-19-06-704Z";
+function syncMessage(t){syncLabel.textContent=t;syncLabel.title=t;}
+function decodeCloud(d){const p=JSON.parse(d.content);if(p.app!=="VILASSTECH"||p.formatVersion!==1||!p.records)throw Error("Respaldo inválido");for(const k of keys)if(!Array.isArray(p.records[k]))throw Error("Falta un módulo");return p.records;}
+function localText(){return JSON.stringify(readData());}
+function applyCloud(records){const before=localText(),after=JSON.stringify(Object.fromEntries(keys.map(k=>[k,records[k]])));if(before===after)return false;localStorage.setItem("vilasstech_pre_cloud_"+Date.now(),before);for(const k of keys)localStorage.setItem(k,JSON.stringify(records[k]));return true;}
+function targetFor(uid){return doc(db,"privateBackups",uid,"snapshots","live-v1");}
+function cloudPayload(records,rev){const createdAt=new Date().toISOString(),content=JSON.stringify({app:"VILASSTECH",formatVersion:1,createdAt,records});if(new Blob([content]).size>850000)throw Error("Límite de almacenamiento alcanzado; descarga un respaldo");return {app:"VILASSTECH",formatVersion:1,createdAt,content,revision:rev,source:"automatic"};}
+onAuthStateChanged(auth,async user=>{
+ activeUid=null;baseline=null;revision=null;document.documentElement.classList.remove("vt-authorized");
+ if(!user||!user.emailVerified||user.email?.toLowerCase()!=="javuson05@gmail.com")return;
+ const msg=document.getElementById("vtAuthMessage");
+ try{
+ const target=targetFor(user.uid);let snap=await getDocFromServer(target);
+ if(!snap.exists()){
+ const seed=await getDocFromServer(doc(db,"privateBackups",user.uid,"snapshots",initialId));
+ if(!seed.exists())throw Error("No se encontró el respaldo inicial");
+ const records=decodeCloud(seed.data());
+ await runTransaction(db,async tx=>{const current=await tx.get(target);if(!current.exists())tx.set(target,cloudPayload(records,1));});
+ snap=await getDocFromServer(target);
+ }
+ if(auth.currentUser?.uid!==user.uid)return;
+ const records=decodeCloud(snap.data()),next=JSON.stringify(Object.fromEntries(keys.map(k=>[k,records[k]])));
+ const marker="vilasstech_cloud_baseline_"+user.uid,prior=localStorage.getItem(marker);
+ if(prior&&localText()!==prior&&localText()!==next){
+ msg.textContent="Hay cambios locales pendientes. No se sobrescribieron. Abre la aplicación en el dispositivo donde hiciste los cambios y conserva un respaldo.";
+ return;
+ }
+ const changed=applyCloud(records);localStorage.setItem(marker,next);
+ if(changed){location.reload();return;}
+ baseline=next;revision=snap.data().revision;activeUid=user.uid;
+ document.documentElement.classList.add("vt-authorized");syncMessage("Nube conectada");
+ }catch(e){msg.textContent="No se pudieron cargar los datos: "+e.message+". Recarga para reintentar.";document.getElementById("vtAuthLogout").hidden=false;}
+});
+async function autoSave(){
+ if(busy||!activeUid||auth.currentUser?.uid!==activeUid||!baseline)return;
+ busy=true;const uid=activeUid;
+ try{
+ const current=localText();if(current===baseline)return;
+ const records=JSON.parse(current),expected=revision;
+ const next=await runTransaction(db,async tx=>{const target=targetFor(uid),snap=await tx.get(target);if(!snap.exists()||snap.data().revision!==expected)throw Error("Conflicto entre dispositivos; conserva un respaldo local");tx.set(target,cloudPayload(records,expected+1));return expected+1;});
+ if(activeUid!==uid)return;
+ revision=next;baseline=current;localStorage.setItem("vilasstech_cloud_baseline_"+uid,current);syncMessage("Guardado en nube ✓");
+ }catch(e){syncMessage("Pendiente: "+e.message);}finally{busy=false;}
+}
+setInterval(autoSave,1500);
+window.addEventListener("online",autoSave);
 </script></body></html>
